@@ -6,7 +6,7 @@
             <ul class="nav sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                       TEINNOVA
+                    <?php echo $shop->shName ?>
                     </a>
                 </li>
                 <li>
@@ -81,6 +81,12 @@
                 <?php if(checkAdmin()) : ?>
                 <li>
                     <a href="notifications.php"><i class="fa fa-warning fa-fw"></i> Alertas</a>
+                </li>
+                <?php endif; ?>
+                <?php if(checkAdmin()) : ?>
+                <li>
+                    <a href="settings.php?shId=<?php echo $shop->shId; ?> "><i class="fa fa-warning fa-fw"></i> Ajustes</a>
+                    
                 </li>
                 <?php endif; ?>
                 

@@ -175,7 +175,7 @@
                                         <br>
                                         <b style="font-size:10px;"><?php echo $shop->shWeb ?>  </b>
                                         <br>
-                                        <b style="font-size:8px;">  Cel. <?php echo $shop->shTel ?></b>
+                                        <b style="font-size:8px;">  Cel. <?php echo $shop->shTelf ?></b>
                                         <br>
                                         <b>Software de Facturación Desarrolado por SAEDI.COM.CO</b>                                       
                                         </td>                                   

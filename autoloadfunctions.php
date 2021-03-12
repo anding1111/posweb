@@ -1,12 +1,9 @@
 <?php 
 
-
 //session start
 session_start();
 
-
 // all included file will be here
-
 
 	require('functions/date.php');
 	require('functions/database.php');
