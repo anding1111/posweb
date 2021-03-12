@@ -8,7 +8,7 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <!-- <div class="huge"><b style="font-size:52px; font-family:Helvetica, Arial, sans-serif;">TEINNOVA</b><br>Comunicaciones</div>                               -->
-                                    <div class="huge"><span class="title-card"><?php $shName ?></span><br><span class="sec-title">Comunicaciones</h2></div>                              
+                                    <div class="huge"><span class="title-card"><?php echo $shop->shName ?></span><br><span class="sec-title"><?php echo $shop->shAuxName ?></h2></div>                              
                                 </div>
                             </div>
                         </div>

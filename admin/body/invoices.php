@@ -25,12 +25,12 @@
                                <div class="table" style="background-color: white;" id="printers">
                                 <!-- info row -->
                                 <div class="col-sm-12 invoice-col" style="text-align:center;">
-                                <b style="font-size:22px; font-family:Helvetica, Arial, sans-serif;">TEINNOVA COMUNICACIONES</b><br>
-                                <b style="font-size:16px; font-family:Helvetica, Arial, sans-serif;">Importadores Mayoristas</b><br>
-                                <b style="font-size:12px;">NIT. 1085950928-5</b><br>
+                                <b style="font-size:22px; font-family:Helvetica, Arial, sans-serif;"><?php echo $shop->shName ?></b><br>
+                                <b style="font-size:16px; font-family:Helvetica, Arial, sans-serif;"><?php echo $shop->shDesc ?></b><br>
+                                <b style="font-size:12px;">NIT. <?php echo $shop->shDoc ?></b><br>
                                 <!-- <b style="font-size:12px;">Cra 6, Cll 12 # 5-27 Local 213 Piso 2</b><br> -->
                                 <!-- <b style="font-size:12px;">Cel. 317 446 4948</b><br> -->
-                                <b style="font-size:12px;">IPIALES - NARIÑO - COLOMBIA</b><br>
+                                <b style="font-size:12px;"><?php echo $shop->shDir ?></b><br>
                                 </div>
                                 <div>                               
                                 </div>
@@ -155,7 +155,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><b>IMEIS: </b></td>
+                                            <td><b>SERIALES: </b></td>
                                             <!-- <td id="ocultar"></td> -->
                                             <!-- <td></td>
                                             <td></td> -->
@@ -173,9 +173,9 @@
                                         <br>                                        
                                         <b style="font-size:10px;">Atendido por: <?php echo getLoggedInUserName(); ?>  </b>
                                         <br>
-                                        <b style="font-size:10px;">www.teinnova.com.co  </b>
+                                        <b style="font-size:10px;"><?php echo $shop->shWeb ?>  </b>
                                         <br>
-                                        <b style="font-size:8px;">  Cel. 317 446 4948</b>
+                                        <b style="font-size:8px;">  Cel. <?php echo $shop->shTel ?></b>
                                         <br>
                                         <b>Software de Facturación Desarrolado por SAEDI.COM.CO</b>                                       
                                         </td>                                   

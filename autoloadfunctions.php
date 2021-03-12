@@ -24,3 +24,4 @@ session_start();
 	require('functions/financial.php');
 	require('functions/brand.php');
 	require('functions/supplier.php');
+	require('functions/shop.php');

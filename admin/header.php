@@ -53,6 +53,12 @@ include('../vendor/autoload.php');
 
 </head>
 <body>
+            <!-- Shop -->
+            <?php
+            $id = 1;
+            $shop = getShopNameById($id);
+
+            ?>
 
                <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-user">
