@@ -47,8 +47,8 @@ include('../vendor/autoload.php');
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-     <!-- jQuery 3.4.1 -->
-     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery 3.4.1 -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
 
 </head>

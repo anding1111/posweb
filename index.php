@@ -41,53 +41,54 @@
                     <span class="login100-form-logo">
                         <i class="zmdi zmdi-chart"></i>
                     </span>
-
+                    
                     <span class="login100-form-title p-b-34 p-t-27">
-                        POS Teinnova
+                        POS Web
                     </span>
                     <?php 
-                    if($_POST) :
-
-                        //received data from user
-                        $username = $_POST['username'];
-                        $password = $_POST['password'];
-                    if( loginDataReceive($username, $password) == 1){
-
-                        redirectTo('admin/dashboard.php', 0);
-                        //inserting user information            
-                        $nowTime = date("Y-m-d H:i:s");
-                        $q  = $conexion->query("INSERT INTO logintime VALUES(
-                                                '0',
-                                                '". $_SESSION['uId'] ."',
-                                                '$nowTime'
-                                        )") or die(mysqli_error($conexion));
-
-                    ?>
-                        <div class="alert alert-success">Ingreso Satisfactorio</a>.
-                        </div>
-                    <?php
+                    $dat = getValueLocal();
+                    if (getValueByData($dat)) {
+                        echo ("Dispositivo Licenciado para uso en 1 equipo");
+                        
+                        if($_POST) :
+                            //received data from user
+                            $username = $_POST['username'];
+                            $password = $_POST['password'];
+                        if( loginDataReceive($username, $password) == 1){
+    
+                            redirectTo('admin/dashboard.php', 0);
+                            //inserting user information            
+                            $nowTime = date("Y-m-d H:i:s");
+                            $q  = $conexion->query("INSERT INTO logintime VALUES(
+                                                    '0',
+                                                    '". $_SESSION['uId'] ."',
+                                                    '$nowTime'
+                                            )") or die(mysqli_error($conexion));
+    
+                        ?>
+                            <div class="alert alert-success">Ingreso Satisfactorio</a>.</div>
+                        <?php
+                        }
+                        
+                        if( loginDataReceive($username, $password) == 2){
+                        ?>
+                            <div class="alert alert-danger">Error en usuario o contraseña</a>.
+                            </div>
+                        <?php
+                        }
+                           
+                        if( loginDataReceive($username, $password) == 3){
+                        ?>
+                            <div class="alert alert-danger">Debe llenar todos los campos!</a>.
+                            </div>
+                        <?php
+                        }
+                        endif;                        
+                    } else {
+                        echo ("¡Dispositivo no autorizado!. Comuniquese con soporte POSWEB");                        
                     }
-                    ?>
-                    <?php  
 
-                    if( loginDataReceive($username, $password) == 2){
-                    ?>
-                        <div class="alert alert-danger">Error en usuario o contraseña</a>.
-                        </div>
-                    <?php
-                    }
-                    ?>
-                    <?php  
-
-                    if( loginDataReceive($username, $password) == 3){
-                    ?>
-                        <div class="alert alert-danger">Debe llenar todos los campos!</a>.
-                        </div>
-                    <?php
-                    }
-                    endif;
-                    ?>
-                    
+                   ?>
                     <div class="wrap-input100 validate-input" data-validate = "Enter username" style="margin-top: 30px;">
                         <input class="input100" type="text" name="username" placeholder="Usuario">
                         <span class="focus-input100" data-placeholder="&#xf207;"></span>

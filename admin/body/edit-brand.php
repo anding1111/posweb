@@ -32,8 +32,8 @@
     }
 ?>
 
-            <div class="row">
-                <div class="col-lg-12">
+                <!-- /.col-lg-6... -->
+                <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
                     <div class="panel panel-default">
                         <div class="panel-heading titles">
                         Editar Marca
@@ -67,18 +67,13 @@
                                                
                                 <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />
 
-
                             </form>
 
- 
-                        </div>
+                            </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.col-lg-6... -->
             </div>
             <!-- /.row -->
-          
-            <!-- /.row -->
-        </div>

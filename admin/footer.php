@@ -1,4 +1,4 @@
-                </div>
+                   
         </div>
         <!-- /#page-content-wrapper -->
 
@@ -43,6 +43,9 @@ $actual_link = "$_SERVER[REQUEST_URI]";
 
     <!-- Impresora JavaScript -->
     <script src="../dist/js/Impresora.js"></script>   
+    
+    <!-- JS Color Picker -->
+    <script src="../dist/js/jscolor.min.js"></script>   
 
     <script>
 
@@ -52,7 +55,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
                     return numero;
                 }; 
 
-    // Funcion para obtener el numero de un dato
+    // Funcion para obtener el numero de un string 
     function numInt( i ) {
         var num = Number(i.replace(/[\$,\.]/g, '')*1);
         return num;

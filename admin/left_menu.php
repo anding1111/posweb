@@ -85,7 +85,7 @@
                 <?php endif; ?>
                 <?php if(checkAdmin()) : ?>
                 <li>
-                    <a href="settings.php?shId=<?php echo $shop->shId; ?> "><i class="fa fa-warning fa-fw"></i> Ajustes</a>
+                    <a href="settings.php?shId=<?php echo $shop->shId; ?> "><i class="fa fa-gear fa-fw"></i> Ajustes</a>
                     
                 </li>
                 <?php endif; ?>
@@ -105,5 +105,4 @@
 				<span class="hamb-bottom"></span>
             </button>
             <div class="container container-user">
-                
-     
+                 

@@ -13,13 +13,13 @@
          $shDoc = formItemValidation($_POST['shDoc']);
          $shTelf = formItemValidation($_POST['shTelf']);
          $shDir = formItemValidation($_POST['shDir']);
-         $shEmail = formItemValidation($_POST['shEmail']);       
+         $shMail = formItemValidation($_POST['shMail']);       
          $shWeb = formItemValidation($_POST['shWeb']);       
          $shDesc = formItemValidation($_POST['shDesc']);       
          $shColor = formItemValidation($_POST['shColor']);   
         
 
-                $update = "UPDATE shop SET shName = '".$shName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shEmail = '".$shEmail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE shId = '".$getshId."' ";
+                $update = "UPDATE shop SET shName = '".$shName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE shId = '".$getshId."' ";
 
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
@@ -34,11 +34,9 @@
                 }
     }
 
-?>
-
-
-            <div class="row">
-                <div class="col-lg-12">
+?>            
+                <!-- /.col-lg-6... -->
+                <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none">      
                     <div class="panel panel-default">
                         <div class="panel-heading titles">
                         AJUSTES DE MI TIENDA
@@ -49,7 +47,7 @@
                             <?php if(isset($insertSuccess)) : ?>
                                 <div class="alert alert-success">Datos de la Tienda se han actualizado con éxito</div>
                             <?php 
-                                    redirectTo('settings.php', 1);
+                                    redirectTo('settings.php?shId=1', 1);
 
                                     endif; ?>
 
@@ -64,11 +62,12 @@
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>Nombre</label>
-                                    <input class="form-control" name="shName" required="required" type="text" value="<?php echo $qry->shName; ?>">
+                                    <input class="form-control" name="shName" required="required" type="text" value="<?php if(isset($qry->shName)) : echo $qry->shName; endif; ?>">
+                                   
                                 </div>
                                 <div class="form-group">
                                     <label>Sub-Nombre (Nombre Auxiliar)</label>
-                                    <input class="form-control" name="shAuxName" required="required" type="text" value="<?php echo $qry->shAuxName; ?>">
+                                    <input class="form-control" name="shAuxName" type="text" value="<?php echo $qry->shAuxName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Identificación</label>
@@ -96,7 +95,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Color</label>
-                                    <input class="form-control" name="shColor" required="required" type="text" value="<?php echo $qry->shColor; ?>">
+                                    <input class="form-control" name="shColor" required="required" type="text" data-jscolor="{}" value="<?php echo $qry->shColor; ?>">
                                 </div>
                                 
                                 <input type="submit" value="Actualizar Datos" class="btn btn-info btn-large" name="submit" />
@@ -110,9 +109,7 @@
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
+                <!-- /.col-lg-6... -->
             <script>
                 function clicViewInv(){
                     var valId =  $('.cViewInv').val();                    
@@ -123,8 +120,6 @@
                     }              
                 
                 }
-            </script>
-           
-
-            <!-- /.row -->
+            </script>  
         </div>
+        <!-- /.row -->
