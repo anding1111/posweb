@@ -1,11 +1,14 @@
 <?php  
 
+    $getCId = $_GET['cId'];
+
+    //collect all informaion from database
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM client WHERE cID = '{$getCId}' ") ); 
+
     
     if ( @$_POST['submit'] ) {
         
-       
-         //collecting userinfo
-        
+         //collecting client info        
         $cName = formItemValidation($_POST['cName']);
         $cDoc = formItemValidation($_POST['cDoc']);
         $cTelf = formItemValidation($_POST['cTelf']);
@@ -17,31 +20,14 @@
         }else{
             $cViewInv = 0;
         }
-       
-              
-                //current time now
-                $nowTime = date("Y-m-d H:i:s");
 
-                //logged in user ID
-                $loggedInUser = $_SESSION['uId'];
+                $update = "UPDATE client SET cName = '".$cName."', cDoc = '".$cDoc."', cTelf = '".$cTelf."', cDir = '".$cDir."', cEmail = '".$cEmail."', cViewInv = '".$cViewInv."' WHERE cId = '".$getCId."' ";
 
-
-                $qry = $conexion->query("INSERT INTO category VALUES(
-                                        '0',
-                                        '".$cName."',
-                                        '".$cDoc."',
-                                        '".$cTelf."',                                       
-                                        '".$cDir."',
-                                        '".$cEmail."',
-                                        '".$cViewInv."',                                       
-                                        '".$loggedInUser."',
-                                        '".$nowTime."',
-                                        '1'
-                    )") or die(mysqli_error($conexion));
+                $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
 
                 if ( $qry ) {
-                    
+
                     $insertSuccess = 1;
 
                 } else{
@@ -52,60 +38,79 @@
 
 ?>
 
+
             <!-- /.col-lg-6... -->
             <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
                     <div class="panel panel-default">
                         <div class="panel-heading titles">
-                            Añadir un nuevo cliente
+                            Editar Cliente
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
                             <?php if(isset($insertSuccess)) : ?>
-                                <div class="alert alert-success">Categoría agregada con éxito</div>
+                                <div class="alert alert-success">Categoría ha actualizado con éxito</div>
                             <?php 
-                                    redirectTo('categories.php', 0);
+                                    redirectTo('clients.php', 1);
 
-                            endif; ?>
+                                    endif; ?>
 
                             <?php if(isset($insertError)) : ?>
                                 <div class="alert alert-danger">Opps Algo mal. Inténtalo de nuevo</div>
-                            <?php endif; ?>                           
+                            <?php endif; ?>
+
+                            <?php if(isset($uniquenessError)) : ?>
+                                <div class="alert alert-danger">Opps Este cliente ya está en uso. Prueba otro.</div>
+                            <?php endif; ?>
                               
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>Nombre Completo</label>
-                                    <input class="form-control" name="cName" required="required" type="text" value="<?php echo @$_POST['cName'] ?>">
+                                    <input class="form-control" name="cName" required="required" type="text" value="<?php echo $qry->cName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Identificación</label>
-                                    <input class="form-control" name="cDoc" required="required" type="text" value="<?php echo @$_POST['cDoc'] ?>">
+                                    <input class="form-control" name="cDoc" required="required" type="text" value="<?php echo $qry->cDoc; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Celular</label>
-                                    <input class="form-control" name="cTelf" required="required" type="text" value="<?php echo @$_POST['cTelf'] ?>">
+                                    <input class="form-control" name="cTelf" required="required" type="text" value="<?php echo $qry->cTelf; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Dirección</label>
-                                    <input class="form-control" name="cDir" required="required" type="text" value="<?php echo @$_POST['cDir'] ?>">
+                                    <input class="form-control" name="cDir" required="required" type="text" value="<?php echo $qry->cDir; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Correo Electronico</label>
-                                    <input class="form-control" name="cEmail" required="required" type="text" value="<?php echo @$_POST['cEmail'] ?>">
+                                    <input class="form-control" name="cEmail" required="required" type="text" value="<?php echo $qry->cEmail; ?>">
                                 </div>
                                 <div class="checkbox" style="font-size:20px;">
-                                    <label><input type="checkbox" value="1" name="cViewInv" checked><b>  VER PRECIOS</b>(EN FACTURA)</label>
-                                </div>                                                         
+                                    <label ><input class="cViewInv" type="checkbox" value="<?php echo $qry->cViewInv; ?>" name="cViewInv" onclick="clicViewInv()"><b>  VER PRECIOS</b>(EN FACTURA)</label>
+                                </div> 
 
-                                <input type="submit" value="Añadir Ahora" class="btn btn-info btn-large" name="submit" />
+                                <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />
+
 
                             </form>
 
+ 
                             </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-6... -->
+            <script>
+                function clicViewInv(){
+                    var valId =  $('.cViewInv').val();                    
+                    if(valId == 1) {
+                        $('.cViewInv').val(0);
+                    }else{
+                        $('.cViewInv').val(1); 
+                    }              
+                    
+                }
+                </script>
             </div>
             <!-- /.row -->
+           

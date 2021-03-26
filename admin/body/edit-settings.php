@@ -8,8 +8,9 @@
     
     if ( @$_POST['submit'] ) {
         
-         //collecting categoryinfo        
+         //collecting client info        
          $shName = formItemValidation($_POST['shName']);
+         $shAuxName = formItemValidation($_POST['shAuxName']);
          $shDoc = formItemValidation($_POST['shDoc']);
          $shTelf = formItemValidation($_POST['shTelf']);
          $shDir = formItemValidation($_POST['shDir']);
@@ -19,7 +20,7 @@
          $shColor = formItemValidation($_POST['shColor']);   
         
 
-                $update = "UPDATE shop SET shName = '".$shName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE shId = '".$getshId."' ";
+                $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE shId = '".$getshId."' ";
 
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
@@ -56,7 +57,7 @@
                             <?php endif; ?>
 
                             <?php if(isset($uniquenessError)) : ?>
-                                <div class="alert alert-danger">Opps Esta categoría ya está en uso. Prueba otro.</div>
+                                <div class="alert alert-danger">Opps Este cliente ya está en uso. Prueba otro.</div>
                             <?php endif; ?>
                               
                             <form role="form" method="POST" action="">

@@ -8,7 +8,7 @@
     
     if ( @$_POST['submit'] ) {
         
-         //collecting categoryinfo        
+         //collecting client info        
         $sName = formItemValidation($_POST['sName']);
         $sDoc = formItemValidation($_POST['sDoc']);
         $sTelf = formItemValidation($_POST['sTelf']);

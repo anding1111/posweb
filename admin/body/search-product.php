@@ -29,7 +29,7 @@ if (!$con) {
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
-		$query = "SELECT * FROM category WHERE cName like'%".$search."%' AND clEnable = '1' ";
+		$query = "SELECT * FROM client WHERE cName like'%".$search."%' AND clEnable = '1' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();

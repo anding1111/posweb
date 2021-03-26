@@ -85,8 +85,8 @@ while($row = mysqli_fetch_array($result))
       $product = getItemNameById($row["pId"]);
       $sub_array[] = $product->pName;
     }elseif ($_POST["radio"] == 2) {
-      $category = getCategoryNameById($row["cId"]);
-      $sub_array[] = $category->cName;
+      $client = getCategoryNameById($row["cId"]);
+      $sub_array[] = $client->cName;
     }else {  
       $brand = getBrandNameById($row["pIdBrand"]);
       $sub_array[] = $brand->bName;

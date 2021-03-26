@@ -42,7 +42,7 @@ function getTotalAllSaldosSuppliers()
 function getClientNameById($id){
 
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT * FROM category WHERE cId = '$id' LIMIT 1"));
+	return mysqli_fetch_object($conexion->query("SELECT * FROM client WHERE cId = '$id' LIMIT 1"));
 
 }
 

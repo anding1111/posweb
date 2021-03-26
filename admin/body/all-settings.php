@@ -60,7 +60,7 @@
                             <?php if(isset($insertSuccess)) : ?>
                                 <div class="alert alert-success">Datos guardados correctamente!</div>
                             <?php 
-                                    redirectTo('categories.php', 0);
+                                    redirectTo('settings.php', 0);
 
                             endif; ?>
 

@@ -69,15 +69,14 @@
 												
 											
                                                 <?php 
-                                                    $category = getCategoryNameById($data->cId);
-                                                    $cNameNew = $category->cName;
+                                                    $client = getCategoryNameById($data->cId);
+                                                    $cNameNew = $client->cName;
                                                     if($cName != $cNameNew){
                                                         $cName = $cNameNew;?>
                                                         <td> 
                                                         <?php echo($cName); ?>
                                                         </td><?php
                                                     }  
-                                                    //echo $category->cName;
 
                                                 ?>
                                             <?php                                                                                                 

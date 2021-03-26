@@ -1,11 +1,11 @@
 <?php include('header.php'); ?>
 
 
-<?php if(checkActiveSession()) { ?>
+<?php if(checkActiveSession() OR checkClark() ) { ?>
 
 <?php include('left_menu.php'); ?>
 
-<?php include('body/add-category.php'); ?>
+<?php include('body/edit-client.php'); ?>
 
 
 <?php include('footer.php'); ?>

@@ -47,8 +47,8 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle fa-fw"></i> Clientes <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li class="dropdown-header">Seleccione</li>
-                    <li><a href="add-category.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
-                    <li><a href="categories.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>                    
+                    <li><a href="add-client.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
+                    <li><a href="clients.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>                    
                   </ul>
                 </li>
 

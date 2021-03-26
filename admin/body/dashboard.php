@@ -71,14 +71,14 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="categories.php">
+                        <a href="clients.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Ver Detalles</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
-						<a href="add-category.php">
+						<a href="add-client.php">
 						 <div class=" panel-footer pull-center">
                                 <span><i class="fa fa-plus-circle fa-3x"></i></span>
                                 <div class="clearfix"></div>

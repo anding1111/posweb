@@ -12,7 +12,7 @@ session_start();
 	require('functions/sessions.php');
 	require('functions/validation.php');
 	require('functions/users.php');
-	require('functions/category.php');
+	require('functions/client.php');
 	require('functions/product.php');
 	require('functions/notification.php');
 	require('functions/userslog.php');

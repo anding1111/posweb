@@ -8,7 +8,7 @@ function getValueLocal(){
 }
 function getValueByData($dat){
 	global $conexion;
-	$qry = $conexion->query("SELECT * FROM localvalues WHERE vaId = '$dat' ");	
+	$qry = $conexion->query("SELECT * FROM localvalues WHERE vaData = '$dat' ");	
 	$val = $qry->num_rows;
 	return ($val>0) ? true : false ;
 }

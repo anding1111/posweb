@@ -5,7 +5,7 @@
                         <div class="panel-heading titles">
                             Clientes
 
-                            <a href="add-category.php" class="btn btn-info pull-right titlesbuttons">Nuevo Cliente</a>
+                            <a href="add-client.php" class="btn btn-info pull-right titlesbuttons">Nuevo Cliente</a>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -34,7 +34,7 @@
 
                                         <tr class="odd gradeX">
                                             <td> <?php echo $i; ?> </td>
-                                            <td> <a href="edit-category.php?cId=<?php echo $data->cId; ?> "><?php echo $data->cName; ?></a> </td>
+                                            <td> <a href="edit-client.php?cId=<?php echo $data->cId; ?> "><?php echo $data->cName; ?></a> </td>
                                             <td> <?php echo $data->cDoc; ?> </td>
                                             <td> <?php echo $data->cTelf; ?> </td>
                                             <td> <?php echo $data->cDir; ?> </td>
@@ -57,7 +57,7 @@
                                             <h4 class="modal-title" id="myModalLabel">Eliminar confirmacion</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <h1>¿Quieres eliminar esta categoría?</h1>
+                                            <h1>¿Quieres eliminar este cliente?</h1>
                                         </div>
                                         <div class="modal-footer">
                                            <!-- <button id="del-confirm"></button> -->
@@ -79,7 +79,7 @@
                                         var id = $(this).data("did");
                                         if(confirm("Estas Seguro?")){
                                             $.ajax({
-                                                url: "body/delete-category.php",
+                                                url: "body/delete-client.php",
                                                 type: "POST",
                                                 data: {dId:id}												
                                             }).done(function(msg){

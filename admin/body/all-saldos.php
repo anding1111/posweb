@@ -27,11 +27,11 @@
                                 ?>
                                             <tr class="odd gradeX">
                                                 <?php                                               
-                                                $category = getCategoryNameById($data->cId);
+                                                $client = getCategoryNameById($data->cId);
                                                 ?>
                                                 <td> 
                                                 <?php
-                                                echo($category->cName);                                                   
+                                                echo($client->cName);                                                   
                                                 ?>
                                                 </td>
                                                 <td style="text-align:right"> 

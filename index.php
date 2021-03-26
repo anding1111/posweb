@@ -48,7 +48,7 @@
                     <?php 
                     $dat = getValueLocal();
                     if (getValueByData($dat)) {
-                        echo ("Dispositivo Licenciado para uso en 1 equipo");
+                        echo ("Dispositivo Licenciado. ¡Gracias por su compra!");
                         
                         if($_POST) :
                             //received data from user
