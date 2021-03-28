@@ -25,7 +25,7 @@ if (!$con) {
 	   
 	   //exit;
 
-	   //Autocomplete Customer
+	   //Autocomplete Client
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
@@ -37,7 +37,7 @@ if (!$con) {
 
 			//Read Credit Client
 			$id = $row['cId'];
-			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `customer` GROUP BY invId) AS subquery WHERE cId = '$id' ");
+			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$id' ");
 			$abonoCliente = 0;
 			if($qrys->num_rows > 0){
 				$qryss = mysqli_fetch_object($qrys);

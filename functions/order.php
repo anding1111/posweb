@@ -3,14 +3,14 @@
 function getAllCustomers()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM customer WHERE `pId` != '0'");
+	return $conexion->query("SELECT * FROM orders WHERE `pId` != '0'");
 }
 
-//Funcion para contar total Customers
+//Funcion para contar total Ordenes
 function getTotalCustomers()
 {
 	global $conexion;
-	$query = $conexion->query("SELECT DISTINCT invId FROM customer WHERE pId != '0'");	
+	$query = $conexion->query("SELECT DISTINCT invId FROM orders WHERE pId != '0'");	
 	return $query->num_rows;
 	
 }
@@ -18,7 +18,7 @@ function getTotalCustomers()
 function getAllCustomersByInvId($invId)
 {
 	global $conexion;
-	$result = $conexion->query("SELECT * FROM customer WHERE invId ='$invId'");
+	$result = $conexion->query("SELECT * FROM orders WHERE invId ='$invId'");
 	$total = 0;
 	while ($row = $result->fetch_assoc()) {
 		$total = $total + $row['pMount'];
@@ -31,8 +31,7 @@ function getAllCustomersByInvId($invId)
 function getIdClienteByInvId($invId)
 {
 	global $conexion;
-	//$resultC = $conexion->query("SELECT * FROM customer WHERE invId ='$invId' LIMIT 1");
-	$resultC = mysqli_fetch_object( $conexion->query("SELECT * FROM customer WHERE invId ='$invId' LIMIT 1") );		
+	$resultC = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE invId ='$invId' LIMIT 1") );		
 	return $resultC;
 
 }

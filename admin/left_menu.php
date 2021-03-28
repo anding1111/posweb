@@ -17,7 +17,7 @@
                   <ul class="dropdown-menu" role="menu">
                     <li class="dropdown-header">Seleccione</li>
                     <li><a href="buy-product.php"><i class="fa fa-cart-plus fa-fw"></i> Nueva Venta</a></li>
-                    <li><a href="customers.php"><i class="fa fa-money fa-fw"></i> Recibos</a></li>                    
+                    <li><a href="orders.php"><i class="fa fa-money fa-fw"></i> Recibos</a></li>                    
                   </ul>
                 </li>
                 

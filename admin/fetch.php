@@ -19,10 +19,8 @@ $connect = mysqli_connect($server_db, $user_db, $password_db, $database_db);
 $columns = array('pId', 'pQty', 'pMount');
 $columnss = array('invId', 'Pagado');
 
-//$query = "SELECT pId, cId, SUM(pQty) AS pQty, SUM(pMount) AS pMount FROM `customer` WHERE `pId` != '0' AND ";
-// $query = "SELECT customer.pId, customer.cId, SUM(customer.pQty) AS pQty, SUM(customer.pMount) AS pMount, items.pIdBrand FROM `customer` INNER JOIN items ON customer.pId = items.pId WHERE ";
-$query = "SELECT customer.pId, customer.cId, SUM(customer.pQty) AS pQty, SUM(customer.pMount) AS pMount, SUM(customer.inCost * customer.pQty) AS pCost, items.pIdBrand FROM `customer` INNER JOIN items ON customer.pId = items.pId WHERE ";
-$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `customer` GROUP BY `invId`) AS subquery WHERE ";
+$query = "SELECT orders.pId, orders.cId, SUM(orders.pQty) AS pQty, SUM(orders.pMount) AS pMount, SUM(orders.inCost * orders.pQty) AS pCost, items.pIdBrand FROM `orders` INNER JOIN items ON orders.pId = items.pId WHERE ";
+$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `orders` GROUP BY `invId`) AS subquery WHERE ";
 
 if($_POST["is_date_search"] == "yes")
 if($_POST["start_date"] == ''){
@@ -39,7 +37,7 @@ if($_POST["end_date"] == ''){
 if(isset($_POST["search"]["value"]))
 {
   $query .= '
-  (customer.pId LIKE "%'.$_POST["search"]["value"].'%"  
+  (orders.pId LIKE "%'.$_POST["search"]["value"].'%"  
   OR pQty LIKE "%'.$_POST["search"]["value"].'%"  
   OR pMount LIKE "%'.$_POST["search"]["value"].'%") GROUP BY '.$type.'
  ';
@@ -106,7 +104,7 @@ while($row = mysqli_fetch_array($result))
 
 function get_all_data($connect)
 {
- $query = "SELECT * FROM customer";
+ $query = "SELECT * FROM orders";
  $result = mysqli_query($connect, $query);
  return mysqli_num_rows($result);
 }

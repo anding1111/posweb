@@ -5,7 +5,7 @@
 
 <?php include('left_menu.php'); ?>
 
-<?php include('body/all-customers.php'); ?>
+<?php include('body/all-orders.php'); ?>
 
 
 <?php include('footer.php'); ?>

@@ -27,6 +27,6 @@ function horaCastellano ($fecha) {
 
 function getFecha ($inv){
   global $conexion;
-  $query = $conexion->query("SELECT bDate FROM customer WHERE invId = ".$inv." LIMIT 1 ");
+  $query = $conexion->query("SELECT bDate FROM orders WHERE invId = ".$inv." LIMIT 1 ");
   return mysqli_fetch_object($query);
 }

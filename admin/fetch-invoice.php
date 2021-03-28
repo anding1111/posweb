@@ -8,10 +8,10 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 if(isset($_POST["userid"])) {
 
     $invId = $_POST['userid'];
-    $qry = $conexion->query("SELECT * FROM customer WHERE invId = ".$invId." ");
+    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." ");
     $numItems =  $qry->num_rows;
-    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM customer WHERE invId = ".$invId." GROUP BY cId"));
-    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `customer` GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
+    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." GROUP BY cId"));
+    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
 
     $result = getCategoryNameById($qrydata->cId);
     $Fecha = getFecha($invId);                                                

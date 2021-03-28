@@ -8,11 +8,11 @@
 
 		//generate invoice number		
 		$numRecibo = 0;       
-		$result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM customer"));        
+		$result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
 		$numRecibo = $result->maxN;        
 		$invNum = $numRecibo + 1;
 		
-		$qry = $conexion->query("INSERT INTO customer VALUES(
+		$qry = $conexion->query("INSERT INTO orders VALUES(
                                         '0',
                                         '".$invNum."', 
                                         '0',

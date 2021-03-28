@@ -15,14 +15,14 @@ if ( @$_POST['dId'] ) {
     
     //generate invoice number
     $numRecibo = 0;       
-    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM customer"));        
+    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
     $numRecibo = $result->maxN;        
     $invNum = $numRecibo + 1;
 
     //logged in user ID
     //$loggedInUser = $_SESSION['uId'];
 
-    $qry = $con->query("INSERT INTO customer VALUES(
+    $qry = $con->query("INSERT INTO orders VALUES(
                             '0',
                             '".$invNum."', 
                             '0',
@@ -50,7 +50,7 @@ if ( @$_POST['dIdSupplier'] ) {
     
     //generate invoice number
     $numRecibo = 0;       
-    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM customer"));        
+    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
     $numRecibo = $result->maxN;        
     $invNum = $numRecibo + 1;
 

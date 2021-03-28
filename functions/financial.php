@@ -4,22 +4,22 @@ function getAllSaldos()
 {
 	global $conexion;
 	//return $conexion->query("SELECT * FROM saldo  WHERE sSaldo != 0");
-	return $conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `customer` GROUP BY invId) AS subquery GROUP BY subquery.cId");
+	return $conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery GROUP BY subquery.cId");
 }
 
 function getAllSaldosHistory()
 {
 	global $conexion;
 	//return $conexion->query("SELECT * FROM saldo  WHERE sSaldo != 0");
-	return $conexion->query("SELECT * FROM `customer` WHERE pId = 0");
+	return $conexion->query("SELECT * FROM `orders` WHERE pId = 0");
 }
 //Get Total Saldos Proveedor
 function getAllSaldosBetween($cid, $invId)
 {
 	global $conexion;
 	//return $conexion->query("SELECT * FROM saldo  WHERE sSaldo != 0");
-	// return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) AS Total, SUM(`cPayment`) AS Abonos FROM `customer` WHERE `cId` = '$cid' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
-	return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `customer` WHERE `cId` = '$cid' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
+	// return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
+	return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
 }
 
 
@@ -50,7 +50,7 @@ function getClientNameById($id){
 function getSumItems($id)
 {
 	global $conexion;
-	$query = $conexion->query("SELECT SUM(pQty) AS sumQty FROM customer WHERE pId = '$id' ");	
+	$query = $conexion->query("SELECT SUM(pQty) AS sumQty FROM orders WHERE pId = '$id' ");	
 	return mysqli_fetch_object($query);
 	
 }

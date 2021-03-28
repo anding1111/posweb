@@ -16,7 +16,7 @@ session_start();
 	require('functions/product.php');
 	require('functions/notification.php');
 	require('functions/userslog.php');
-	require('functions/customer.php');
+	require('functions/order.php');
 	require('functions/item.php');
 	require('functions/financial.php');
 	require('functions/brand.php');

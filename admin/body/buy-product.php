@@ -23,7 +23,7 @@
         //$nowTime = date("Y-m-d");
 
         $numRecibo = 0;       
-        $result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM customer"));        
+        $result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
         $numRecibo = $result->maxN;        
         $invNum = $numRecibo + 1;   
 
@@ -64,7 +64,7 @@
                     //Update Qty on items  
 					$update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
 					$qryf = $conexion->query($update) or die(mysqli_error($conexion));            
-					$qry = $conexion->query("INSERT INTO customer VALUES(
+					$qry = $conexion->query("INSERT INTO orders VALUES(
 						'0',
 						'".$invNum."',
 						'".$pId."',                
@@ -300,7 +300,7 @@
                 return false;
             }
         });
-        // Single Select Customer
+        // Single Select Client
         $( "#autocomplete_customer" ).autocomplete({
             autoFocus: true,
             classes: {
@@ -324,14 +324,14 @@
             select: function (event, ui) {
           
             $('#autocomplete_customer').val(ui.item.label); // display the selected text
-            $('#cId').val(ui.item.value); // set value the selected customer id
+            $('#cId').val(ui.item.value); // set value the selected id
 
             if(ui.item.saldo != 0){
                 $('#oculta-saldo').show("swing");
             } else {
                 $('#oculta-saldo').hide("swing");
             }
-            $('#saldoCliente').val(numMiles(ui.item.saldo)); // set value saldo the selected customer
+            $('#saldoCliente').val(numMiles(ui.item.saldo)); // set value saldo the selected client
             subAmount();
             return false;
             }

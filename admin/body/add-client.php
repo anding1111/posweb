@@ -1,11 +1,8 @@
 <?php  
-
     
     if ( @$_POST['submit'] ) {
-        
        
-         //collecting userinfo
-        
+        //collecting userinfo
         $cName = formItemValidation($_POST['cName']);
         $cDoc = formItemValidation($_POST['cDoc']);
         $cTelf = formItemValidation($_POST['cTelf']);
@@ -17,15 +14,11 @@
         }else{
             $cViewInv = 0;
         }
-       
-              
                 //current time now
                 $nowTime = date("Y-m-d H:i:s");
 
                 //logged in user ID
                 $loggedInUser = $_SESSION['uId'];
-
-
                 $qry = $conexion->query("INSERT INTO client VALUES(
                                         '0',
                                         '".$cName."',
@@ -39,7 +32,6 @@
                                         '1'
                     )") or die(mysqli_error($conexion));
 
-
                 if ( $qry ) {
                     
                     $insertSuccess = 1;
@@ -51,7 +43,6 @@
     }
 
 ?>
-
             <!-- /.col-lg-6... -->
             <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
                     <div class="panel panel-default">
@@ -62,7 +53,7 @@
                         <div class="panel-body">
 
                             <?php if(isset($insertSuccess)) : ?>
-                                <div class="alert alert-success">Categoría agregada con éxito</div>
+                                <div class="alert alert-success">Cliente agregado con éxito</div>
                             <?php 
                                     redirectTo('clients.php', 0);
 

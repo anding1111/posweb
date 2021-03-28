@@ -9,7 +9,7 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
  if(isset($_POST["rowid"])) {
 	
 	$IdClient = $_POST["rowid"];
-	$consulta = "SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `customer` GROUP BY invId) AS subquery WHERE cId = '$IdClient' ";	
+	$consulta = "SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$IdClient' ";	
 	$query = $con->query($consulta);
 	// $abonoCliente = 0;
 	if($query->num_rows > 0){

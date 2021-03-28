@@ -49,7 +49,7 @@
                         <div class="panel-body">
 
                             <?php if(isset($insertSuccess)) : ?>
-                                <div class="alert alert-success">Categoría ha actualizado con éxito</div>
+                                <div class="alert alert-success">Cliente actualizado con éxito</div>
                             <?php 
                                     redirectTo('clients.php', 1);
 
@@ -81,7 +81,7 @@
                                     <input class="form-control" name="cDir" required="required" type="text" value="<?php echo $qry->cDir; ?>">
                                 </div>
                                 <div class="form-group">
-                                    <label>Correo Electronico</label>
+                                    <label>Correo Electrónico</label>
                                     <input class="form-control" name="cEmail" required="required" type="text" value="<?php echo $qry->cEmail; ?>">
                                 </div>
                                 <div class="checkbox" style="font-size:20px;">
@@ -89,12 +89,8 @@
                                 </div> 
 
                                 <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />
-
-
                             </form>
-
- 
-                            </div>
+                        </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
@@ -108,9 +104,7 @@
                     }else{
                         $('.cViewInv').val(1); 
                     }              
-                    
                 }
                 </script>
             </div>
             <!-- /.row -->
-           
