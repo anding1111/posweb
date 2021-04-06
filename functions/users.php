@@ -66,7 +66,6 @@ function checkAddedUserByLoggedInUser()
 
 	$loggedInUser = $_SESSION['uId'];
 
-
 	global $conexion;
 	$qry = $conexion->query("SELECT * FROM users WHERE uAddedBy='".$loggedInUser."' AND uType='admin' ");
 
@@ -76,14 +75,10 @@ function checkAddedUserByLoggedInUser()
 
 		while ( $row = mysqli_fetch_object( $qry ) ) {
 			//$cnt = $cnt + 1;
-
 			//$cnt++;
 
 			$cnt = $cnt + 1;
-
-
 		}
-
 
 		if ( $cnt >= 2 ) {
 			
@@ -94,7 +89,6 @@ function checkAddedUserByLoggedInUser()
 
 		//return $cnt;
 	}
-
 
 	$allowed = 0;
 	return $allowed;

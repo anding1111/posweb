@@ -11,25 +11,21 @@ function loginDataReceive($username, $password){
 
 		if ( mysqli_affected_rows($conexion) ) {
 			
-			
-
 			//fetching data from db
 			$myData = mysqli_fetch_object( $qry );
 
 			$_SESSION['username']	= $username;
 			$_SESSION['uType']		= $myData->uType;
 			$_SESSION['uId']		= $myData->uId;
-
+			$_SESSION['shId']		= $myData->shId;
 
 			return 1;
-			
 
 		} else{
 			
 			return 2;
 
 		}
-
 
 	} else{
 
@@ -38,9 +34,6 @@ function loginDataReceive($username, $password){
 
 
 }
-
-
-
 
 function checkFormValidation($value){
 
@@ -51,14 +44,8 @@ function checkFormValidation($value){
 	return 0;
 }
 
-
-
-
-
-
 function logOut(){
 
-	
 	if ( isset( $_SESSION['username'] ) ) {
 		
 		global $conexion;
@@ -68,8 +55,6 @@ function logOut(){
                                 '". $_SESSION['uId'] ."',
                                 '$nowTime'
                         )") or die(mysqli_error($conexion));
-
-
 
 		if ( $insert ) {
 
@@ -82,7 +67,4 @@ function logOut(){
 		return 5;	//Not success
 	}
 
-
 }
-
-
