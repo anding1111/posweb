@@ -18,7 +18,6 @@
             
             //check uniqueness
             if ( !checkUniqueUsername( $uName ) ) {
-
                         
                         //current time now
                         $nowTime = date("Y-m-d H:i:s");
