@@ -53,7 +53,8 @@ function logOut(){
         $insert  = $conexion->query("INSERT INTO logouttime VALUES(
                                 '0',
                                 '". $_SESSION['uId'] ."',
-                                '$nowTime'
+                                '".$nowTime."',
+                                '". $_SESSION['shId'] ."'
                         )") or die(mysqli_error($conexion));
 
 		if ( $insert ) {

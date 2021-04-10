@@ -18,6 +18,8 @@
 
         //logged in user ID
         //$loggedInUser = $_SESSION['uId'];
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
 
         $qry = $conexion->query("INSERT INTO orders VALUES(
                                 '0',
@@ -30,7 +32,9 @@
                                 '".$pCredito."',
                                 '0',
                                 '".$nowTime."',
-                                ''
+                                '',
+                                '1',
+                                '".$loggedInShop."'
             )") or die(mysqli_error($conexion));
 
         if ( $qry ) {

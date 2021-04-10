@@ -29,6 +29,9 @@
 
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];
+        
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
 
         $numRows = formItemValidation($_POST['numRows']);
         $i = 1;
@@ -75,7 +78,9 @@
 						'".$pMount."',
                         '".$cPayment."',
 						'".$nowTime."',
-                        '".$inSerial."'                 
+                        '".$inSerial."',                 
+                        '1',             
+                        '".$loggedInShop."'             
 						
                         )") or die(mysqli_error($conexion));
 

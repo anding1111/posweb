@@ -8,17 +8,21 @@
         $bName = formItemValidation($_POST['bName']);        
                         
                 //current time now
-                $nowTime = date("Y-m-d H:i:s");
+                // $nowTime = date("Y-m-d H:i:s");
 
                 //need to insert data
-                $myNewId = generateId();
+                // $myNewId = generateId();
 
                 //logged in user ID
-                $loggedInUser = $_SESSION['uId'];
+                // $loggedInUser = $_SESSION['uId'];
+
+                //logged in shop ID
+                $loggedInShop = $_SESSION['shId'];
 
                 $qry = $conexion->query("INSERT INTO brands VALUES(
                                         '0',
-                                        '".$bName."'
+                                        '".$bName."',
+                                        '".$loggedInShop."'
                     )") or die(mysqli_error($conexion));
 
 

@@ -19,6 +19,10 @@
 
                 //logged in user ID
                 $loggedInUser = $_SESSION['uId'];
+
+                //logged in shop ID
+                $loggedInShop = $_SESSION['shId'];
+
                 $qry = $conexion->query("INSERT INTO client VALUES(
                                         '0',
                                         '".$cName."',
@@ -29,7 +33,8 @@
                                         '".$cViewInv."',                                       
                                         '".$loggedInUser."',
                                         '".$nowTime."',
-                                        '1'
+                                        '1',
+                                        '".$loggedInShop."'
                     )") or die(mysqli_error($conexion));
 
                 if ( $qry ) {

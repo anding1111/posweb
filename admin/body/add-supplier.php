@@ -16,6 +16,9 @@
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];
 
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
+
         $qry = $conexion->query("INSERT INTO suppliers VALUES(
                                 '0',
                                 '".$sName."',
@@ -23,7 +26,8 @@
                                 '".$sTelf."',                                       
                                 '".$sDir."',                     
                                 '".$loggedInUser."',
-                                '".$nowTime."'
+                                '".$nowTime."',
+                                '".$loggedInShop."'
             )") or die(mysqli_error($conexion));
 
         if ( $qry ) {
@@ -38,7 +42,6 @@
     }
 
 ?>
-
 
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 

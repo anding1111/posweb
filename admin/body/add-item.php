@@ -10,7 +10,10 @@
         $pBarCode =  formItemValidation($_POST['pBarCode'] );        
         $pQuantity = formItemValidation($_POST['pQuantity']);  
         $pCost = formItemValidation($_POST['pCost']);   
-        $pPrice = formItemValidation($_POST['pPrice']);   
+        $pPrice = formItemValidation($_POST['pPrice']);
+          
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId']; 
              
 
                 $qry = $conexion->query("INSERT INTO items VALUES(
@@ -21,7 +24,8 @@
                                         '".$pQuantity."',
                                         '".$pCost."',                                       
                                         '".$pPrice."',
-                                        '1'
+                                        '1',
+                                        '".$loggedInShop."'
                                         
                     )") or die(mysqli_error($conexion));
                    

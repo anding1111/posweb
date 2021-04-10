@@ -29,6 +29,9 @@
                         //logged in user ID
                         $loggedInUser = $_SESSION['uId'];
 
+                        //logged in shop ID
+                        $loggedInShop = $_SESSION['shId'];
+
                         $qry = $con->query("INSERT INTO users VALUES(
                                                 '0',
                                                 '".$myNewId."',
@@ -39,7 +42,8 @@
                                                 1,
                                                 0,
                                                 '".$loggedInUser."',
-                                                '".$nowTime."'
+                                                '".$nowTime."',
+                                                '".$loggedInShop."'
                             )") or die(mysqli_error($con));
 
 
@@ -56,26 +60,20 @@
                                                         '".$myNewId."',
                                                         '".$message."',
                                                         '".$nowTime."',
-                                                        '0'        
+                                                        '0',       
+                                                        '".$loggedInShop."',
                                     )" ) or die(mysqli_error($con));
                                 
                             /*}*/
 
-
                             $insertSuccess = 1;
-
-
 
                 } else{
 
                     $insertError = 1;
                 }
 
-
-
             } else{
-
-               
 
                 //set used variable
                 $uniquenessError = 1;
@@ -89,7 +87,6 @@
     }
 
 ?>
-
 
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 

@@ -55,7 +55,7 @@ include('../vendor/autoload.php');
 <body>
             <!-- Shop -->
             <?php
-            $id = 1;
+            $id = $_SESSION['shId'];
             $shop = getShopNameById($id);
 
             ?>

@@ -55,14 +55,15 @@
                             $username = $_POST['username'];
                             $password = $_POST['password'];
                         if( loginDataReceive($username, $password) == 1){
-    
+
                             redirectTo('admin/dashboard.php', 0);
                             //inserting user information            
                             $nowTime = date("Y-m-d H:i:s");
                             $q  = $conexion->query("INSERT INTO logintime VALUES(
                                                     '0',
                                                     '". $_SESSION['uId'] ."',
-                                                    '$nowTime'
+                                                    '".$nowTime."',
+                                                    '". $_SESSION['shId'] ."'
                                             )") or die(mysqli_error($conexion));
     
                         ?>

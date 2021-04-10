@@ -23,6 +23,9 @@
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];
 
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
+
         $qry = $conexion->query("INSERT INTO purchases VALUES(
                                 '0',
                                 '".$pIdSupplier."', 
@@ -31,7 +34,8 @@
                                 '".$loggedInUser."',
                                 '".$nowTime."',
                                 '".$puInvPurchase."',
-                                '".$puDetail."'
+                                '".$puDetail."',
+                                '".$loggedInShop."'
                                 )") or die(mysqli_error($conexion));                
 
         if ( $qry ) {
