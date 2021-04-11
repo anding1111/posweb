@@ -22,6 +22,9 @@ if ( @$_POST['dId'] ) {
     //logged in user ID
     //$loggedInUser = $_SESSION['uId'];
 
+    //logged in shop ID
+    $loggedInShop = $_SESSION['shId'];
+
     $qry = $con->query("INSERT INTO orders VALUES(
                             '0',
                             '".$invNum."', 
@@ -33,7 +36,9 @@ if ( @$_POST['dId'] ) {
                             '0',
                             '".$dSaldo."',                                    
                             '".$nowTime."',
-                            ''
+                            '',
+                            '1',
+                            '".$loggedInShop."'
                         )") or die(mysqli_error($con));
 	
 }
@@ -56,6 +61,9 @@ if ( @$_POST['dIdSupplier'] ) {
 
     //logged in user ID
     $loggedInUser = $_SESSION['uId'];
+
+    //logged in shop ID
+    $loggedInShop = $_SESSION['shId'];
     
     $qry = $con->query("INSERT INTO purchases VALUES(
                             '0',
@@ -65,7 +73,8 @@ if ( @$_POST['dIdSupplier'] ) {
                             '".$loggedInUser."',
                             '".$nowTime."',
                             '0',
-                            'Abono'
+                            'Abono',
+                            '".$loggedInShop."'
                         )") or die(mysqli_error($con));
 
 }
