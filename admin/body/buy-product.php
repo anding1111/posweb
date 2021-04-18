@@ -116,9 +116,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading titles">
-                        <?php echo $shop->shName?> POS
+                    <div class="panel panel-default w3-card-4">
+                        <div class="titles mb--10">
+                        <?php echo $shop->shName?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">

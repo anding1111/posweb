@@ -5,14 +5,14 @@
  */
 
 body {
-    background: url(../img/teinnova_background_main.jpg) top;
+    background: url(../img/background-dashboard.jpg) top;
     background-size:     cover;                     
     background-repeat:   no-repeat;
     background-position: center center;       
 
 }
 body.login {
-    background: url(../img/teinnova_background.jpg) top;
+    background: url(../img/background-login.jpg) top;
     background-size:     cover;                     
     background-repeat:   no-repeat;
     background-position: center center;  
@@ -412,15 +412,15 @@ table.dataTable thead .sorting:after {
 .panel-greenf .panel-heading {
     border-color: #fff;
     /*color: #f07c00;*/
-    color: #F07C00;
+    color: #25758E;
     text-shadow:
-   -1px -1px 0 #fff,  
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-     1px 1px 0 #fff;
+   -2px -2px 0 #fff,  
+    2px -2px 0 #fff,
+    -2px 2px 0 #fff,
+     2px 2px 0 #fff;
     /*color: #fff; /*Color Letras*/
     /*background-color: #44BD32;*/
-    background: url(../img/teinnova_banner.jpg);
+    background: url(../img/background-mini.jpg);
     background-size:     cover;                      /* <------ */
     background-repeat:   no-repeat;
     background-position: center center; 
@@ -482,6 +482,7 @@ table.dataTable thead .sorting:after {
     font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;
     /*border-color: #44BD32;*/
     border: 2px solid rgb(255, 255, 255);
+    margin-bottom: 20px;
     /*border-radius: 25px;
     color: #fff !important;*/
     color: #31B0D5 !important;
@@ -493,6 +494,54 @@ table.dataTable thead .sorting:after {
     -1px 1px 0 #fff,
      1px 1px 0 #fff;
      padding: 1px 2px;
+}
+.pt--10{
+    padding-top: -10px;
+}
+.pt-10{
+    padding-top: 10px;
+}
+.pt-20{
+    padding-top: 20px;
+}
+.pt-30{
+    padding-top: 30px;
+}
+.pb--10{
+    padding-bottom: -10px;
+}
+.pb-10{
+    padding-bottom: 10px;
+}
+.pb-20{
+    padding-bottom: 20px;
+}
+.pb-30{
+    padding-bottom: 30px;
+}
+.mt--10{
+    margin-top: -10px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.mt-30{
+    margin-top: 30px;
+}
+.mb--10{
+    margin-bottom: -10px;
+}
+.mb-10{
+    margin-bottom: 10px;
+}
+.mb-20{
+    margin-bottom: 20px;
+}
+.mb-30{
+    margin-bottom: 30px;
 }
 .titlesbuttons{
     font-size: 14px;

@@ -1,7 +1,7 @@
 
                 <div class="col-lg-12 col-md-18">
                     <div class="panel panel-greenf w3-card-4 main-card">
-                        <div class="panel-heading">
+                        <div class="panel-heading" style="color:<?php echo $shop->shColor ?>;">
                             <div class="row">
                                 <div class="col-xs-3">
                                     <i class="fa fa-bar-chart fa-5x"></i>
@@ -14,7 +14,7 @@
                         </div>
                         <a href="https://www.saedi.com.co">
                             <div class="panel-footer">
-                                <span class="pull-left">Desarrollado por SAEDI.COM.CO</span>
+                                <span class="pull-left">Desarrollado por SAEDI</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>

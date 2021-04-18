@@ -2,7 +2,7 @@
              <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading titles">
+                        <div class="titles mb--10">
                             Clientes
 
                             <a href="add-client.php" class="btn btn-info pull-right titlesbuttons">Nuevo Cliente</a>

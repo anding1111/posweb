@@ -18,7 +18,7 @@
 	<link rel="icon" type="image/png" href="dist/img/icons/favicon.ico"/>
     <!--===============================================================================================-->
 
-    <title>SISTEMA POS - TEINNOVA</title>
+    <title>miPOS - WEB</title>
 
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
@@ -43,7 +43,7 @@
                     </span>
                     
                     <span class="login100-form-title p-b-34 p-t-27">
-                        POS Web
+                        miPOS
                     </span>
                     <?php 
                     $dat = getValueLocal();
