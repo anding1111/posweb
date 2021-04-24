@@ -89,7 +89,7 @@
                                     <label>Correo Electronico</label>
                                     <input class="form-control" name="cEmail" required="required" type="text" value="<?php echo @$_POST['cEmail'] ?>">
                                 </div>
-                                <div class="checkbox" style="font-size:20px;">
+                                <div class="checkbox mt-20 mb-30">
                                     <label><input type="checkbox" value="1" name="cViewInv" checked><b>  VER PRECIOS</b>(EN FACTURA)</label>
                                 </div>                                                         
 

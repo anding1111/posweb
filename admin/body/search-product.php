@@ -13,7 +13,7 @@ if (!$con) {
 	if(isset($_POST['search'])){
 		$search = mysqli_real_escape_string($con,$_POST['search']);
 	   
-		$query = "SELECT * FROM items WHERE pName like'%".$search."%' AND pEnable = '1' ";
+		$query = "SELECT * FROM items WHERE pName like'%".$search."%' AND pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();
@@ -29,7 +29,7 @@ if (!$con) {
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
-		$query = "SELECT * FROM client WHERE cName like'%".$search."%' AND clEnable = '1' ";
+		$query = "SELECT * FROM client WHERE cName like'%".$search."%' AND clEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();
@@ -37,7 +37,7 @@ if (!$con) {
 
 			//Read Credit Client
 			$id = $row['cId'];
-			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$id' ");
+			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$id' AND `shId` = '".$_SESSION['shId']."' ");
 			$abonoCliente = 0;
 			if($qrys->num_rows > 0){
 				$qryss = mysqli_fetch_object($qrys);
@@ -54,7 +54,7 @@ if (!$con) {
 		$search = mysqli_real_escape_string($con,$_POST['search_imei']);
 	   
 		// $query = "SELECT * FROM serials WHERE seSerial like'%".$search."%'";
-		$query = "SELECT * FROM serials WHERE seSerial like'%".$search."%'";
+		$query = "SELECT * FROM serials WHERE seSerial like'%".$search."%' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);		
 		// $row = mysqli_fetch_array($result);
 
@@ -67,8 +67,7 @@ if (!$con) {
 			$supplier = getSupplierNameById($row['sId']);
 			$suppliertName = $supplier->sName;
 
-			$serial = $row['seSerial'];;
-
+			$serial = $row['seSerial'];
 			$user = getUsernameByUserId($row['seAddedBy']);		
 			
 			// $date = $row['seDate'];
@@ -82,9 +81,7 @@ if (!$con) {
 	      //Respone Supplier Saldo
 	if(isset($_POST['supplier'])){
 		$search = mysqli_real_escape_string($con,$_POST['supplier']);
-	   
-		// $query = "SELECT * FROM purchases WHERE suId = '$search'";
-		$query = "SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `suId` = '$search' GROUP BY `suId`";
+		$query = "SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `suId` = '$search' AND `shId` = '".$_SESSION['shId']."' GROUP BY `suId`";
 		$result = mysqli_query($con,$query);
 		$qry = mysqli_fetch_object($result);
 		$saldo = 0;		
@@ -103,4 +100,3 @@ if (!$con) {
 	   exit;
 	
 ?>
-

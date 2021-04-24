@@ -1,7 +1,6 @@
 <?php 
 
 
-
 function fechaCastellano ($fecha) {
   $fecha = substr($fecha, 0, 19);
   $numeroDia = date('d', strtotime($fecha));
@@ -27,6 +26,6 @@ function horaCastellano ($fecha) {
 
 function getFecha ($inv){
   global $conexion;
-  $query = $conexion->query("SELECT bDate FROM orders WHERE invId = ".$inv." LIMIT 1 ");
+  $query = $conexion->query("SELECT bDate FROM orders WHERE invId = ".$inv." AND `shId` = '".$_SESSION['shId']."' LIMIT 1 ");
   return mysqli_fetch_object($query);
 }

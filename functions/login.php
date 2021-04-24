@@ -7,13 +7,11 @@ function loginDataReceive($username, $password){
 		$myPassword = md5($password);
 		global $conexion;
 		$qry = $conexion->query("SELECT * FROM users WHERE (uName = '". $myUsername."' AND uPassword='". $myPassword ."') AND uFlag = '1'  ");
-		//$conex->query("SELECT * FROM  `fixers` where lat='".$_REQUEST['lat']."'" );
 
 		if ( mysqli_affected_rows($conexion) ) {
 			
 			//fetching data from db
 			$myData = mysqli_fetch_object( $qry );
-
 			$_SESSION['username']	= $username;
 			$_SESSION['uType']		= $myData->uType;
 			$_SESSION['uId']		= $myData->uId;
@@ -24,14 +22,12 @@ function loginDataReceive($username, $password){
 		} else{
 			
 			return 2;
-
 		}
 
 	} else{
 
 		return 3;
 	}
-
 
 }
 
@@ -60,7 +56,6 @@ function logOut(){
 		if ( $insert ) {
 
 			session_destroy();
-
 			return 4;	//successfully logout
 			
 		}

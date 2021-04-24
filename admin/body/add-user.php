@@ -5,67 +5,63 @@
         
        $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 
-         //collecting userinfo
-        
+         //collecting userinfo        
         $uFullName = formItemValidation($_POST['uFullName']);
         $uName = formItemValidation($_POST['uName']);
         $uPassword =  formItemValidation($_POST['uPassword'] );
         $uPasswordAgain = formItemValidation($_POST['uPasswordAgain']);
         $uType = formItemValidation($_POST['uType']);
-
      
-        if ( $uPassword == $uPasswordAgain ) {
-            
+        if ( $uPassword == $uPasswordAgain ) { 
+
             //check uniqueness
             if ( !checkUniqueUsername( $uName ) ) {
+
+                //current time now
+                $nowTime = date("Y-m-d H:i:s");
+
+                //need to insert data
+                $myNewId = generateId();
+
+                //logged in user ID
+                $loggedInUser = $_SESSION['uId'];
+
+                //logged in shop ID
+                $loggedInShop = $_SESSION['shId'];
+
+                $qry = $con->query("INSERT INTO users VALUES(
+                                        '0',
+                                        '".$myNewId."',
+                                        '".$uFullName."',
+                                        '".$uName."',
+                                        '".md5($uPassword)."',
+                                        '".$uType."',
+                                        1,
+                                        0,
+                                        '".$loggedInUser."',
+                                        '".$nowTime."',
+                                        '".$loggedInShop."'
+                    )") or die(mysqli_error($con));
+
+                if ( $qry ) {
+                    /*if (!checkAdmin()) {*/
                         
-                        //current time now
-                        $nowTime = date("Y-m-d H:i:s");
+                        $message = "Se agregó un nuevo usuario, <b>{$uName} </b> ({$myNewId}) ha sido creado. ";
 
-                        //need to insert data
-                        $myNewId = generateId();
-
-                        //logged in user ID
-                        $loggedInUser = $_SESSION['uId'];
-
-                        //logged in shop ID
-                        $loggedInShop = $_SESSION['shId'];
-
-                        $qry = $con->query("INSERT INTO users VALUES(
+                        $con->query( "INSERT INTO notification VALUES(
                                                 '0',
-                                                '".$myNewId."',
-                                                '".$uFullName."',
-                                                '".$uName."',
-                                                '".md5($uPassword)."',
-                                                '".$uType."',
-                                                1,
-                                                0,
+                                                'admin',
                                                 '".$loggedInUser."',
+                                                '".$myNewId."',
+                                                '".$message."',
                                                 '".$nowTime."',
+                                                '0',       
                                                 '".$loggedInShop."'
-                            )") or die(mysqli_error($con));
+                            )" ) or die(mysqli_error($con));
+                        
+                    /*}*/
 
-
-                        if ( $qry ) {
-
-                            /*if (!checkAdmin()) {*/
-                                
-                                $message = "Se agregó un nuevo usuario, <b>{$uName} </b> ({$myNewId}) ha sido creado. ";
-
-                                $con->query( "INSERT INTO notification VALUES(
-                                                        '0',
-                                                        'admin',
-                                                        '".$loggedInUser."',
-                                                        '".$myNewId."',
-                                                        '".$message."',
-                                                        '".$nowTime."',
-                                                        '0',       
-                                                        '".$loggedInShop."',
-                                    )" ) or die(mysqli_error($con));
-                                
-                            /*}*/
-
-                            $insertSuccess = 1;
+                    $insertSuccess = 1;
 
                 } else{
 
@@ -76,7 +72,6 @@
 
                 //set used variable
                 $uniquenessError = 1;
-
             }
 
         } else{
@@ -89,7 +84,7 @@
 
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         <div class="titles">
                             Añadir Nuevo Usuario
                         </div>
@@ -144,11 +139,12 @@
                                 <div class="form-group">
                                     <label>Seleccione un Perfíl</label>
                                     <select class="form-control" name="uType">
-                                        <option value="admin" selected="selected">Desarrollador</option>
-                                        <option value="manager">Administrador</option>
+                                        <option value="admin">Desarrollador</option>
+                                        <option value="manager" selected="selected">Administrador</option>
                                         <option value="replacement">Encargado</option>
 										<option value="seller">Vendedor</option>
                                     </select>
+                                    
                                 </div>
 
                                 <input type="submit" value="Añadir Ahora" class="btn btn-info btn-large" name="submit" />

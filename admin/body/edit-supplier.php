@@ -3,9 +3,8 @@
     $getCId = $_GET['sId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM suppliers WHERE sID = '{$getCId}' ") ); 
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM suppliers WHERE `sID` = '{$getCId}' AND `shId` = '".$_SESSION['shId']."' ") ); 
 
-    
     if ( @$_POST['submit'] ) {
         
          //collecting client info        
@@ -14,11 +13,8 @@
         $sTelf = formItemValidation($_POST['sTelf']);
         $sDir = formItemValidation($_POST['sDir']);
 
-
-        $update = "UPDATE suppliers SET sName = '".$sName."', sDoc = '".$sDoc."', sTelf = '".$sTelf."', sDir = '".$sDir."' WHERE sId = '".$getCId."' ";
-
+        $update = "UPDATE suppliers SET sName = '".$sName."', sDoc = '".$sDoc."', sTelf = '".$sTelf."', sDir = '".$sDir."' WHERE sId = '".$getCId."' AND `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
-
 
         if ( $qry ) {
 
@@ -34,7 +30,7 @@
 
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles">
                             Editar Proveedor
                         </div>
@@ -59,23 +55,22 @@
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>Nombre Completo</label>
-                                    <input class="form-control" name="sName" required="required" type="text" value="<?php echo $qry->sName; ?>">
+                                    <input class="form-control" name="sName" required="required" type="text" value="<?php if(isset($qry->sName)) echo $qry->sName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Identificación</label>
-                                    <input class="form-control" name="sDoc" required="required" type="text" value="<?php echo $qry->sDoc; ?>">
+                                    <input class="form-control" name="sDoc" required="required" type="text" value="<?php if(isset($qry->sDoc)) echo $qry->sDoc; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Celular</label>
-                                    <input class="form-control" name="sTelf" required="required" type="text" value="<?php echo $qry->sTelf; ?>">
+                                    <input class="form-control" name="sTelf" required="required" type="text" value="<?php if(isset($qry->sTelf)) echo $qry->sTelf; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Dirección</label>
-                                    <input class="form-control" name="sDir" required="required" type="text" value="<?php echo $qry->sDir; ?>">
+                                    <input class="form-control" name="sDir" required="required" type="text" value="<?php if(isset($qry->sDir)) echo $qry->sDir; ?>">
                                 </div>
                                 
                                 <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />
-
 
                             </form>
 

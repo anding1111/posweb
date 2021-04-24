@@ -50,7 +50,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles mb--10">
                             AJUSTES DE MI TIENDA
                         </div>

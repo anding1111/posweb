@@ -1,10 +1,10 @@
 <?php  
 
-    $getshId = $_GET['shId'];
+    // $getshId = $_GET['shId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE shId = '{$getshId}' ") ); 
-
+    // $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE shId = '{$getshId}' ") ); 
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE `shId` = '".$_SESSION['shId']."' ") ); 
     
     if ( @$_POST['submit'] ) {
         
@@ -17,28 +17,25 @@
          $shMail = formItemValidation($_POST['shMail']);       
          $shWeb = formItemValidation($_POST['shWeb']);       
          $shDesc = formItemValidation($_POST['shDesc']);       
-         $shColor = formItemValidation($_POST['shColor']);   
-        
+         $shColor = formItemValidation($_POST['shColor']);         
 
-                $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE shId = '".$getshId."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
-                $qry = $conexion->query($update) or die(mysqli_error($conexion));
+        if ( $qry ) {
 
+            $insertSuccess = 1;
 
-                if ( $qry ) {
+        } else{
 
-                    $insertSuccess = 1;
-
-                } else{
-
-                    $insertError = 1;
-                }
+            $insertError = 1;
+        }
     }
 
 ?>            
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none">      
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles">
                         AJUSTES DE MI TIENDA
                         </div>
@@ -48,7 +45,7 @@
                             <?php if(isset($insertSuccess)) : ?>
                                 <div class="alert alert-success">Datos de la Tienda se han actualizado con éxito</div>
                             <?php 
-                                    redirectTo('settings.php?shId=1', 1);
+                                    redirectTo('settings.php', 1);
 
                                     endif; ?>
 
@@ -63,40 +60,40 @@
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>Nombre</label>
-                                    <input class="form-control" name="shName" required="required" type="text" value="<?php if(isset($qry->shName)) : echo $qry->shName; endif; ?>">
+                                    <input class="form-control" name="shName" required="required" type="text" value="<?php if(isset($qry->shName)) echo $qry->shName; ?>">
                                    
                                 </div>
                                 <div class="form-group">
                                     <label>Sub-Nombre (Nombre Auxiliar)</label>
-                                    <input class="form-control" name="shAuxName" type="text" value="<?php echo $qry->shAuxName; ?>">
+                                    <input class="form-control" name="shAuxName" type="text" value="<?php if (isset($qry->shAuxName)) echo $qry->shAuxName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Identificación</label>
-                                    <input class="form-control" name="shDoc" required="required" type="text" value="<?php echo $qry->shDoc; ?>">
+                                    <input class="form-control" name="shDoc" required="required" type="text" value="<?php if(isset($qry->shDoc)) echo $qry->shDoc; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Teléfono</label>
-                                    <input class="form-control" name="shTelf" required="required" type="text" value="<?php echo $qry->shTelf; ?>">
+                                    <input class="form-control" name="shTelf" required="required" type="text" value="<?php if(isset($qry->shTelf)) echo $qry->shTelf; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Dirección</label>
-                                    <input class="form-control" name="shDir" required="required" type="text" value="<?php echo $qry->shDir; ?>">
+                                    <input class="form-control" name="shDir" required="required" type="text" value="<?php if(isset($qry->shDir)) echo $qry->shDir; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Correo Electronico</label>
-                                    <input class="form-control" name="shMail" required="required" type="text" value="<?php echo $qry->shMail; ?>">
+                                    <input class="form-control" name="shMail" required="required" type="text" value="<?php if(isset($qry->shMail)) echo $qry->shMail; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Sitio Web</label>
-                                    <input class="form-control" name="shWeb" required="required" type="text" value="<?php echo $qry->shWeb; ?>">
+                                    <input class="form-control" name="shWeb" required="required" type="text" value="<?php if(isset($qry->shWeb)) echo $qry->shWeb; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Descripción (Eslogan)</label>
-                                    <input class="form-control" name="shDesc" required="required" type="text" value="<?php echo $qry->shDesc; ?>">
+                                    <input class="form-control" name="shDesc" required="required" type="text" value="<?php if(isset($qry->shDesc)) echo $qry->shDesc; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Color</label>
-                                    <input class="form-control" name="shColor" required="required" type="text" data-jscolor="{}" value="<?php echo $qry->shColor; ?>">
+                                    <input class="form-control" name="shColor" required="required" type="text" data-jscolor="{}" value="<?php if(isset($qry->shColor)) echo $qry->shColor; ?>">
                                 </div>
                                 
                                 <input type="submit" value="Actualizar Datos" class="btn btn-info btn-large" name="submit" />

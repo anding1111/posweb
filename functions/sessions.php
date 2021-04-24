@@ -1,6 +1,5 @@
 <?php 
 
-
 function checkActiveSession(){
 
 	if ( isset( $_SESSION['username'] ) ) {

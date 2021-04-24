@@ -1,18 +1,16 @@
 <?php 
 
-
-
 function getAllSuppliers()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM suppliers");
+	return $conexion->query("SELECT * FROM suppliers WHERE `shId` = '".$_SESSION['shId']."' ");
 }
 
 
 function getSupplierNameById($id){
 
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT * FROM suppliers WHERE sId = '$id' "));
+	return mysqli_fetch_object($conexion->query("SELECT * FROM suppliers WHERE sId = '$id' AND `shId` = '".$_SESSION['shId']."' "));
 
 }
 
@@ -20,8 +18,7 @@ function getSupplierNameById($id){
 function getTotalSuppliers()
 {
 	global $conexion;
-	$query = $conexion->query("SELECT * FROM suppliers");	
+	$query = $conexion->query("SELECT * FROM suppliers WHERE `shId` = '".$_SESSION['shId']."' ");	
 	return $query->num_rows;
 	
 }
-

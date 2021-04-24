@@ -22,16 +22,14 @@
         $nowTime = date("Y-m-d H:i:s");
         //$nowTime = date("Y-m-d");
 
-        $numRecibo = 0;       
-        $result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
-        $numRecibo = $result->maxN;        
-        $invNum = $numRecibo + 1;   
-
-        //logged in user ID
-        $loggedInUser = $_SESSION['uId'];
-        
         //logged in shop ID
         $loggedInShop = $_SESSION['shId'];
+
+        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' ORDER BY cmId DESC LIMIT 1") );
+	    $invNum = $result->invId + 1;   
+
+        //logged in user ID
+        $loggedInUser = $_SESSION['uId'];        
 
         $numRows = formItemValidation($_POST['numRows']);
         $i = 1;
@@ -162,7 +160,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group wraper">
+                                    <div class="form-group wraper" style="overflow-x:auto;">
                                         <table class="table table-bordered table-fixed" id="product_info_table">
                                             <thead class="head-fixed">
                                                 <tr>

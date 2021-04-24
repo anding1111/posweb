@@ -1,21 +1,22 @@
- <?php $invId = $_GET['invId'];?>
- 
+ <?php $invId = $_GET['invId'];?> 
 
  <?php 
     global $conexion;
+    //logged in shop ID
+    $loggedInShop = $_SESSION['shId'];
     //$qry = mysqli_fetch_object($conexion->query("SELECT * FROM orders WHERE invId = ".$invId." "));
-    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." ");
+    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND shId = '".$loggedInShop."' ");
     //determinar el número de filas del resultado
     $numItems =  $qry->num_rows;
     //$qrydata = mysqli_fetch_object($conexion->query("SELECT * FROM orders WHERE invId = ".$invId." LIMIT 1"));
-    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." GROUP BY cId"));
-    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
+    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND shId = '".$loggedInShop."' GROUP BY cId"));
+    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `shId` = '".$loggedInShop."' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND shId = '".$loggedInShop."' AND invId BETWEEN 0 AND '$invId' "));
    
 ?>
 
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -115,7 +116,6 @@
                                             <!-- <td></td>
                                             <td></td> -->
                                             <td id="printOldSaldo" style="text-align:right"> <b>$<?php 
-                                                     //$total = getAllCustomersByInvId($invId);                                                     
                                                      echo(numMiles(($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)) - $total));
                                                 ?> </b>                                          
                                             </td>
@@ -126,7 +126,6 @@
                                             <!-- <td></td>
                                             <td></td> -->
                                             <td id="printTotal" style="text-align:right"> <b>$<?php 
-                                                     //$total = getAllCustomersByInvId($invId);
                                                      echo(numMiles($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)));
                                                 ?> </b>                                          
                                             </td>
@@ -137,7 +136,6 @@
                                             <!-- <td></td>
                                             <td></td> -->
                                             <td id="printAbona" style="text-align:right"> <b>$<?php 
-                                                     //$total = getAllCustomersByInvId($invId);
                                                      echo(numMiles($qrydata->cPayment));
                                                 ?> </b>                                          
                                             </td>
@@ -148,7 +146,6 @@
                                             <!-- <td></td>
                                             <td></td> -->
                                             <td id="printNewSaldo" style="text-align:right"> <b>$<?php 
-                                                     //$total = getAllCustomersByInvId($invId);
                                                      echo(numMiles($qrysaldo->total - $qrysaldo->pagado));
                                                 ?> </b>                                          
                                             </td>
@@ -159,7 +156,6 @@
                                             <!-- <td></td>
                                             <td></td> -->
                                             <td colspan="3" id="printSerial"> <b><?php 
-                                                     //$total = getAllCustomersByInvId($invId);
                                                      $imeis = getIdClienteByInvId($invId);
                                                      print_r($imeis->inSerial);                                                     
                                                      //echo($qrysaldo->total - $qrysaldo->pagado);

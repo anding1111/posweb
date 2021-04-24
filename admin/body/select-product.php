@@ -19,7 +19,7 @@ if (!$con) {
         {
         $product_id = $_POST['row_id'];   
             if($product_id) {
-                $result = $con->query("SELECT * FROM items WHERE pId = '$product_id'");
+                $result = $con->query("SELECT * FROM items WHERE pId = '$product_id' AND `shId` = '".$_SESSION['shId']."' ");
                 $qryss = mysqli_fetch_object($result);
                 //$product_data = getProductData($product_id);
                 echo json_encode($qryss);

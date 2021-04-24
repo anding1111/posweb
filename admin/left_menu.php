@@ -85,13 +85,13 @@
                 <?php endif; ?>
                 <?php if(checkAdmin()) : ?>
                 <li>
-                    <a href="settings.php?shId=<?php echo $shop->shId; ?> "><i class="fa fa-gear fa-fw"></i> Ajustes</a>
+                    <a href="settings.php"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
                     
                 </li>
                 <?php endif; ?>
                 
                 <li>               
-                    <a href="https://saedi.com.co"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a>
+                    <a href="https://mipos.pro"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a>
                 </li>                
             </ul>
         </nav>

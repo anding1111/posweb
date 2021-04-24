@@ -3,8 +3,7 @@
     $getPId = $_GET['pId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pID = '$getPId' ") );
-    
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pID = '$getPId' AND `shId` = '".$_SESSION['shId']."' ") );
     $existingPName = $qry->pName;
     
     if ( @$_POST['submit'] ) {      
@@ -25,8 +24,7 @@
             
             if ( !checkUniqueUsername( $pName ) ) {
 
-                $update = "UPDATE items SET pName = '".$pName."', pIdBrand = '".$pIdBrand."', pBarCode = '".$pBarCode."', pQuantity = '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."' WHERE pId = '".$getPId."' ";
-
+                $update = "UPDATE items SET pName = '".$pName."', pIdBrand = '".$pIdBrand."', pBarCode = '".$pBarCode."', pQuantity = '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
                
                 if ( $qry ) {
@@ -47,8 +45,7 @@
 
         } else{       
                     
-                $update = "UPDATE items SET pBarCode = '".$pBarCode."', pIdBrand = '".$pIdBrand."' WHERE pId = '".$getPId."' ";
-
+                $update = "UPDATE items SET pBarCode = '".$pBarCode."', pIdBrand = '".$pIdBrand."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
                 //$qry = mysql_query($update) or die(mysql_error());
 
@@ -64,29 +61,26 @@
             
             //current time now
               
-                $update = "UPDATE items SET pQuantity = '".$pQuantity."' WHERE pId = '".$getPId."' ";
+            $update = "UPDATE items SET pQuantity = '".$pQuantity."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
+            $qry = $conexion->query($update) or die(mysqli_error($conexion));
+            //$qry = mysql_query($update) or die(mysql_error());
 
-                $qry = $conexion->query($update) or die(mysqli_error($conexion));
-                //$qry = mysql_query($update) or die(mysql_error());
+            if ( $qry ) {
 
-                if ( $qry ) {
+                $insertSuccess = 1;
 
-                    $insertSuccess = 1;
+            } else{
 
-                } else{
-
-                    $insertError = 1;
-                }
-               
+                $insertError = 1;
+            }       
 
         }
-
 
 ?>
 
             <!-- /.col-lg-6... -->
             <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles">
                         Editar producto
                         </div>
@@ -111,7 +105,7 @@
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>NOMBRE DEL PRODUCTO</label>
-                                    <input class="form-control" name="pName" required="required" type="text" value="<?php echo $qry->pName; ?>">
+                                    <input class="form-control" name="pName" required="required" type="text" value="<?php if(isset($qry->pName)) echo $qry->pName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>MARCA DEL PRODUCTO</label>
@@ -131,23 +125,23 @@
                                 </div>      
                                 <div class="form-group">
                                     <label>CÓDIGO DE BARRAS</label>
-                                    <input class="form-control" name="pBarCode" required="required" type="text" value="<?php echo $qry->pBarCode; ?>">
+                                    <input class="form-control" name="pBarCode" required="required" type="text" value="<?php if(isset($qry->pBarCode)) echo $qry->pBarCode; ?>">
                                 </div>
                                  <div class="form-group">
                                     <label>CANTIDAD DISPONIBLE</label>
-                                    <input class="form-control" name="pQuantity" required="required" type="text" value="<?php echo $qry->pQuantity; ?>" readonly>
+                                    <input class="form-control" name="pQuantity" required="required" type="text" value="<?php if(isset($qry->pQuantity)) echo $qry->pQuantity; ?>" readonly>
                                 </div>
                                 <div class="form-group" style="display:none;">
                                     <label>COSTO DE COMPRA</label>
-                                    <input class="form-control" name="pCost"  id="pCost" required="required" type="text" value="<?php echo $qry->pCost; ?>" oninput="promCost()" >
+                                    <input class="form-control" name="pCost"  id="pCost" required="required" type="text" value="<?php if(isset($qry->pCost)) echo $qry->pCost; ?>" oninput="promCost()" >
                                 </div>
                                 <div class="form-group" style="display:none;">
                                     <label>COSTO PROMEDIO</label>
-                                    <input class="form-control" name="pCostProm" id="pCostProm" required="required" type="text" value="<?php echo $qry->pCost; ?>" readonly>
+                                    <input class="form-control" name="pCostProm" id="pCostProm" required="required" type="text" value="<?php if(isset($qry->pCost)) echo $qry->pCost; ?>" readonly>
                                 </div>
                                 <div class="form-group">
                                     <label>PRECIO DE VENTA</label>
-                                    <input class="form-control" name="pPrice" required="required" type="text" value="<?php echo $qry->pPrice; ?>">
+                                    <input class="form-control" name="pPrice" required="required" type="text" value="<?php if(isset($qry->pPrice)) echo $qry->pPrice; ?>">
                                 </div>
                                 <div class="form-group" style="display:none;">
                                     <label>ENTRADAS</label>

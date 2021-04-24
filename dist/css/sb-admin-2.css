@@ -7,7 +7,8 @@
 body {
     background: url(../img/background-dashboard.jpg) top;
     background-size:     cover;                     
-    background-repeat:   no-repeat;
+    /* background-repeat:   no-repeat; */
+    background-repeat: repeat;
     background-position: center center;       
 
 }
@@ -477,23 +478,22 @@ table.dataTable thead .sorting:after {
 }
 
 .titles{
-    font-size: 22px;
+    font-size: 20px;
     text-align:center;
     font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;
     /*border-color: #44BD32;*/
     border: 2px solid rgb(255, 255, 255);
     margin-bottom: 20px;
-    /*border-radius: 25px;
-    color: #fff !important;*/
-    color: #31B0D5 !important;
+    border-radius: 25px;
+    color: #297991 !important;
     font-weight: bold;
     text-transform: uppercase;
     text-shadow:
-   -1px -1px 0 #fff,  
-    1px -1px 0 #fff,
-    -1px 1px 0 #fff,
-     1px 1px 0 #fff;
-     padding: 1px 2px;
+   -1px -1px 0 #F1F1F1,  
+    1px -1px 0 #F1F1F1,
+    -1px 1px 0 #F1F1F1,
+     1px 1px 0 #F1F1F1;
+    padding: 1px 2px;
 }
 .pt--10{
     padding-top: -10px;

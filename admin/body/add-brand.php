@@ -2,9 +2,7 @@
     
     if ( @$_POST['submit'] ) {
         
-       
          //collecting userinfo
-                      
         $bName = formItemValidation($_POST['bName']);        
                         
                 //current time now
@@ -39,7 +37,7 @@
 
             <!-- /.col-lg-6... -->
             <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         <div class="titles">
                             NUEVA MARCA
                         </div>

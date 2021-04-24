@@ -1,12 +1,9 @@
 <?php 
 
 $con = new mysqli($server_db, $user_db, $password_db, $database_db);
-
     
     if ( @$_POST['submit'] ) {
 
-        //$con = new mysqli("localhost", "root", "", "teinnova");
-               
         //collecting product entry
         $pId = formItemValidation($_POST['pId']);                  
         $pQuantity = formItemValidation($_POST['pQuantity']);  
@@ -29,8 +26,10 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
         $nowTime = date("Y-m-d H:i:s");
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
                
-        $update = "UPDATE items SET pQuantity = pQuantity + '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."'  WHERE pId = '".$pId."' ";
+        $update = "UPDATE items SET pQuantity = pQuantity + '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."'  WHERE pId = '".$pId."' AND `shId` = '".$loggedInShop."' ";
 
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
         //$qry = mysql_query($update) or die(mysql_error());
@@ -50,7 +49,8 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
                     '".$serial[$i]."',
                     '".$loggedInUser."',
                     '".$nowTime."',
-                    NULL                                  
+                    NULL,
+                    '".$loggedInShop."'                                 
                 )" ) or die(mysqli_error($con));
 
             }
@@ -65,86 +65,82 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
     }
 ?>
 
-                <!-- /.col-lg-6... -->
-                <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
-                    <div class="panel panel-default">
-                        <div class="titles">
-                            ENTRADA DE PRODUCTOS
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+            <!-- /.col-lg-6... -->
+            <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
+                <div class="panel panel-default w3-card-4">
+                    <div class="titles">
+                        ENTRADA DE PRODUCTOS
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
 
-                            <?php if(isset($insertSuccess)) : ?>
-                                <div class="alert alert-success">Producto Añadido Satisfactoriamente</div>
-                            <?php 
-                                    redirectTo('stockin.php', 2);
+                        <?php if(isset($insertSuccess)) : ?>
+                            <div class="alert alert-success">Producto Añadido Satisfactoriamente</div>
+                        <?php 
+                                redirectTo('stockin.php', 2);
 
-                                    endif; ?>
+                                endif; ?>
 
-                            <?php if(isset($insertError)) : ?>
-                                <div class="alert alert-danger">Opps! Algo salió mal. Inténtalo de nuevo</div>
-                            <?php endif; ?>
-
+                        <?php if(isset($insertError)) : ?>
+                            <div class="alert alert-danger">Opps! Algo salió mal. Inténtalo de nuevo</div>
+                        <?php endif; ?>
                             
-                              
-                            <form role="form" method="POST" action="">
-                                <div class="form-group">
-                                    <label>NOMBRE DEL PRODUCTO</label>
-                                    <input type="text" id="autocomplete_product" class="form-control" required/>
-                                    <input type="hidden" id="pId" name="pId" value="0">                                    
-                                    <!-- <input class="form-control" name="pName" required type="text" value="<?php //echo @$_POST['pName'] ?>"> -->
-                                </div> 
-                                <div class="form-group">
-                                    <label>PROVEEDOR</label>
-                                    <select class="form-control" name="pIdSupplier" required>
-                                    <?php  
-                                        $qry = getAllSuppliers();
-                                        while($row = mysqli_fetch_object( $qry )){
-                                    ?>
-                                        <option value="<?php echo $row->sId; ?>"> <?php echo $row->sName; ?> </option>
+                        <form role="form" method="POST" action="">
+                            <div class="form-group">
+                                <label>NOMBRE DEL PRODUCTO</label>
+                                <input type="text" id="autocomplete_product" class="form-control" required/>
+                                <input type="hidden" id="pId" name="pId" value="0">                                    
+                                <!-- <input class="form-control" name="pName" required type="text" value="<?php //echo @$_POST['pName'] ?>"> -->
+                            </div> 
+                            <div class="form-group">
+                                <label>PROVEEDOR</label>
+                                <select class="form-control" name="pIdSupplier" required>
+                                <?php  
+                                    $qry = getAllSuppliers();
+                                    while($row = mysqli_fetch_object( $qry )){
+                                ?>
+                                    <option value="<?php echo $row->sId; ?>"> <?php echo $row->sName; ?> </option>
 
-                                    <?php } ?>
-                                    </select>
-                                </div>                                
-
-                                 <div class="form-group">
-                                    <label>CANTIDAD</label>
-                                    <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0">
-                                    <input class="form-control" id="pQty" name="pQty" type="hidden" value="0">
-                                </div> 
+                                <?php } ?>
+                                </select>
+                            </div>                                
 
                                 <div class="form-group">
-                                    <label id="pCostOld" value="0">COSTO DE COMPRA</label>
-                                    <div class="form-horizontal">
-                                        <div class="col-sm-8" style="padding-left: 0px;">
-                                            <input class="form-control" id="pCostNew" required type="text" value="0" oninput="promCost()">
-                                        </div>
-                                        <label class="col-sm-2 control-label" style="padding-left: 0px;">PROMEDIO: </label>
-                                        <div class="col-sm-2" style="padding-left: 0px; margin-bottom: 15px;">
-                                            <input class="form-control" id="pCostProm" name="pCost" required type="text" value="0" readonly>
-                                        </div>
+                                <label>CANTIDAD</label>
+                                <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0">
+                                <input class="form-control" id="pQty" name="pQty" type="hidden" value="0">
+                            </div> 
+
+                            <div class="form-group">
+                                <label id="pCostOld" value="0">COSTO DE COMPRA</label>
+                                <div class="form-horizontal">
+                                    <div class="col-sm-6" style="padding-left: 0px;">
+                                        <input class="form-control" id="pCostNew" required type="text" value="0" oninput="promCost()">
+                                    </div>
+                                    <label class="col-sm-2 control-label" style="padding-left: 0px;">PROMEDIO: </label>
+                                    <div class="col-sm-4" style="padding-left: 0px; margin-bottom: 15px;">
+                                        <input class="form-control" id="pCostProm" name="pCost" required type="text" value="0" readonly>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group" style="display:none;">
-                                    <label>COSTO DE COMPRA PROMEDIO</label>
-                                    <input class="form-control" name="pCostProm" required type="text" value="0" readonly>
-                                </div>
+                            <div class="form-group" style="display:none;">
+                                <label>COSTO DE COMPRA PROMEDIO</label>
+                                <input class="form-control" name="pCostProm" required type="text" value="0" readonly>
+                            </div>
 
-                                <div class="form-group">
-                                    <label>PRECIO DE VENTA</label>
-                                    <input class="form-control" id='pPrice' name="pPrice" required type="text" value="0">
-                                </div> 
-                                <div class="form-group">
-                                    <label>Seriales o IMEIs</label>
-                                    <textarea class="form-control" rows="3" name="pSN" type="text" value=""></textarea>
-                                </div>      
-                               
+                            <div class="form-group">
+                                <label>PRECIO DE VENTA</label>
+                                <input class="form-control" id='pPrice' name="pPrice" required type="text" value="0">
+                            </div> 
+                            <div class="form-group">
+                                <label>Seriales o IMEIs</label>
+                                <textarea class="form-control" rows="3" name="pSN" type="text" value=""></textarea>
+                            </div>      
+                            
+                            <input type="submit" value="GUARDAR" class="btn btn-info btn-large" name="submit" />
 
-                                <input type="submit" value="GUARDAR" class="btn btn-info btn-large" name="submit" />
-
-
-                            </form>
+                        </form>
 <script>
 
 $( function() {
@@ -190,15 +186,14 @@ $( function() {
 
 });
 function promCost() {
-var subAmount = (Number($("#pCostOld").val())) * Number($("#pQty").val()) + Number($("#pCostNew").val()) * Number($("#pQuantity").val());
-var qtys = Number($("#pQty").val()) + Number($("#pQuantity").val());
-if($("#pCostOld").val() > 0){   
-    var prom = Math.round( subAmount / qtys);
-}else{
-    var prom = Number($("#pCostNew").val());
-}
-
-$("#pCostProm").val(prom);    
+    var subAmount = (Number($("#pCostOld").val())) * Number($("#pQty").val()) + Number($("#pCostNew").val()) * Number($("#pQuantity").val());
+    var qtys = Number($("#pQty").val()) + Number($("#pQuantity").val());
+    if($("#pCostOld").val() > 0){   
+        var prom = Math.round( subAmount / qtys);
+    }else{
+        var prom = Number($("#pCostNew").val());
+    }
+    $("#pCostProm").val(prom);    
 }
                        
                         
@@ -206,11 +201,11 @@ $("#pCostProm").val(prom);
  
 
 
-                        </div>
-                        <!-- /.panel-body -->
                     </div>
-                    <!-- /.panel -->
+                    <!-- /.panel-body -->
                 </div>
-                <!-- /.col-lg-12 -->
-            <!-- /.row -->
-        </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        <!-- /.row -->
+    </div>

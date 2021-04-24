@@ -1,7 +1,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles mb--10">
                         Lista de Ventas
                           
@@ -20,7 +20,7 @@
                                             <th>Cliente</th>
                                             <th style="text-align:right">Total</th>                                            
                                             <th>Fecha</th>
-                                            <th style="text-align:center">Detalle</th>
+                                            <th style="text-align:center">Opciones</th>
                                            
                                         </tr>
                                     </thead>
@@ -41,8 +41,6 @@
                                         while($data = mysqli_fetch_object( $qry )){
                                             //print_r($data);                                            
                                     ?>
-
-                                       
                                             <!-- <td> --> <?php
                                             $snNew = $data->invId;
                                             if($sn != $snNew){

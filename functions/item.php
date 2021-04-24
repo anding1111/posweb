@@ -3,15 +3,21 @@
 function getAllItems()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM items WHERE pEnable = '1' ");
+	return $conexion->query("SELECT * FROM items WHERE pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ");
 }
 
-
 function getItemNameById($id){
-
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT * FROM items WHERE pId = '$id' "));
+	return mysqli_fetch_object($conexion->query("SELECT * FROM items WHERE pId = '$id' AND `shId` = '".$_SESSION['shId']."' "));
+}
 
+//Funcion para contar total productos
+function getTotalItems()
+{
+	global $conexion;
+	$query = $conexion->query("SELECT * FROM items WHERE pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ");	
+	return $query->num_rows;
+	
 }
 
 function generateInvoiceIds($length=16){
@@ -24,13 +30,5 @@ function generateInvoiceIds($length=16){
  
     }
     return $final_rand;
-	
-}
-//Funcion para contar total productos
-function getTotalItems()
-{
-	global $conexion;
-	$query = $conexion->query("SELECT * FROM items WHERE pEnable = '1' ");	
-	return $query->num_rows;
 	
 }

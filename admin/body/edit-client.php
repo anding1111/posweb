@@ -3,9 +3,8 @@
     $getCId = $_GET['cId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM client WHERE cID = '{$getCId}' ") ); 
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM client WHERE cID = '{$getCId}' AND `shId` = '".$_SESSION['shId']."' ") ); 
 
-    
     if ( @$_POST['submit'] ) {
         
          //collecting client info        
@@ -21,27 +20,24 @@
             $cViewInv = 0;
         }
 
-                $update = "UPDATE client SET cName = '".$cName."', cDoc = '".$cDoc."', cTelf = '".$cTelf."', cDir = '".$cDir."', cEmail = '".$cEmail."', cViewInv = '".$cViewInv."' WHERE cId = '".$getCId."' ";
+        $update = "UPDATE client SET cName = '".$cName."', cDoc = '".$cDoc."', cTelf = '".$cTelf."', cDir = '".$cDir."', cEmail = '".$cEmail."', cViewInv = '".$cViewInv."' WHERE cId = '".$getCId."' AND `shId` = '".$_SESSION['shId']."' ";
+        $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
-                $qry = $conexion->query($update) or die(mysqli_error($conexion));
+        if ( $qry ) {
 
+            $insertSuccess = 1;
 
-                if ( $qry ) {
+        } else{
 
-                    $insertSuccess = 1;
-
-                } else{
-
-                    $insertError = 1;
-                }
+            $insertError = 1;
+        }
     }
 
 ?>
 
-
             <!-- /.col-lg-6... -->
             <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles">
                             Editar Cliente
                         </div>
@@ -66,28 +62,27 @@
                             <form role="form" method="POST" action="">
                                 <div class="form-group">
                                     <label>Nombre Completo</label>
-                                    <input class="form-control" name="cName" required="required" type="text" value="<?php echo $qry->cName; ?>">
+                                    <input class="form-control" name="cName" required="required" type="text" value="<?php if(isset($qry->cName)) echo $qry->cName; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Identificación</label>
-                                    <input class="form-control" name="cDoc" required="required" type="text" value="<?php echo $qry->cDoc; ?>">
+                                    <input class="form-control" name="cDoc" required="required" type="text" value="<?php if(isset($qry->cDoc)) echo $qry->cDoc; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Celular</label>
-                                    <input class="form-control" name="cTelf" required="required" type="text" value="<?php echo $qry->cTelf; ?>">
+                                    <input class="form-control" name="cTelf" required="required" type="text" value="<?php if(isset($qry->cTelf)) echo $qry->cTelf; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Dirección</label>
-                                    <input class="form-control" name="cDir" required="required" type="text" value="<?php echo $qry->cDir; ?>">
+                                    <input class="form-control" name="cDir" required="required" type="text" value="<?php if(isset($qry->cDir)) echo $qry->cDir; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label>Correo Electrónico</label>
-                                    <input class="form-control" name="cEmail" required="required" type="text" value="<?php echo $qry->cEmail; ?>">
+                                    <input class="form-control" name="cEmail" required="required" type="text" value="<?php if(isset($qry->cEmail)) echo $qry->cEmail; ?>">
                                 </div>
-                                <div class="checkbox" style="font-size:20px;">
-                                    <label ><input class="cViewInv" type="checkbox" value="<?php echo $qry->cViewInv; ?>" name="cViewInv" onclick="clicViewInv()"><b>  VER PRECIOS</b>(EN FACTURA)</label>
+                                <div class="checkbox mt-20 mb-30">
+                                    <label ><input class="cViewInv" type="checkbox" value="<?php if(isset($qry->cViewInv)) echo $qry->cViewInv; ?>" name="cViewInv" onclick="clicViewInv()"><b>  VER PRECIOS</b>(EN EL RECIBO)</label>
                                 </div> 
-
                                 <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />
                             </form>
                         </div>

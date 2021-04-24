@@ -11,8 +11,9 @@ if(isset($_POST["invId"])) {
         $update = "UPDATE items SET pQuantity = pQuantity + '".$row['pQty']."', pCost = '".$row['inCost']."' WHERE pId = '".$row['pId']."' ";
         $execute = $conexion->query($update) or die(mysqli_error($conexion));        
     }
-    $delete = "DELETE FROM orders WHERE invId = ".$invId." ";
-    $qryd = $con->query($delete) or die(mysqli_error($con));
+    // $delete = "DELETE FROM orders WHERE invId = ".$invId." ";
+    $update = "UPDATE orders SET `orEnable` = 0 WHERE `invId` = ".$invId." ";
+    $qryd = $con->query($update) or die(mysqli_error($con));
    
 }
 exit;

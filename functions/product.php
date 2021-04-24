@@ -3,14 +3,14 @@
 function getAllProducts()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM product");
+	return $conexion->query("SELECT * FROM product AND `shId` = '".$_SESSION['shId']."' ");
 }
 
 
 function getProductNameById($id){
 
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT * FROM product WHERE pId = '$id' "));
+	return mysqli_fetch_object($conexion->query("SELECT * FROM product WHERE pId = '$id' AND `shId` = '".$_SESSION['shId']."' "));
 
 }
 
@@ -31,7 +31,7 @@ function generateInvoiceId($length=16){
 function getTotalProducts()
 {
 	global $conexion;
-	$query = $conexion->query("SELECT * FROM product");	
+	$query = $conexion->query("SELECT * FROM product  AND `shId` = '".$_SESSION['shId']."' ");	
 	return $query->num_rows;
 	
 }

@@ -27,7 +27,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         <div class="titles mb--10">
                         Reportes
 
@@ -48,7 +48,7 @@
                                     <tbody>
                                     <?php  
 
-                                        $qry = $conexion->query("SELECT u.* , n.* FROM users u, notification n WHERE u.uid=n.newUserId");
+                                        $qry = $conexion->query("SELECT u.* , n.* FROM users u, notification n WHERE u.shId = '".$_SESSION['shId']."' AND n.shId = '".$_SESSION['shId']."' AND u.uid=n.newUserId ");
                                         $i = 1;
                                         while($data = mysqli_fetch_object( $qry )){
                                     ?>

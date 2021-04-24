@@ -30,7 +30,7 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         
                         <!-- /.panel-heading -->
                         <div class="panel-body">

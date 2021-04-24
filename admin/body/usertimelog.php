@@ -1,9 +1,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                         <div class="titles mb--10">
-                        registro de llegada del usuario
+                        Registro de llegada del usuario
 
                         </div>
                         <!-- /.panel-heading -->
@@ -60,9 +60,6 @@
                                                 $total = $inTime->diffInMinutes($outTime);
 
                                                 echo $total;
-
-
-
 
                                                 ?> 
                                             </td>

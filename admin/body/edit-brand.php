@@ -3,7 +3,7 @@
     $getiId = $_GET['iId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM brands WHERE bId = '$getiId' ") );
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM brands WHERE bId = '$getiId' AND `shId` = '".$_SESSION['shId']."' ") );
     
     //$existingPName = $qry->iId;
         
@@ -14,11 +14,8 @@
         $bId = formItemValidation($_POST['bId']);
         $bName = formItemValidation($_POST['bName']);
 
-        $update = "UPDATE brands SET bName = '".$bName."' WHERE bId = '".$bId."' ";
-
+        $update = "UPDATE brands SET bName = '".$bName."' WHERE bId = '".$bId."' AND `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
-        //$qry = mysql_query($update) or die(mysql_error());
-
 
         if ( $qry ) {
 
@@ -34,7 +31,7 @@
 
                 <!-- /.col-lg-6... -->
                 <div class="col-lg-6 col-md-8 col-sm-9 col-xs-12 center-block" style="float:none"> 
-                    <div class="panel panel-default">
+                    <div class="panel panel-default w3-card-4">
                     <div class="titles">
                         Editar Marca
                         </div>
@@ -58,11 +55,11 @@
                               
                             <form role="form" method="POST" action="">
                             <div class="form-group">                                    
-                                    <input type="hidden" class="form-control" name="bId" value="<?php echo $qry->bId; ?>" autocomplete="off">
+                                    <input type="hidden" class="form-control" name="bId" value="<?php if(isset($qry->bId)) echo $qry->bId; ?>" autocomplete="off">
                                 </div> 
                                 <div class="form-group">
                                     <label>MARCA:</label>
-                                    <input class="form-control" name="bName" required="required" type="text" value="<?php echo $qry->bName; ?>">
+                                    <input class="form-control" name="bName" required="required" type="text" value="<?php if(isset($qry->bName)) echo $qry->bName; ?>">
                                 </div>  
                                                
                                 <input type="submit" value="Actualizar" class="btn btn-info btn-large" name="submit" />

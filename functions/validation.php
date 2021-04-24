@@ -34,7 +34,6 @@ function generateId()
 {
 	global $conexion;
 	$qry = mysqli_fetch_object( $conexion->query("SELECT * FROM users ORDER BY id DESC LIMIT 1") );
-
 	$newId = $qry->uId + 1;
 
 	return $newId;
