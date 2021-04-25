@@ -37,7 +37,7 @@ if (!$con) {
 
 			//Read Credit Client
 			$id = $row['cId'];
-			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$id' AND `shId` = '".$_SESSION['shId']."' ");
+			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$id' AND `shId` = '".$_SESSION['shId']."' ");
 			$abonoCliente = 0;
 			if($qrys->num_rows > 0){
 				$qryss = mysqli_fetch_object($qrys);

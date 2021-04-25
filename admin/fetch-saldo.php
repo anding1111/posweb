@@ -9,7 +9,7 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
  if(isset($_POST["rowid"])) {
 	
 	$IdClient = $_POST["rowid"];
-	$consulta = "SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` GROUP BY invId) AS subquery WHERE cId = '$IdClient' ";	
+	$consulta = "SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$IdClient' AND `shId` = '".$_SESSION['shId']."' ";	
 	$query = $con->query($consulta);
 	// $abonoCliente = 0;
 	if($query->num_rows > 0){
@@ -29,7 +29,7 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
  if(isset($_POST["rowid_supplier"])) {
 	
 	$idSupplier = $_POST["rowid_supplier"];
-	$consulta = "SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `suId` = '$idSupplier' GROUP BY `suId`";
+	$consulta = "SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `suId` = '$idSupplier' AND `shId` = '".$_SESSION['shId']."' GROUP BY `suId`";
 	$query = $con->query($consulta);
 	// $abonoCliente = 0;
 	if($query->num_rows > 0){

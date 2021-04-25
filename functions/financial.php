@@ -3,20 +3,19 @@
 function getAllSaldos()
 {
 	global $conexion;
-	//return $conexion->query("SELECT * FROM saldo  WHERE sSaldo != 0");
-	return $conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` WHERE `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery GROUP BY subquery.cId");
+	return $conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` WHERE  `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery GROUP BY subquery.cId");
 }
 
 function getAllSaldosHistory()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM `orders` WHERE pId = 0 AND `shId` = '".$_SESSION['shId']."' ");
+	return $conexion->query("SELECT * FROM `orders` WHERE pId = 0 AND `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' ");
 }
 //Get Total Saldos Proveedor
 function getAllSaldosBetween($cid, $invId)
 {
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND shId = '".$_SESSION['shId']."' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
+	return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND `orEnable` = '1' AND shId = '".$_SESSION['shId']."' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
 }
 
 //Get Saldos Proveedor

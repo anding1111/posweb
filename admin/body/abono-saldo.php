@@ -5,8 +5,6 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 
 if ( @$_POST['dId'] ) {
 
-	// $con = new mysqli("localhost", "root", "", "teinnova");
-	
     $dId = $_POST['dId'];
     $dSaldo = $_POST['dSaldo'];
 
@@ -14,10 +12,8 @@ if ( @$_POST['dId'] ) {
     $nowTime = date("Y-m-d H:i:s");
     
     //generate invoice number
-    $numRecibo = 0;       
-    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
-    $numRecibo = $result->maxN;        
-    $invNum = $numRecibo + 1;
+    $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$_SESSION['shId']."' ORDER BY cmId DESC LIMIT 1") );
+	$invNum = $result->invId + 1; 
 
     //logged in user ID
     //$loggedInUser = $_SESSION['uId'];
@@ -54,10 +50,10 @@ if ( @$_POST['dIdSupplier'] ) {
     $nowTime = date("Y-m-d H:i:s");
     
     //generate invoice number
-    $numRecibo = 0;       
-    $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
-    $numRecibo = $result->maxN;        
-    $invNum = $numRecibo + 1;
+    // $numRecibo = 0;       
+    // $result = mysqli_fetch_object($con->query("SELECT MAX(invId) AS 'maxN' FROM orders WHERE `shId` = '".$_SESSION['shId']."' "));        
+    // $numRecibo = $result->maxN;        
+    // $invNum = $numRecibo + 1;
 
     //logged in user ID
     $loggedInUser = $_SESSION['uId'];
