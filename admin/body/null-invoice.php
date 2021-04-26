@@ -13,7 +13,6 @@ if(isset($_POST["invId"])) {
         $update = "UPDATE items SET pQuantity = pQuantity + '".$row['pQty']."', pCost = '".$newCostItems."' WHERE pId = '".$row['pId']."'AND `shId` = '".$_SESSION['shId']."' ";
         $execute = $conexion->query($update) or die(mysqli_error($conexion));        
     }
-    // $delete = "DELETE FROM orders WHERE invId = ".$invId." ";
     $update = "UPDATE orders SET `orEnable` = 0 WHERE `invId` = ".$invId." AND  `shId` = '".$_SESSION['shId']."' ";
     $qryd = $con->query($update) or die(mysqli_error($con));
    

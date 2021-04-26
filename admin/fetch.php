@@ -104,7 +104,6 @@ while($row = mysqli_fetch_array($result))
 
 function get_all_data($connect)
 {
-//  $query = "SELECT * FROM orders";
  $query = "SELECT * FROM orders WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' ";
  $result = mysqli_query($connect, $query);
  return mysqli_num_rows($result);

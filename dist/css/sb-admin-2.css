@@ -914,10 +914,7 @@ input[type=checkbox] {
     width: 100%;
     padding: 10px;
     color:#000000;    
-    /*padding-bottom : 10px;*/
     display: flex;
-    /* justify-content: center; */
-    /* justify-content: right; */
     border-width: 1px;
     border-style: solid;
     border-color: #31B0D5;

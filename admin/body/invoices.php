@@ -4,7 +4,7 @@
     global $conexion;
     //logged in shop ID
     $loggedInShop = $_SESSION['shId'];
-    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `orEnable` = '1' AND `shId` = '".$loggedInShop."' ");
+    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '1' AND `shId` = '".$loggedInShop."' ");
     //determinar el número de filas del resultado
     $numItems =  $qry->num_rows;
     $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND  `orEnable` = '1' AND shId = '".$loggedInShop."' GROUP BY cId"));

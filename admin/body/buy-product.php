@@ -135,8 +135,8 @@
                               
                             <form role="form" method="POST" action="" id="printer"> 
 
-                            <div class="col-lg-12">
-                                <div class="col-lg-9">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="col-sm-12 col-md-8 col-lg-9">
                                     <!-- </div> -->
                                     <div class="form-group wraper">
                                         <div class="topleft">
@@ -185,7 +185,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3"> 
+                                <div class="col-sm-12 col-md-4 col-lg-3"> 
                                     <table class="table wraper" id="product_info_table_2">
                                     <tbody>
                                         <tr>

@@ -46,9 +46,9 @@
                         miPOS
                     </span>
                     <?php 
-                    $dat = getValueLocal();
-                    if (getValueByData($dat)) {
-                        echo ("Dispositivo Licenciado. ¡Gracias por su compra!");
+                    // $dat = getValueLocal();
+                    // if (getValueByData($dat)) {
+                    //     echo ("Dispositivo Licenciado. ¡Gracias por su compra!");
                         
                         if($_POST) :
                             //received data from user
@@ -85,9 +85,9 @@
                         <?php
                         }
                         endif;                        
-                    } else {
-                        echo ("¡Dispositivo no autorizado!. Comuniquese con soporte POSWEB");                        
-                    }
+                    // } else {
+                    //     echo ("¡Dispositivo no autorizado!. Comuniquese con soporte POSWEB");                        
+                    // }
 
                    ?>
                     <div class="wrap-input100 validate-input" data-validate = "Enter username" style="margin-top: 30px;">
