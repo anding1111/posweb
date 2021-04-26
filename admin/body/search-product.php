@@ -13,7 +13,7 @@ if (!$con) {
 	if(isset($_POST['search'])){
 		$search = mysqli_real_escape_string($con,$_POST['search']);
 	   
-		$query = "SELECT * FROM items WHERE pName like'%".$search."%' AND pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
+		$query = "SELECT * FROM items WHERE pName like '%".$search."%' AND pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();
@@ -29,7 +29,7 @@ if (!$con) {
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
-		$query = "SELECT * FROM client WHERE cName like'%".$search."%' AND clEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
+		$query = "SELECT * FROM client WHERE cName like '%".$search."%' AND clEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();
@@ -54,7 +54,7 @@ if (!$con) {
 		$search = mysqli_real_escape_string($con,$_POST['search_imei']);
 	   
 		// $query = "SELECT * FROM serials WHERE seSerial like'%".$search."%'";
-		$query = "SELECT * FROM serials WHERE seSerial like'%".$search."%' AND `shId` = '".$_SESSION['shId']."' ";
+		$query = "SELECT * FROM serials WHERE seSerial like '%".$search."%' AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);		
 		// $row = mysqli_fetch_array($result);
 
@@ -71,7 +71,6 @@ if (!$con) {
 			$user = getUsernameByUserId($row['seAddedBy']);		
 			
 			// $date = $row['seDate'];
-
 			$response[] = array("value"=>$productName,"supplier"=>$suppliertName,"serial"=>$serial,"user"=>$user,"date"=>$row['seDate'], "datesale"=>$row['seDateSale']);
 
 		}

@@ -1,10 +1,8 @@
 <?php  
     
-    if ( @$_POST['submit'] ) {
-        
+    if ( @$_POST['submit'] ) {        
        
-         //collecting userinfo
-        
+         //collecting userinfo        
         $pIdSupplier = formItemValidation($_POST['puIdSupplier']);   
         $puInvPurchase = formItemValidation($_POST['puInvPurchase']);
         $puTotal = formItemValidation($_POST['puTotal']);   
@@ -14,11 +12,9 @@
         //current time now
         $nowTime = date("Y-m-d H:i:s");
 
-        //generate invoice number				
-        $numRecibo = 0;       
-        $result = mysqli_fetch_object($conexion->query("SELECT MAX(invId) AS 'maxN' FROM orders"));        
-        $numRecibo = $result->maxN;        
-        $invNum = $numRecibo + 1;
+        //generate invoice number
+        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$_SESSION['shId']."' ORDER BY cmId DESC LIMIT 1") );
+        $invNum = $result->invId + 1; 
 
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];
