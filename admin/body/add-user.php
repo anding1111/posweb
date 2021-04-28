@@ -122,7 +122,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Usuario (para inicio de sesión)</label>
+                                    <label>Correo Electrónico (Usuario de iniciar sesión)</label>
                                     <input class="form-control" name="uName" required="required" type="text" value="<?php echo @$_POST['uName'] ?>">
                                 </div>
 

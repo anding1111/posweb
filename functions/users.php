@@ -11,7 +11,7 @@ function getLoggedInUserName()
 	// if(isset($_SESSION['username'])){
 	// 	return $_SESSION['username'];
     // }
-	return $_SESSION['username'];
+	return $_SESSION['fullusername'];
 }
 
 function getLoggedInUserID()

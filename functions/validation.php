@@ -25,15 +25,11 @@ function checkUniqueUsername($matchingValue)
 	return 0;
 }
 
-
-
-
-
 //generate a unique id
 function generateId()
 {
 	global $conexion;
-	$qry = mysqli_fetch_object( $conexion->query("SELECT * FROM users ORDER BY id DESC LIMIT 1") );
+	$qry = mysqli_fetch_object( $conexion->query("SELECT * FROM users WHERE `shId` = '".$_SESSION['shId']."' ORDER BY id DESC LIMIT 1") );
 	$newId = $qry->uId + 1;
 
 	return $newId;

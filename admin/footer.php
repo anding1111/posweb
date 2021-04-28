@@ -3,7 +3,31 @@
         <!-- /#page-content-wrapper -->
 
     </div>
-    <!-- /#wrapper -->   
+    <!-- /#wrapper --> 
+
+    <!-- Modal About -->
+    <div class="modal fade" id="about_modal" role="dialog">
+        <div class="modal-dialog about_modal">                            
+            <!-- Modal content-->
+            <div class="modal-content" style="border-radius:10px;">
+                <div class="modal-header" style="background-color:#287890;border-radius:6px 6px 0px 0px;">
+                    <label class="modal-title" style=" text-align:center;color:#fff; font-size:18px; width:95%;">miPOS</label>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body" style="text-align: center; color:#5C5C5C;">
+                    <span style="font-size:26px; font-weight:100;">¡Apoyamos tu negocio!<br></span>
+                    Desarrollado<br>por<br>
+                    <a href="https://saedi.com.co"><i class="fa fa-globe fa-fw"></i>www.saedi.com.co</a>
+
+                </div>
+                <div class="modal-footer" style="text-align:center;padding:0px;background-color:#287890;border-radius:0px 0px 6px 6px;">
+                    <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#287890;width:100%;border-color:#287890;">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fin Modal Anulacion --> 
+
 <?php
 // $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 $actual_link = "$_SERVER[REQUEST_URI]";
@@ -61,7 +85,11 @@ $actual_link = "$_SERVER[REQUEST_URI]";
         return num;
     };    
 
-    $(document).ready(function() {  
+    $(document).ready(function() { 
+
+        $('#aboutInfo').click(function(){   
+            $('#about_modal').modal('show');             
+        });        
 
         $('.cViewInv').each(function(e){
             if($(this).val() == 1){

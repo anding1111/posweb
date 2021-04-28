@@ -13,6 +13,7 @@ function loginDataReceive($username, $password){
 			//fetching data from db
 			$myData = mysqli_fetch_object( $qry );
 			$_SESSION['username']	= $username;
+			$_SESSION['fullusername']	= $myData->uFullName;
 			$_SESSION['uType']		= $myData->uType;
 			$_SESSION['uId']		= $myData->uId;
 			$_SESSION['shId']		= $myData->shId;

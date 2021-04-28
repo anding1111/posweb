@@ -85,18 +85,17 @@
                 <?php endif; ?>
                 <?php if(checkAdmin()) : ?>
                 <li>
-                    <a href="settings.php"><i class="fa fa-gear fa-fw"></i> Ajustes</a>
-                    
+                    <a href="settings.php"><i class="fa fa-gear fa-fw"></i> Ajustes</a>                    
                 </li>
                 <?php endif; ?>
                 
                 <li>               
-                    <a href="https://mipos.pro"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a>
+                    <!-- <a href="https://mipos.pro"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a> -->
+                    <a href="#" id="aboutInfo" class="hamburger is-closed" data-toggle="offcanvas"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a>
                 </li>                
             </ul>
         </nav>
         <!-- /#sidebar-wrapper -->
-
         <!-- Page Content -->
         <div id="page-content-wrapper">
             <button type="button" class="hamburger is-closed" data-toggle="offcanvas">

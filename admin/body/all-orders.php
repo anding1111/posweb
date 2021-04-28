@@ -108,7 +108,7 @@
                                                             $cmId = $cmIdNew;?>
                                                             <td style="text-align:center">
                                                             <a href="invoice.php?invId=<?php echo $cmId; ?>" class="btn btn-default">Ver</a>
-                                                            <?php echo '<a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="'.$cmId.'">Anular</a>';?>
+                                                            <a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="<?php echo $cmId ?>">Anular</a>
                                                             <?php //echo '<a href="#" id="anular-btn" class="btn btn-default btn-small" data-id="'.$cmId.'">Anular</a>';?>
                                                             </td>
                                                 </tr>                                                           
