@@ -30,8 +30,10 @@ if($_POST["end_date"] == ''){
   $_POST["end_date"] = '2100-01-01';
 }
 {
- $query .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
- $querys .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
+//  $query .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
+ $query .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
+//  $querys .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
+ $querys .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
 }
 
 if(isset($_POST["search"]["value"]))
@@ -66,7 +68,8 @@ if($_POST["length"] != -1)
  $query1 = 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
 }
 $number_filter_row = mysqli_num_rows(mysqli_query($connect, $query));
-
+// print_r($query);
+// print_r($querys);
 $result = mysqli_query($connect, $query . $query1);
 $results = mysqli_query($connect, $querys . $query1);
 

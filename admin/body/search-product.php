@@ -63,14 +63,10 @@ if (!$con) {
 
 			$product = getItemNameById($row['pId']);	
 			$productName = $product->pName;
-
 			$supplier = getSupplierNameById($row['sId']);
 			$suppliertName = $supplier->sName;
-
 			$serial = $row['seSerial'];
 			$user = getUsernameByUserId($row['seAddedBy']);		
-			
-			// $date = $row['seDate'];
 			$response[] = array("value"=>$productName,"supplier"=>$suppliertName,"serial"=>$serial,"user"=>$user,"date"=>$row['seDate'], "datesale"=>$row['seDateSale']);
 
 		}

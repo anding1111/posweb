@@ -62,6 +62,9 @@ $actual_link = "$_SERVER[REQUEST_URI]";
     <script type="text/javascript" src="../bower_components/datatables/Scroller-2.0.3/js/dataTables.scroller.min.js"></script>
     <!-- <script type="text/javascript" src="../bower_components/datatables/media/js/datatables.min.js"></script> -->
 
+    <!-- Timer Picker JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
@@ -96,6 +99,46 @@ $actual_link = "$_SERVER[REQUEST_URI]";
                 $(this).attr("checked", "checked");
             }
         }); 
+
+        // $('.viewTimer').hide("linear");
+
+        $('#timer').click(function(){
+            var showTimer = $('#timerState').data('timer'); //getter
+            if(showTimer == 0){
+                $('.viewTimer').show("swing");
+                $("#start_time").val("06:00:00");
+                $("#end_time").val("14:00:00");
+                $('#timerState').data('timer',1); //setter
+            } else {
+                $('.viewTimer').hide("swing");
+                $("#start_time").val("00:00:00");
+                $("#end_time").val("23:59:59");
+                $('#timerState').data('timer',0); //setter
+
+            }
+        });
+        $('.input-timerstart').timepicker({
+            timeFormat: 'HH:mm:ss',
+            interval: 30,
+            minTime: '06:00',
+            maxTime: '22:00',
+            defaultTime: '06:00',
+            startTime: '06:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
+        $('.input-timerend').timepicker({
+            timeFormat: 'HH:mm:ss',
+            interval: 30,
+            minTime: '06:00',
+            maxTime: '22:00',
+            defaultTime: '14:00',
+            startTime: '14:00',
+            dynamic: true,
+            dropdown: true,
+            scrollbar: true
+        });
 
         $('table.display').DataTable({
             responsive: true,
@@ -264,7 +307,6 @@ $actual_link = "$_SERVER[REQUEST_URI]";
                     '$' + numMiles(pageAbono) 
                 );
                 
-                
             }
             
         });
@@ -347,7 +389,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
 
             fetch_data('no');
 
-            function fetch_data(is_date_search, start_date='', end_date='', radio='1', checkbox='0') {
+            function fetch_data(is_date_search, start_date='', end_date='', start_time='00:00:00', end_time='23:59:59', radio='1', checkbox='0') {
             
                 var st_date = $("#start_date").val();
                 var en_date = $("#end_date").val();            
@@ -364,7 +406,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
                         url:"fetch.php",
                         type:"POST",
                         data:{
-                        is_date_search:is_date_search, start_date:start_date, end_date:end_date, radio:radio, checkbox:checkbox
+                        is_date_search:is_date_search, start_date:start_date, end_date:end_date, start_time:start_time, end_time:end_time, radio:radio, checkbox:checkbox
                         }
                     },
                     "language": {
@@ -430,11 +472,12 @@ $actual_link = "$_SERVER[REQUEST_URI]";
             $('#search').click(function(){
                 var start_date = $('#start_date').val();
                 var end_date = $('#end_date').val();
-                //var radio = $('#radio').val();
+                var start_time = $('#start_time').val();
+                var end_time = $('#end_time').val();
                 var radio = $('.radio:checked').val();
                 var checkbox = $('#checkbox').val();
                 $('#order_data').DataTable().destroy();
-                fetch_data('yes', start_date, end_date, radio, checkbox);
+                fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
                 // if(start_date != '' || end_date !='') {
                 //     $('#order_data').DataTable().destroy();
                 //     fetch_data('yes', start_date, end_date, radio);

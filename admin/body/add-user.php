@@ -139,7 +139,7 @@
                                 <div class="form-group">
                                     <label>Seleccione un Perfíl</label>
                                     <select class="form-control" name="uType">
-                                        <option value="admin">Desarrollador</option>
+                                        <option value="admin">Super Administrador</option>
                                         <option value="manager" selected="selected">Administrador</option>
                                         <option value="replacement">Encargado</option>
 										<option value="seller">Vendedor</option>

@@ -16,7 +16,6 @@ function getLoggedInUserName()
 
 function getLoggedInUserID()
 {
-
 	return $_SESSION['uId'];
 }
 
@@ -30,7 +29,6 @@ function getUsernameByUserId($value)
 function getAllAdmin(){
 	global $conexion;
 	return $conexion->query("SELECT * FROM users WHERE uType = 'admin' AND `shId` = '".$_SESSION['shId']."' ");
-	
 }
 
 function checkAdmin()

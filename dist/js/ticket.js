@@ -51,6 +51,11 @@ function alignData(str) {
 var numItems = document.querySelector("#numItems").value;
 
 //Obtiene Datos Factura
+var printShopName = document.querySelector("#printShopName").textContent;
+var printShopDesc = document.querySelector("#printShopDesc").textContent;
+var printShopDoc = document.querySelector("#printShopDoc").textContent;
+var printShopDir = document.querySelector("#printShopDir").textContent;
+
 var printFacturaNum = document.querySelector("#printFacturaNum").textContent;
 var printFacturaFech = document.querySelector("#printFacturaFech").textContent;
 var printFacturaHor = document.querySelector("#printFacturaHor").textContent;
@@ -74,13 +79,17 @@ $btnImprimir.addEventListener("click", () => {
     impresora.setFontSize(2, 2);   
     impresora.setAlign("center");
     impresora.setEmphasize(1);
-    impresora.write("TEINNOVA COMUNICACIONES\n");
+    impresora.write(printShopName);
+    impresora.write("\n");
     impresora.setFontSize(1, 1);
-    impresora.write("Importadores Mayoristas\n"); 
+    impresora.write(printShopDesc); 
+    impresora.write("\n");
     impresora.setFont("B");   
     impresora.setEmphasize(0);    
-    impresora.write("NIT. 1085950928-5\n");
-    impresora.write("IPIALES-NARINO-COLOMBIA\n\n");
+    impresora.write(printShopDoc);
+    impresora.write("\n");
+    impresora.write(printShopDir);
+    impresora.write("\n\n");
     impresora.setAlign("left");
     impresora.write("Factura No: ");
     impresora.write(printFacturaNum);
@@ -150,7 +159,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.setEmphasize(1);
     impresora.write("----------------------------------------------------------------\n");
     impresora.setEmphasize(0);   
-    impresora.write("IMEIS: ");
+    impresora.write("OBSERVACION: ");
     impresora.write(printSerial);
     impresora.write("\n");
     impresora.feed(2); // Feed 2 veces

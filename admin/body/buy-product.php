@@ -60,7 +60,7 @@
 				}else{
 					
 					 if ($idif<10){
-						echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 50 unidades!");</script>';
+						echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
                         }
                     //Update Qty on items  
 					$update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
@@ -113,7 +113,7 @@
 ?>
 
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 smartphone">
                     <div class="panel panel-default w3-card-4">
                         <div class="titles mb--10">
                         <?php echo $shop->shName?>
@@ -134,42 +134,38 @@
                             <?php endif; ?>
                               
                             <form role="form" method="POST" action="" id="printer"> 
-
-                            <div class="col-md-12 col-lg-12">
-                                <div class="col-sm-12 col-md-8 col-lg-9">
+                            <div class="col-md-12 col-lg-12 smartphone">
+                                <div class="col-sm-12 col-md-8 col-lg-9 smartphone">
                                     <!-- </div> -->
-                                    <div class="form-group wraper">
+                                    <div class="form-group w3-card-4b">
                                         <div class="topleft">
                                             <label style="font-size:14px">INGRESE EL NOMBRE DEL PRODUCTO:</label> <br>
                                             <input type="text" id="autocomplete" class="form-control" style="margin-bottom: 8px;"/>
                                         </div>
                                         <div class="topright">
-                                            
+                                            <div><p>                                           
                                                 <?php
                                                 $date = new DateTime();
-                                                //echo $date->format('l, F jS, Y'); 
-                                                echo '<div><p>';
                                                 $Fecha = date('d-m-Y H:i:s');
                                                 echo fechaCastellano($Fecha);
-                                                echo '</p></div>';
                                                 ?>
-                                                <div>
-                                                <span id="tick2"></span>
-                                                </div>                                                   
-                                           
+                                            </p></div>
+                                            <div>
+                                            <span id="tick2"></span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-group wraper" style="overflow-x:auto;">
-                                        <table class="table table-bordered table-fixed" id="product_info_table">
+                                    <div class="form-group w3-card-4b" style="overflow-x:auto;">
+                                        <table class="table table-fixed table-auto" id="product_info_table">
                                             <thead class="head-fixed">
                                                 <tr>
                                                 <!-- <th style="width:12%">Cod.</th> -->
-                                                <th style="width:12%">Disp.</th>
-                                                <th style="width:34%">Descripción</th>
+                                                <th id="ocultar-smartphone" style="width:10%">Disp.</th>
+                                                <th style="width:36%">Descripción</th>
                                                 <th style="width:12%">Cant.</th>
                                                 <th style="width:15%">Vr. Unit.</th>
-                                                <th style="width:18%">Vr. Total</th>
+                                                <th id="ocultar-smartphone" style="width:18%">Vr. Total</th>
                                                 <th style="width:9%; text-align:center;">Borr.</th>
                                                 </tr>
                                             </thead>
@@ -178,27 +174,28 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="form-group wraper">
+                                    <div class="form-group w3-card-4b">
                                         <div class="topjustify">
                                             <label style="font-size:14px">OBSERVACIONES:</label> <br>
                                             <textarea class="form-control" rows="1" name="inSerial" type="text" value=""></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-12 col-md-4 col-lg-3"> 
-                                    <table class="table wraper" id="product_info_table_2">
+                                <div class="col-sm-12 col-md-4 col-lg-3 smartphone"> 
+                                <div class="form-group w3-card-4b">
+                                    <table class="table" id="product_info_table_2">
                                     <tbody>
                                         <tr>
                                             <td>
                                             <div class="form-inline">
                                                 <fieldset class="scheduler-border">
                                                     <legend class="scheduler-border">CLIENTE</legend>                                                    
-                                                    <input type="text" id="autocomplete_customer" class="form-control" required/>
+                                                    <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" required/>
                                                     <input type="hidden" id="cId" name="cId" value="0">
-                                                    <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
+                                                        <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
                                                         <label style="font-size:12px; width:25%;">Saldo: </label>
                                                         <input style="text-align:center; font-size:18px; background-color:coral; width:72%;" id="saldoCliente" name="saldoCliente" value="0" readonly>
-                                                    </div>
+                                                        </div>
                                                 </fieldset>
                                             </div>
                                             </td>                                            
@@ -206,9 +203,8 @@
                                         <tr>
                                             <td>
                                             <fieldset class="scheduler-border">
-                                                    <legend class="scheduler-border">TOTAL</legend>       
-                                                    <!-- <label style="font-size:14px;width:20%;vertical-align:middle; text-align:right">TOTAL:</label> -->
-                                                    <input id="gross_total" class="form-control" name="cTotal" style="font-size:30px;width:100%;height:65px;text-align:center;" required="required" type="text" value="" readonly="readonly">
+                                                <legend class="scheduler-border">TOTAL</legend>       
+                                                <input id="gross_total" class="form-control" name="cTotal" style="font-size:30px;width:100%;height:65px;text-align:center;" required="required" type="text" value="" readonly="readonly">
                                             </fieldset>
                                             </td>
                                         </tr>                                        
@@ -218,7 +214,6 @@
                                                 <fieldset class="scheduler-border">
                                                     <legend class="scheduler-border">FORMA DE PAGO</legend>
                                                     <div class="form-group" style="width:100%;">
-                                                        <!-- <label style="width:25%">Selecc.</label> -->
                                                         <select class="form-control fPago" name="fPago" style="width:100%">
                                                             <option value="1" selected id="ocultar">Contado</option>
                                                             <option value="2" id="mostrar">Credito</option>                                                            
@@ -228,22 +223,20 @@
                                                     <div class="form-inline" id="mostrar-ocultar" style="width:100%; padding-top:10px;"> 
                                                         <label style="font-size:12px; width:25%;">Abono: </label>
                                                         <input type="text" name="cCredito" value="0" style="font-size:18px; width:72%; padding-left:10px;">
-                                                    </div>
-                                                   
+                                                    </div>                                                   
                                                 </fieldset>
                                             </div>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                            <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;" class="btn btn-info btn-large" name="submit"/>
+                                            <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;background-color:#287890;border-color:#287890;" class="btn btn-info btn-large" name="submit"/>
                                             <input type="hidden" name="numRows" id="num_rows" value="">
                                             </td>
-                                        </tr>
-                                                            
+                                        </tr>                                                            
                                         </tbody>
                                     </table>
-                                  
+                                </div>
                                 </div>
                             </div>
                         </form> 
@@ -360,11 +353,11 @@
         var num_row = count_table_tbody_tr + 1 + deleted;
         tableSize = num_row;
         var html = '<tr id="row_'+num_row+'">'+                  
-                   '<td style="width:12%"><input type="hidden" name="pId_value[]" id="pId_value_'+num_row+'" class="form-control"><input type="text" name="code[]" id="disp_'+num_row+'" class="form-control" disabled><input type="hidden" name="code_value[]" id="disp_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:34%"><input type="text" name="name[]" id="name_'+num_row+'" class="form-control" disabled><input type="hidden" name="name_value[]" id="name_value_'+num_row+'" class="form-control"></td>'+
+                   '<td id="ocultar-smartphone" style="width:10%"><input type="hidden" name="pId_value[]" id="pId_value_'+num_row+'" class="form-control"><input type="text" name="code[]" id="disp_'+num_row+'" class="form-control" disabled><input type="hidden" name="code_value[]" id="disp_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:36%"><input type="text" name="name[]" id="name_'+num_row+'" class="form-control" disabled><input type="hidden" name="name_value[]" id="name_value_'+num_row+'" class="form-control"></td>'+
                    '<td style="width:12%"><input type="number" min="1" name="qty[]" id="qty_'+num_row+'" class="form-control" required oninput="subAmount('+num_row+')"><input type="hidden" name="cost_value[]" id="cost_value_'+num_row+'" class="form-control"></td>'+
                    '<td style="width:15%"><input type="text" name="rate[]" id="rate_'+num_row+'" class="form-control" required oninput="subAmount('+num_row+')"><input type="hidden" name="rate_value[]" id="rate_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:18%"><input type="text" name="amount[]" id="amount_'+num_row+'" class="form-control" value="" readonly></td>'+
+                   '<td id="ocultar-smartphone" style="width:18%"><input type="text" name="amount[]" id="amount_'+num_row+'" class="form-control" value="" readonly></td>'+
                    '<td style="width:9%; text-align:center;"><button type="button" class="btn btn-default" onclick="removeRow(\''+num_row+'\')"><i class="fa fa-close"></i></button></td>'+
                    '</tr>';
         if(count_table_tbody_tr >= 1) {

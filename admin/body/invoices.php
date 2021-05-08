@@ -23,12 +23,12 @@
                                <div class="table" style="background-color: white;" id="printers">
                                 <!-- info row -->
                                 <div class="col-sm-12 invoice-col" style="text-align:center;">
-                                <b style="font-size:22px; font-family:Helvetica, Arial, sans-serif;"><?php echo $shop->shName ?></b><br>
-                                <b style="font-size:16px; font-family:Helvetica, Arial, sans-serif;"><?php echo $shop->shDesc ?></b><br>
-                                <b style="font-size:12px;">NIT. <?php echo $shop->shDoc ?></b><br>
+                                <b style="font-size:22px; font-family:Helvetica, Arial, sans-serif;"><span id="printShopName"><?php echo $shop->shName ?></span></b><br>
+                                <b style="font-size:16px; font-family:Helvetica, Arial, sans-serif;"><span id="printShopDesc"><?php echo $shop->shDesc ?></span></b><br>
+                                <b style="font-size:12px;">NIT. <span id="printShopDoc"><?php echo $shop->shDoc ?></span></b><br>
                                 <!-- <b style="font-size:12px;">Cra 6, Cll 12 # 5-27 Local 213 Piso 2</b><br> -->
                                 <!-- <b style="font-size:12px;">Cel. 317 446 4948</b><br> -->
-                                <b style="font-size:12px;"><?php echo $shop->shDir ?></b><br>
+                                <b style="font-size:12px;"><span id="printShopDir"><?php echo $shop->shDir ?></span></b><br>
                                 </div>
                                 <div>                               
                                 </div>
@@ -41,14 +41,14 @@
                                     
                                         <div class="col-sm-6 invoice-col" id="ocultar">
                                             <br>
-                                            <b>Factura No.: </b><span id="printFacturaNum"><?php echo $invId.'<br/>';
-                                            $result = getCategoryNameById($qrydata->cId); ?></span>
+                                            <b>Factura No.: </b><span id="printFacturaNum"><?php echo $invId.'<br/>'; ?></span>
                                             <b>Fecha: </b><span id="printFacturaFech"><?php
                                             $Fecha = getFecha($invId);                                                
                                             echo fechaCastellano($Fecha->bDate).'<br/>'; ?></span>
                                             <b>Hora: </b><span id="printFacturaHor"><?php                                                                                             
                                             echo horaCastellano($Fecha->bDate).'<br/>';?></span>
-                                            <b>Cliente: </b><span id="printFacturaClient"><?php                                       
+                                            <b>Cliente: </b><span id="printFacturaClient"><?php  
+                                            $result = getCategoryNameById($qrydata->cId);                                      
                                             echo $result->cName.'<br/>'; ?> </span>
                                             <b>Documento: </b><span id="printFacturaDoc"><?php                                           
                                             echo $result->cDoc.'<br/>'; ?> </span>

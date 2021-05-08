@@ -29,7 +29,6 @@ function getAllSaldosSuppliers()
 function getTotalAllSaldosSuppliers()
 {
 	global $conexion;
-	//return $conexion->query("SELECT * FROM saldo  WHERE sSaldo != 0");
 	return $conexion->query("SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `shId` = '".$_SESSION['shId']."' GROUP BY `suId`");
 }
 

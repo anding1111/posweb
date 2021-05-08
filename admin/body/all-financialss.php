@@ -27,14 +27,34 @@
                                             <span class="checkmark-custom"></span>
                                             </label>
                                         </div>
-                                        <div class="col-md-2 titles" style="font-size:18px;">
-                                            <b>FECHA INICIAL: </b>
-                                            <input style="font-size:18px;" type="text" name="start_date" id="start_date" class="form-control input-daterange" autocomplete="off"/>
+                                        <div class="col-md-4">
+                                            <div class="row col-md-12">
+                                                <div class="col-md-6 titles" style="font-size:18px;">
+                                                    <b>FECHA INICIAL: </b>
+                                                    <input style="font-size:18px;" type="text" name="start_date" id="start_date" class="form-control input-daterange" autocomplete="off"/>
+                                                </div>
+                                                <div class="col-md-6 titles" style="font-size:18px;">
+                                                    <b>FECHA FINAL: </b>
+                                                    <input style="font-size:18px;" type="text" name="end_date" id="end_date" class="form-control input-daterange" autocomplete="off"/>
+                                                </div> 
+                                            </div> 
+                                            <div class="row col-md-12" id="timerState" data-timer="0">
+                                                <div class="col-md-12 titles" style="font-size:18px;">
+                                                <input type="button" name="timer" id="timer" value="HORAS" class="btn btn-info btn-mini"/>                                        
+                                                </div>                                                
+                                            </div>
+                                            <div class="row col-md-12 viewTimer" style="display: none;">
+                                                <div class="col-md-6 titles" style="font-size:18px;">
+                                                    <b>HORA INICIAL: </b>
+                                                    <input style="font-size:18px;" type="text" name="start_time" id="start_time" class="form-control input-timerstart" autocomplete="off"/>
+                                                </div>
+                                                <div class="col-md-6 titles" style="font-size:18px;">
+                                                    <b>HORA FINAL: </b>
+                                                    <input style="font-size:18px;" type="text" name="end_time" id="end_time" class="form-control input-timerend" autocomplete="off"/>
+                                                </div> 
+                                            </div>
                                         </div>
-                                        <div class="col-md-2 titles" style="font-size:18px;">
-                                            <b>FECHA FINAL: </b>
-                                            <input style="font-size:18px;" type="text" name="end_date" id="end_date" class="form-control input-daterange" autocomplete="off"/>
-                                        </div> 
+
                                         <div class="col-md-2" style="font-size:14px;">
                                             <label class="container-check">UTILIDAD
                                             <input id="checkbox" type="checkbox" value="0" onclick="checkValidate();">
@@ -42,7 +62,7 @@
                                             </label>                                            
                                         </div>                                      
                                         <div class="col-md-2">
-                                            <input style="height:45px; width:100%; margin-top:22px; font-size:16px; font-weight: bold;" type="button" name="search" id="search" value="BUSCAR" class="btn btn-info" />                                        
+                                            <input style="height:45px; width:100%; margin-top:22px; font-size:16px; font-weight: bold;background-color:#287890;border-color:#287890;" type="button" name="search" id="search" value="CONSULTAR" class="btn btn-info" />                                        
                                         </div> 
                                     </div>                                       
                                 </div>
@@ -54,7 +74,6 @@
                                        <th>Nombre</th>
                                        <th>Cantidad</th>                                           
                                        <th>Total</th>
-                                       <!-- <th>Saldo</th>   -->
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -62,19 +81,13 @@
                                        <th colspan="1" style="text-align:right">Total:</th>                                       
                                        <th></th>
                                        <th></th>
-                                       
                                    </tr>                                 
-                                   
                                </tfoot>
                                 </table>
                                 <table class="table table-bordered" id="table_credito">
                                     <tbody id="resume_credito" class="form-inline" style="font-size:22px; color:#31B0D5;">
                                     <tr>
-                                                                            
-                                        <th colspan="4" class="text-center" id="totales">                              
-                                        </th>                            
-                                        
-                                        
+                                        <th colspan="4" class="text-center" id="totales"></th>                            
                                     </tr>                    
                                     </tbody>
                                 </table>

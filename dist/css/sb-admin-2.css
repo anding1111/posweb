@@ -322,7 +322,7 @@ table.dataTable thead .sorting:after {
     }
   }
   
-  @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     .huge .title-card {
         font-size:9vw;
         font-weight: bold;
@@ -330,8 +330,7 @@ table.dataTable thead .sorting:after {
     .sec-title{
         font-size: 6vw;
     }
-    
-  }
+}
 .panel-blue {
     border-color: #fff;
 }
@@ -339,17 +338,16 @@ table.dataTable thead .sorting:after {
 .panel-blue .panel-heading {
     border-color: #fff;
     color: #fff;
-    background-color: #007F7F;
-}
+    /* background-color: #007F7F; */
+    background-image: linear-gradient(to right, rgba(58,208,191,1), rgba(17,155,210,1));}
 
 .panel-blue a {
-    color: #007F7F;
+    color: rgba(17,155,210,1);
 }
 
 .panel-blue a:hover {
-    color: #007F7F;
+    color: rgba(58,208,191,1);
 }
-
 
 .panel-purple {
     border-color: #fff;
@@ -358,15 +356,16 @@ table.dataTable thead .sorting:after {
 .panel-purple .panel-heading {
     border-color: #fff;
     color: #fff;
-    background-color: #8C0099;
+    /* background-color: #8C0099; */
+    background-image: linear-gradient(to right, rgba(233,111,234,1), rgba(131,98,247,1));
 }
 
 .panel-purple a {
-    color: #8C0099;
+    color: rgba(131,98,247,1);
 }
 
 .panel-purple a:hover {
-    color: #8C0099;
+    color: rgba(233,111,234,1);
 }
 
 .panel-red {
@@ -376,15 +375,16 @@ table.dataTable thead .sorting:after {
 .panel-red .panel-heading {
     border-color: #fff;
     color: #fff;
-    background-color: #89001B;
+    /* background-color: #89001B; */
+    background-image: linear-gradient(to right, rgba(255,135,94,1), rgba(254,103,172,1));
 }
 
 .panel-red a {
-    color: #89001B;
+    color: rgba(254,103,172,1);
 }
 
 .panel-red a:hover {
-    color: #89001B;
+    color: rgba(255,135,94,1);
 }
 
 .panel-yellow {
@@ -394,15 +394,16 @@ table.dataTable thead .sorting:after {
 .panel-yellow .panel-heading {
     border-color: #fff;
     color: #fff;
-    background-color: #F07C00;
+    /* background-color: #F07C00; */
+    background-image: linear-gradient(to right, rgba(142,112,238,1), rgba(44,132,191,1));
 }
 
 .panel-yellow a {
-    color: #F07C00;
+    color: rgba(44,132,191,1);
 }
 
 .panel-yellow a:hover {
-    color: #F07C00;
+    color: rgba(142,112,238,1);
 }
 
 
@@ -412,7 +413,6 @@ table.dataTable thead .sorting:after {
 
 .panel-greenf .panel-heading {
     border-color: #fff;
-    /*color: #f07c00;*/
     color: #25758E;
     text-shadow:
    -2px -2px 0 #fff,  
@@ -443,6 +443,32 @@ table.dataTable thead .sorting:after {
 	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),
 	0 4px 20px 0 rgba(0,0,0,0.19);
 	}
+.w3-card-4b,.w3-hover-shadow:hover {
+	box-shadow:0 4px 10px 0 rgba(0,0,0,0.2),
+	0 4px 20px 0 rgba(0,0,0,0.19);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    width: 100%; 
+	}
+
+.btn-mini{
+    background-color: #297991;
+    border-color: #297991;
+    height: 25px;
+    width: 100%;
+    font-size: 10px;
+    font-weight: bold;
+}
+.btn-mini:hover {
+    background-color: #46b8da; /* Green */
+    color: white;
+  }
+.btn-mini:focus {
+    background-color: #297991 !important;
+    border-color: #297991;
+  }
 
 .pull-center {
     text-align: center !important;  
@@ -483,7 +509,7 @@ table.dataTable thead .sorting:after {
     font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;
     /*border-color: #44BD32;*/
     border: 2px solid rgb(255, 255, 255);
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     border-radius: 25px;
     color: #297991 !important;
     font-weight: bold;
@@ -806,6 +832,8 @@ html { height: 100%;}
 .hamburger.is-closed .hamb-middle,
 .hamburger.is-closed .hamb-bottom {
   background-color: #fff; /*color boton menu cerrado*/
+  border: 1px solid #A2918C;
+  border-radius: 4px;
 }
 .hamburger.is-closed .hamb-top { 
   top: 5px; 
@@ -832,6 +860,8 @@ html { height: 100%;}
 .hamburger.is-open .hamb-middle,
 .hamburger.is-open .hamb-bottom {
   background-color: #fff; /*color boton menu abierto*/
+  border: 1px solid #A2918C;
+  border-radius: 4px;
 }
 .hamburger.is-open .hamb-top,
 .hamburger.is-open .hamb-bottom {
@@ -893,7 +923,8 @@ input[type=checkbox] {
 	height:60px;
 	bottom:40px;
 	right:40px;
-	background-color:#007F7F;
+	/* background-color:#007F7F; */
+    background-image: linear-gradient(to right, rgba(233,111,234,1), rgba(131,98,247,1));
 	color:#FFF;
 	border-radius:50px;
 	text-align:center;
@@ -901,8 +932,10 @@ input[type=checkbox] {
 	border: 2px solid #FFF;
 }
 .float:hover {
-    color: #007F7F;
-	background-color:#fff;
+    /* color: #007F7F; */
+    color: rgba(131,98,247,1);
+	/* background-color:#fff; */
+    background-image: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,200,1));
 	/*border-color: #007F7F;*/
 	width:70px;
 	height:70px;
@@ -911,7 +944,8 @@ input[type=checkbox] {
 	border-radius:50px;
 	text-align:center;
 	box-shadow: 3px 4px 3px #999;
-	border: 3px solid #007F7F;
+	/* border: 3px solid #007F7F; */
+	border: 3px solid rgba(233,111,234,1);
 }
 .my-float{
 	margin-top:16px;
@@ -1005,6 +1039,18 @@ div.dt-buttons {
 .table-fixed  {
     width:100%;
 }
+@media (max-width: 800px) {
+    .table-auto tbody tr td input {    
+    font-size: 11px !important;
+    }
+    #ocultar-smartphone{
+        display: none;
+    }
+    .smartphone{
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+} 
 
 table.dataTable tbody th, table.dataTable tbody td {
     padding: 4px 10px !important; /* e.g. change 8x to 4px here */
@@ -1019,7 +1065,8 @@ table.dataTable tbody th, table.dataTable tbody td {
     margin-left: -12px;
     /* margin-bottom: 12px; */
     cursor: pointer;
-    color: #31B0D5;
+    /* color: #31B0D5; */
+    color: #287890;
     font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1052,7 +1099,8 @@ background-color: #ccc;
 
 /* When the radio button is checked, add a blue background */
 .container-custom input:checked ~ .checkmark-custom {
-background-color: #2196F3;
+/* background-color: #2196F3; */
+background-color: #287890;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -1086,7 +1134,7 @@ display: block;
     margin-top: 34px;
     /* margin-bottom: 12px; */
     cursor: pointer;
-    color: #31B0D5;
+    color: #287890;
     font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -1115,7 +1163,7 @@ background-color: #ccc;
 
 /* When the radio button is checked, add a blue background */
 .container-check input:checked ~ .checkmark-check {
-background-color: #2196F3;
+background-color: #287890;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
