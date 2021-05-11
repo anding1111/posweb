@@ -17,7 +17,7 @@
                   <ul class="dropdown-menu" role="menu">
                     <li class="dropdown-header">Seleccione</li>
                     <li><a href="buy-product.php"><i class="fa fa-cart-plus fa-fw"></i> Nueva Venta</a></li>
-                    <li><a href="orders.php"><i class="fa fa-money fa-fw"></i> Recibos</a></li>                    
+                    <li><a href="orders.php"><i class="fa fa-money fa-fw"></i> Facturas</a></li>                    
                   </ul>
                 </li>
                 
@@ -25,7 +25,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-money fa-fw"></i> Contabilidad <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li class="dropdown-header">Seleccione</li>
-                    <li><a href="financials.php"><i class="fa fa-usd fa-fw"></i> Ventas</a></li>
+                    <li><a href="financials.php"><i class="fa fa-usd fa-fw"></i> Caja</a></li>
                     <li><a href="saldo.php"><i class="fa fa-calculator fa-fw"></i> Creditos</a></li> 
                     <li><a href="saldo-history.php"><i class="fa fa-calculator fa-fw"></i> Historial Creditos</a></li> 
                   </ul>
@@ -36,9 +36,9 @@
                   <ul class="dropdown-menu" role="menu">
                     <li class="dropdown-header">Seleccione</li>
                     <li><a href="add-item.php"><i class="fa fa-plus-square fa-fw"></i> Nuevo Producto</a></li>
-                    <li><a href="brands.php"><i class="fa fa-creative-commons fa-fw"></i> Marcas</a></li>  
                     <li><a href="items.php"><i class="fa fa-list-ul fa-fw"></i> Inventario</a></li> 
                     <li><a href="stockin.php"><i class="fa fa-stack-overflow fa-fw"></i> Entradas</a></li>
+                    <li><a href="brands.php"><i class="fa fa-creative-commons fa-fw"></i> Marcas</a></li>  
                     <li><a href="warranties.php"><i class="fa fa-search fa-fw"></i> Garantias</a></li>                     
                   </ul>
                 </li>
@@ -58,7 +58,7 @@
                     <li class="dropdown-header">Seleccione</li>
                     <li><a href="add-supplier.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Proveedor</a></li>
                     <li><a href="suppliers.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Proveedores</a></li>   
-                    <li><a href="purchases.php"><i class="fa fa-book fa-fw"></i> Lista Compras</a></li>
+                    <li><a href="purchases.php"><i class="fa fa-book fa-fw"></i> Compras</a></li>
                     <li><a href="balances.php"><i class="fa fa-book fa-fw"></i> Saldos</a></li>
                   </ul>
                 </li>
@@ -90,7 +90,6 @@
                 <?php endif; ?>
                 
                 <li>               
-                    <!-- <a href="https://mipos.pro"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a> -->
                     <a href="#" id="aboutInfo" class="hamburger is-closed" data-toggle="offcanvas"><i class="fa fa-info-circle fa-fw"></i> Acerca de</a>
                 </li>                
             </ul>

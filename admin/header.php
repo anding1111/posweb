@@ -60,19 +60,17 @@ include('../vendor/autoload.php');
             <?php
             $id = $_SESSION['shId'];
             $shop = getShopNameById($id);
-
             ?>
-
                <!-- /.navbar-header -->
             <ul class="nav navbar-top-links navbar-user">
             
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    Bienvenido(a) <strong> <?php echo getLoggedInUserName(); ?> </strong> <!--<i class="fa fa-user fa-fw"></i>-->  <i class="fa fa-caret-down"></i>
+                    <i class="fa fa-user-circle fa-fw"></i><strong> <?php echo getLoggedInUserName(); ?> </strong> <!--<i class="fa fa-user fa-fw"></i>-->  <i style="color:#D4D4D4;" class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                       
+                    <input type="hidden" id="shPrinter" value="<?php echo $shop->shPrinterName; ?>">
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>

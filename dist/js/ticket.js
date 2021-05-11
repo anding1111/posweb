@@ -1,5 +1,8 @@
 const RUTA_API = "http://localhost:8000";
-const $impresoraSeleccionada = "POS-80C",
+// const $impresoraSeleccionada = "POS-80C",
+//Eliminar simbolo $ y espacios en blanco
+const $impresoraSeleccionada = document.querySelector("#shPrinter").value;
+
     $btnImprimir = document.querySelector("#btnImprimir");
 
 var invoiceTableArray = [];
