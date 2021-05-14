@@ -17,9 +17,12 @@
          $shMail = formItemValidation($_POST['shMail']);       
          $shWeb = formItemValidation($_POST['shWeb']);       
          $shDesc = formItemValidation($_POST['shDesc']);       
-         $shColor = formItemValidation($_POST['shColor']);         
+         $shSearch = formItemValidation($_POST['shSearch']);       
+         $shPrinterName = formItemValidation($_POST['shPrinterName']);       
+         $shPrinterType = formItemValidation($_POST['shPrinterType']);        
+         $shColor = formItemValidation($_POST['shColor']);        
 
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry ) {
@@ -46,7 +49,6 @@
                                 <div class="alert alert-success">Datos de la Tienda se han actualizado con éxito</div>
                             <?php 
                                     redirectTo('settings.php', 1);
-
                                     endif; ?>
 
                             <?php if(isset($insertError)) : ?>
@@ -61,7 +63,6 @@
                                 <div class="form-group">
                                     <label>Nombre</label>
                                     <input class="form-control" name="shName" required="required" type="text" value="<?php if(isset($qry->shName)) echo $qry->shName; ?>">
-                                   
                                 </div>
                                 <div class="form-group">
                                     <label>Sub-Nombre (Nombre Auxiliar)</label>
@@ -90,6 +91,38 @@
                                 <div class="form-group">
                                     <label>Descripción (Eslogan)</label>
                                     <input class="form-control" name="shDesc" required="required" type="text" value="<?php if(isset($qry->shDesc)) echo $qry->shDesc; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Busqueda (Metodo de busqueda en el modulo ventas)</label>
+                                    <?php $options = array( 
+                                            "Nombre Producto" => 0, 
+                                            "Código Barras" => 1
+                                        );  ?>
+                                    <select class="form-control" name="shSearch">
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->shSearch == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombre Impresora (Exactamente como aparece en Windows)</label>
+                                    <input class="form-control" name="shPrinterName" required="required" type="text" value="<?php if(isset($qry->shPrinterName)) echo $qry->shPrinterName; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo Impresora (Tamaño de papel)</label>
+                                    <?php $options = array( 
+                                            "Impresora 80mm" => 0, 
+                                            "Impresora 57mm" => 1
+                                        );  ?>
+                                    <select class="form-control" name="shPrinterType">
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->shPrinterType == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
                                 </div>
                                 <div class="form-group">
                                     <label>Color</label>

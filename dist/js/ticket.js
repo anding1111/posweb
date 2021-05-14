@@ -1,9 +1,9 @@
 const RUTA_API = "http://localhost:8000";
 // const $impresoraSeleccionada = "POS-80C",
-//Eliminar simbolo $ y espacios en blanco
+//Configura la impresora
 const $impresoraSeleccionada = document.querySelector("#shPrinter").value;
 
-    $btnImprimir = document.querySelector("#btnImprimir");
+$btnImprimir = document.querySelector("#btnImprimir");
 
 var invoiceTableArray = [];
 
@@ -17,6 +17,35 @@ function readTable() {
         }
     });      
 }
+
+//Obtiene Datos Impresora
+var printerType = document.querySelector("#printerType").value;
+//Configura Valores Impresora
+var spaceNumber = 10;
+var tabTitles = "\t\t\t";
+var productString = "Producto";
+var quantityString = "Cantidad";
+var tabProducts ="\t\t";
+var tabProductsMin ="\t";
+var tabNumbers ="\t";
+var lineDivider = "----------------------------------------------------------------\n";
+var largeMinString = 11;
+var largeMaxString = 23;
+var largeCutString = 22;
+if (printerType == 1) {
+    spaceNumber = 9;
+    tabTitles = "\t  ";
+    var productString = "Prod.";
+    var quantityString = "Cant.";
+    tabProducts = "\t";
+    tabProductsMin ="   ";
+    tabNumbers = "\t";
+    lineDivider = "------------------------------------------\n";
+    largeMinString = 6;
+    largeMaxString = 10;
+    largeCutString = 9;
+}
+
 //Eliminar simbolo $ y espacios en blanco
 function replaceSym(sym) {
     var num = sym.replace(/[\$,\s]/g, '');
@@ -25,7 +54,7 @@ function replaceSym(sym) {
 
 //Ajustar los numeros a la izquierda
 function justifyNum(num){
-    var n = 10 - num.length;
+    var n = spaceNumber - num.length;
     var mi = " ";    
     return mi.repeat(n).concat(num);    
 }
@@ -37,14 +66,15 @@ function sliceString(str, length) {
     arrayString[1] = str.slice(length);       
 }
 
+
 //Alinear el contenido del recibo
 function alignData(str) { 
-    if (str.length < 11) {
-        strPart = str.concat("\t\t");
-    }else if (str.length < 23) {
-        strPart = str.concat("\t"); 
+    if (str.length < largeMinString) {
+        strPart = str.concat(tabProducts);
+    }else if (str.length < largeMaxString) {
+        strPart = str.concat(tabProducts); 
     }else { 
-        sliceString(str, 22);
+        sliceString(str, largeCutString);
         strParcial += arrayString[0] + "-\n";
         alignData(arrayString[1]); 
     }
@@ -53,12 +83,14 @@ function alignData(str) {
 
 var numItems = document.querySelector("#numItems").value;
 
-//Obtiene Datos Factura
+
+//Obtiene Datos Tienda
 var printShopName = document.querySelector("#printShopName").textContent;
 var printShopDesc = document.querySelector("#printShopDesc").textContent;
 var printShopDoc = document.querySelector("#printShopDoc").textContent;
 var printShopDir = document.querySelector("#printShopDir").textContent;
 
+//Obtiene Datos Factura
 var printFacturaNum = document.querySelector("#printFacturaNum").textContent;
 var printFacturaFech = document.querySelector("#printFacturaFech").textContent;
 var printFacturaHor = document.querySelector("#printFacturaHor").textContent;
@@ -116,7 +148,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.write(printFacturaDir);
     impresora.write("\n\n");    
     impresora.setEmphasize(1);
-    impresora.write("Producto\t\t\tCantidad\tVr Unit\tVr Total\n");
+    impresora.write(productString + tabTitles + quantityString + "\tVr Unit\tVr Total\n");
     impresora.setEmphasize(0); 
     for (let index = 0; index < numItems; index++) {
         let stringProd = invoiceTableArray[index][0];
@@ -124,16 +156,16 @@ $btnImprimir.addEventListener("click", () => {
         strComplete = '';
         alignData(stringProd);        
         impresora.write(strComplete);
-        impresora.write("\t");
+        impresora.write(tabProductsMin);
         impresora.write(invoiceTableArray[index][1]);
-        impresora.write("\t");
+        impresora.write(tabProductsMin);
         impresora.write(justifyNum(invoiceTableArray[index][2]));
-        impresora.write("\t");
+        impresora.write(tabProductsMin);
         impresora.write(justifyNum(invoiceTableArray[index][3]));
         impresora.write("\n");    
     }
     impresora.setEmphasize(1); 
-    impresora.write("----------------------------------------------------------------\n");
+    impresora.write(lineDivider);
     impresora.setAlign("right");
     impresora.write("Subtotal: ");
     impresora.setEmphasize(0);
@@ -160,7 +192,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.write(justifyNum(printNewSaldo));
     impresora.write("\n");
     impresora.setEmphasize(1);
-    impresora.write("----------------------------------------------------------------\n");
+    impresora.write(lineDivider);
     impresora.setEmphasize(0);   
     impresora.write("OBSERVACION: ");
     impresora.write(printSerial);

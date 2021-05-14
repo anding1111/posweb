@@ -15,7 +15,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="dist/img/icons/favicon.ico"/>
+	<link rel="icon" type="image/png" href="dist/img/icons/favicon.png"/>
     <!--===============================================================================================-->
 
     <title>miPOS - WEB</title>
@@ -39,7 +39,7 @@
             <div class="wrap-login100">
                 <form class="login100-form validate-form" role="form" method="POST" action="">
                     <span class="login100-form-logo">
-                        <i class="zmdi zmdi-chart"></i>
+                        <i style="color:#AAA3A6;" class="zmdi zmdi-chart"></i>
                     </span>
                     
                     <span class="login100-form-title p-b-34 p-t-27">

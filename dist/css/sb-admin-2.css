@@ -15,7 +15,7 @@ body {
 
 }
 body.login {
-    background: url(../img/background-login.jpg) top;
+    background: url(../img/bg-login.svg) top;
     background-size:     cover;                     
     background-repeat:   no-repeat;
     background-position: center center;  

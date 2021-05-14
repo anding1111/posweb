@@ -1,0 +1,5 @@
+get-printer | format-table name
+
+rename-printer -name "SEWOO LK-P21" -newname "SEW00-LK-P21
+
+set-printer -name "SEW00-LK-P21" -shared $True -sharename "SEW00-LK-P21"

@@ -1,8 +1,4 @@
 <?php 
-//date_default_timezone_set('America/Bogota');
-//setlocale(LC_TIME, 'es_ES');
-//locale_set_default('es');
-
 include('../autoloadfunctions.php');
 include('../vendor/autoload.php');
 
@@ -15,16 +11,15 @@ include('../vendor/autoload.php');
 	//date_default_timezone_set('America/Bogota');
 	//setlocale(LC_ALL, 'es_CO.UTF-8');
 ?>
-
 <head>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Punto de Venta en la NUBE - Tu negocio en cualquier lugar y a cualquier hora">
+    <meta name="author" content="SAEDI SAS">
 
-    <title>Administrador Facturación</title>
+    <title>miPOS | WEB</title>
 
      <!-- jQuery UI 1.12.1 -->
      <link href="../bower_components/jqueryui/dist/css/jquery-ui.min.css" rel="stylesheet">
@@ -71,6 +66,7 @@ include('../vendor/autoload.php');
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                     <input type="hidden" id="shPrinter" value="<?php echo $shop->shPrinterName; ?>">
+                    <input type="hidden" id="printerType" value="<?php echo $shop->shPrinterType; ?>">
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>
