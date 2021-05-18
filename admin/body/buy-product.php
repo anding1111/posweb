@@ -9,6 +9,8 @@
         $cTotal = numIntPHP(formItemValidation($_POST['cTotal']));               
         $ifCredito = formItemValidation($_POST['ifCredito']);
         $inSerial = formItemValidation($_POST['inSerial']);
+        $pSubmit = formItemValidation($_POST['submit']);
+        //echo ("<script>alert('".$pSubmit."');</script>"); 
         $inSerial = trim($inSerial);
         if (empty($inSerial)) {
             $numRows = 0;            
@@ -20,13 +22,18 @@
         
         //current time now
         $nowTime = date("Y-m-d H:i:s");
-        //$nowTime = date("Y-m-d");
 
         //logged in shop ID
         $loggedInShop = $_SESSION['shId'];
 
-        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' ORDER BY cmId DESC LIMIT 1") );
-	    $invNum = $result->invId + 1;   
+        $orValue = 1;
+        //Validate Order or Cotization
+        if ($pSubmit == "COTIZAR") {
+            $orValue = 3;
+        }
+
+        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$orValue."' ORDER BY cmId DESC LIMIT 1") );
+	    $invNum = $result->invId + 1;
 
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];        
@@ -48,23 +55,27 @@
 			$pQty = formItemValidation($_POST['qty'][$i]);
 			$pPrice = formItemValidation($_POST['rate'][$i]);
             $pMount = formItemValidation($_POST['amount'][$i]);
-            $pCost = formItemValidation($_POST['cost_value'][$i]);               
+            $pCost = formItemValidation($_POST['cost_value'][$i]); 
 
+            //Query Qty products    
             $qryt = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pId = '$pId'") );
-            $idif = $qryt->pQuantity - $pQty;
+            $idif = $qryt->pQuantity - $pQty;            
 			
 			if($pQty>0){
 				
 				if ($idif<0){
 					echo '<script language="javascript">alert("¡No hay inventario suficiente de '.$qryt->pName.'!");</script>';					
-				}else{
-					
-					 if ($idif<10){
-						echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
-                        }
+				}else{					
+                    if ($idif<10){
+                    echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
+                    }
+
                     //Update Qty on items  
-					$update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
-					$qryf = $conexion->query($update) or die(mysqli_error($conexion));            
+                    if ($orValue == 1) {
+                        $update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
+                        $qryf = $conexion->query($update) or die(mysqli_error($conexion));     
+                    }
+                    //Insert items in orders  
 					$qry = $conexion->query("INSERT INTO orders VALUES(
 						'0',
 						'".$invNum."',
@@ -77,7 +88,7 @@
                         '".$cPayment."',
 						'".$nowTime."',
                         '".$inSerial."',                 
-                        '1',             
+                        '".$orValue."',                 
                         '".$loggedInShop."'             
 						
                         )") or die(mysqli_error($conexion));
@@ -125,7 +136,7 @@
                                 <div class="alert alert-success">El producto fue comprado con éxito</div>
                             <?php 
                                     //redirectTo('buy-product.php', 0);                                    
-                                    $mariae = "invoice.php?invId=".$invNum;
+                                    $mariae = "invoice.php?invId=".$invNum."&type=".$orValue;
                                     redirectTo($mariae, 0);
                                     endif; ?>
 
@@ -183,7 +194,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-4 col-lg-3 smartphone"> 
                                 <div class="form-group w3-card-4b">
-                                    <table class="table" id="product_info_table_2">
+                                    <table class="table" id="product_info_table_2" style="margin-bottom:0px;">
                                     <tbody>
                                         <tr>
                                             <td>
@@ -194,7 +205,7 @@
                                                     <input type="hidden" id="cId" name="cId" value="0">
                                                         <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
                                                         <label style="font-size:12px; width:25%;">Saldo: </label>
-                                                        <input style="text-align:center; font-size:18px; background-color:coral; width:72%;" id="saldoCliente" name="saldoCliente" value="0" readonly>
+                                                        <input class="form-control" style="text-align:center; font-size:18px; background-color:coral; width:72%;" id="saldoCliente" name="saldoCliente" value="0" readonly>
                                                         </div>
                                                 </fieldset>
                                             </div>
@@ -204,7 +215,7 @@
                                             <td>
                                             <fieldset class="scheduler-border">
                                                 <legend class="scheduler-border">TOTAL</legend>       
-                                                <input id="gross_total" class="form-control" name="cTotal" style="font-size:30px;width:100%;height:65px;text-align:center;" required="required" type="text" value="" readonly="readonly">
+                                                <input id="gross_total" class="form-control" name="cTotal" style="font-size:28px;width:100%;height:55px;text-align:center;" required="required" type="text" value="" readonly="readonly">
                                             </fieldset>
                                             </td>
                                         </tr>                                        
@@ -222,7 +233,7 @@
                                                     <input type="hidden" id="ifCredito" name="ifCredito" value="0">
                                                     <div class="form-inline" id="mostrar-ocultar" style="width:100%; padding-top:10px;"> 
                                                         <label style="font-size:12px; width:25%;">Abono: </label>
-                                                        <input type="text" name="cCredito" value="0" style="font-size:18px; width:72%; padding-left:10px;">
+                                                        <input class="form-control" type="text" name="cCredito" value="0" style="font-size:18px; width:72%; padding-left:10px;">
                                                     </div>                                                   
                                                 </fieldset>
                                             </div>
@@ -230,8 +241,13 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                            <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;background-color:#287890;border-color:#287890;" class="btn btn-info btn-large" name="submit"/>
+                                            <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;background-color:#287890;border-color:#287890;border-radius:6px;" class="btn btn-info btn-large" name="submit"/>
                                             <input type="hidden" name="numRows" id="num_rows" value="">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            <input type="submit" value="COTIZAR" style="font-size:14px; font-weight: bold; width:100%;vertical-align:middle;background-color:#445662;border-color:#287890;border-radius:4px;" class="btn btn-info btn-large" name="submit"/>
                                             </td>
                                         </tr>                                                            
                                         </tbody>

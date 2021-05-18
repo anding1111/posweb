@@ -1,183 +1,159 @@
- <?php $invId = $_GET['invId'];?> 
-
- <?php 
+ <?php
+    $invId = $_GET['invId'];
+    $type = $_GET['type'];
     global $conexion;
+    
     //logged in shop ID
     $loggedInShop = $_SESSION['shId'];
-    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '1' AND `shId` = '".$loggedInShop."' ");
-    //determinar el número de filas del resultado
+
+    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '".$type."' AND `shId` = '".$loggedInShop."' ");
+    
+    //Determinar el número de filas del resultado
     $numItems =  $qry->num_rows;
-    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND  `orEnable` = '1' AND shId = '".$loggedInShop."' GROUP BY cId"));
-    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId, orEnable FROM `orders` WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '1' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND shId = '".$loggedInShop."' AND `orEnable` = '1' AND invId BETWEEN 0 AND '$invId' "));
-   
+    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND  `orEnable` = '".$type."' AND shId = '".$loggedInShop."' GROUP BY cId"));
+    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId, orEnable FROM `orders` WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$type."' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND shId = '".$loggedInShop."' AND `orEnable` = '".$type."' AND invId BETWEEN 0 AND '$invId' "));
+
+    $typeName = "Factura";
+    //Validate type order
+    if ($type == 3) {
+        $typeName = "Cotización";
+    }
 ?>
 
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
-                    <div class="panel panel-default w3-card-4">
-                        
+                    <div class="panel panel-default w3-card-4">                        
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="dataTable_wrapper">
-                               <!-- <div class="table-responsive" id="printer"> -->
                                <div class="table" style="background-color: white;" id="printers">
                                 <!-- info row -->
                                 <div class="col-sm-12 invoice-col" style="text-align:center;">
                                 <b style="font-size:22px; font-family:Helvetica, Arial, sans-serif;"><span id="printShopName"><?php echo $shop->shName ?></span></b><br>
                                 <b style="font-size:16px; font-family:Helvetica, Arial, sans-serif;"><span id="printShopDesc"><?php echo $shop->shDesc ?></span></b><br>
                                 <b style="font-size:12px;">NIT. <span id="printShopDoc"><?php echo $shop->shDoc ?></span></b><br>
-                                <!-- <b style="font-size:12px;">Cra 6, Cll 12 # 5-27 Local 213 Piso 2</b><br> -->
-                                <!-- <b style="font-size:12px;">Cel. 317 446 4948</b><br> -->
                                 <b style="font-size:12px;"><span id="printShopDir"><?php echo $shop->shDir ?></span></b><br>
                                 </div>
-                                <div>                               
-                                </div>
-                                    <div class="row invoice-info" style="font-size:12px;">
-                                        <!-- <div class="col-sm-4 invoice-col" style="text-align:center;">
-                                                
-                                                <b id="ocultar">FACTURA </b> <br>
-                                                
-                                            </div> -->
-                                    
-                                        <div class="col-sm-6 invoice-col" id="ocultar">
-                                            <br>
-                                            <b>Factura No.: </b><span id="printFacturaNum"><?php echo $invId.'<br/>'; ?></span>
-                                            <b>Fecha: </b><span id="printFacturaFech"><?php
-                                            $Fecha = getFecha($invId);                                                
-                                            echo fechaCastellano($Fecha->bDate).'<br/>'; ?></span>
-                                            <b>Hora: </b><span id="printFacturaHor"><?php                                                                                             
-                                            echo horaCastellano($Fecha->bDate).'<br/>';?></span>
-                                            <b>Cliente: </b><span id="printFacturaClient"><?php  
-                                            $result = getCategoryNameById($qrydata->cId);                                      
-                                            echo $result->cName.'<br/>'; ?> </span>
-                                            <b>Documento: </b><span id="printFacturaDoc"><?php                                           
-                                            echo $result->cDoc.'<br/>'; ?> </span>
-                                            <b>Celular: </b><span id="printFacturaCel"><?php                                          
-                                            echo $result->cTelf.'<br/>'; ?> </span> 
-                                            <b>Dirección: </b><span id="printFacturaDir"><?php                                           
-                                            echo $result->cDir.'<br/>'; ?> </span>
-                                            <input type="hidden" id="numItems" value="<?php echo($numItems); ?>" class="form-control">
-
-                                        </div>
+                                <div class="row invoice-info" style="font-size:12px;">
+                                    <div class="col-sm-6 invoice-col" id="ocultar">
+                                        <br>
+                                        <span id="printTypeName"><b><?php echo $typeName; ?> No.: </b></span><span id="printFacturaNum"><?php echo $invId.'<br/>'; ?></span>
+                                        <span id="printFacturaFech"><?php
+                                        $Fecha = getFecha($invId);                                                
+                                        echo fechaCastellano($Fecha->bDate).'<br/>'; ?></span>
+                                        <b>Hora: </b><span id="printFacturaHor"><?php                                                                                             
+                                        echo horaCastellano($Fecha->bDate).'<br/>';?></span>
+                                        <b>Cliente: </b><span id="printFacturaClient"><?php  
+                                        $result = getCategoryNameById($qrydata->cId);                                      
+                                        echo $result->cName.'<br/>'; ?> </span>
+                                        <b>Documento: </b><span id="printFacturaDoc"><?php                                           
+                                        echo $result->cDoc.'<br/>'; ?> </span>
+                                        <b>Celular: </b><span id="printFacturaCel"><?php                                          
+                                        echo $result->cTelf.'<br/>'; ?> </span> 
+                                        <b>Dirección: </b><span id="printFacturaDir"><?php                                           
+                                        echo $result->cDir.'<br/>'; ?> </span>
+                                        <input type="hidden" id="numItems" value="<?php echo($numItems); ?>" class="form-control">
+                                    </div>
                                     <!-- /.col -->
                                 </div>
                                 <!-- /.row -->
                             <table class="table table-hover" style="font-size:12px;">
                                 <thead>
-                                <tr>                                
-                                    <th>Producto</th>                                
-                                    <!-- <th id="ocultar" style="display:none;">Precio Unidad</th> -->
-                                    <th style="text-align:right">Cant.</th>
-                                    <th id="ocultar" style="text-align:right">Vr. Unit.</th>
-                                    <th style="text-align:right">Vr. Total</th>
-                                </tr>
-                            </thead>
-                                    <tbody> 
-                                            <?php while ($row = $qry->fetch_assoc()) {
-                                            ?> <tr>                                           
-                                            <td> <?php
-
-                                                    $pId= getItemNameById($row['pId']);                                                    
-                                                    echo $pId->pName;?> </td>
-
-                                            <!-- <td id="ocultar" style="display:none;"> -->
-                                            <td style="text-align:right"> <?php
-                                            //$pId= getItemNameById($row['pId']);
-                                            echo(numMiles($row['pQty']));
-                                            //echo $pId->pName;?> </td> 
-                                             <!-- <td id="ocultar"> -->
-                                             <td style="text-align:right"> <?php
-                                            //$pId= getItemNameById($row['pId']);
-                                            echo(numMiles($row['pPrice']));
-                                            //echo $pId->pName;?> </td>
-                                            <td style="text-align:right"> <?php
-                                            //$pId= getItemNameById($row['pId']);
-                                            echo(numMiles($row['pMount']));
-                                            //echo $pId->pName;?> </td>                                                  
-                                                    
-                                                    </tr>
-                                                <?php } ?>                                                
-                                        <tr>                                      
-                                            <td colspan="3" style="text-align:right"><br><b>SubTotal: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td><br></td>
-                                            <td><br></td> -->
-                                            <td id="printSubTotal" style="text-align:right"><br> <b>$<?php 
-                                                     $total = getAllCustomersByInvId($invId);
-                                                     echo(numMiles($total));
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>  
-                                        <tr>
-                                            <td colspan="3" style="text-align:right"><b>Saldo Anterior: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td></td>
-                                            <td></td> -->
-                                            <td id="printOldSaldo" style="text-align:right"> <b>$<?php 
-                                                     echo(numMiles(($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)) - $total));
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" style="text-align:right"><b>Total: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td></td>
-                                            <td></td> -->
-                                            <td id="printTotal" style="text-align:right"> <b>$<?php 
-                                                     echo(numMiles($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)));
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" style="text-align:right"><b>Abona: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td></td>
-                                            <td></td> -->
-                                            <td id="printAbona" style="text-align:right"> <b>$<?php 
-                                                     echo(numMiles($qrydata->cPayment));
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3" style="text-align:right"><b>Nuevo Saldo: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td></td>
-                                            <td></td> -->
-                                            <td id="printNewSaldo" style="text-align:right"> <b>$<?php 
-                                                     echo(numMiles($qrysaldo->total - $qrysaldo->pagado));
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>SERIALES: </b></td>
-                                            <!-- <td id="ocultar"></td> -->
-                                            <!-- <td></td>
-                                            <td></td> -->
-                                            <td colspan="3" id="printSerial"> <b><?php 
-                                                     $imeis = getIdClienteByInvId($invId);
-                                                     print_r($imeis->inSerial);                                                     
-                                                     //echo($qrysaldo->total - $qrysaldo->pagado);
-                                                ?> </b>                                          
-                                            </td>
-                                        </tr>
-                                        <tr style="font-size:8px; text-align: center !important">
-                                        <td colspan="4">
-                                        <br>
-                                        <br>                                        
-                                        <b style="font-size:10px;">Atendido por: <?php echo getLoggedInUserName(); ?>  </b>
-                                        <br>
-                                        <b style="font-size:10px;"><?php echo $shop->shWeb ?>  </b>
-                                        <br>
-                                        <b style="font-size:8px;">  Cel. <?php echo $shop->shTelf ?></b>
-                                        <br>
-                                        <b>Software de Facturación Desarrolado por SAEDI.COM.CO</b>                                       
-                                        </td>                                   
-                                        </tr>
-                                        
-                                    </tbody>
-                                    
-                                </table> 
-                                <div id="img"></div>                               
+                                    <tr>                                
+                                        <th>Producto</th>                                
+                                        <th style="text-align:right">Cant.</th>
+                                        <th id="ocultar" style="text-align:right">Vr. Unit.</th>
+                                        <th style="text-align:right">Vr. Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <?php while ($row = $qry->fetch_assoc()) {
+                                    ?>
+                                    <tr>                                           
+                                        <td> <?php
+                                        $pId= getItemNameById($row['pId']);                                                    
+                                        echo $pId->pName;
+                                        ?> </td>
+                                        <td style="text-align:right"> <?php
+                                        echo(numMiles($row['pQty']));
+                                        ?> </td> 
+                                        <td style="text-align:right"> <?php
+                                        echo(numMiles($row['pPrice']));
+                                        ?> </td>
+                                        <td style="text-align:right"> <?php
+                                        echo(numMiles($row['pMount']));
+                                        ?> </td> 
+                                    </tr>
+                                    <?php } ?>                                                
+                                    <tr>                                     
+                                        <td colspan="3" style="text-align:right"><br><b><?php echo ($type == 1 ? "SubTotal:" : "Total:");?> </b></td>
+                                        <td id="printSubTotal" style="text-align:right"><br> <b>$<?php 
+                                        if ($type == 3){
+                                            $total = getAllQuotationsByInvId($invId);
+                                            echo(numMiles($total));
+                                            ?>
+                                        </b> </td>
+                                    </tr>
+                                        <?php
+                                        }else{
+                                            $total = getAllCustomersByInvId($invId);
+                                            echo(numMiles($total));
+                                            ?>                                        
+                                        </b> </td>
+                                    </tr>  
+                                    <tr>
+                                        <td colspan="3" style="text-align:right"><b>Saldo Anterior: </b></td>
+                                        <td id="printOldSaldo" style="text-align:right"> <b>$<?php 
+                                        echo(numMiles(($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)) - $total));
+                                        ?> </b>                                          
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align:right"><b>Total: </b></td>
+                                        <td id="printTotal" style="text-align:right"> <b>$<?php 
+                                        echo(numMiles($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)));
+                                        ?> </b>                                          
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align:right"><b>Abona: </b></td>
+                                        <td id="printAbona" style="text-align:right"> <b>$<?php 
+                                        echo(numMiles($qrydata->cPayment));
+                                        ?> </b>                                          
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3" style="text-align:right"><b>Nuevo Saldo: </b></td>
+                                        <td id="printNewSaldo" style="text-align:right"> <b>$<?php 
+                                        echo(numMiles($qrysaldo->total - $qrysaldo->pagado));
+                                        ?> </b>                                          
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>SERIALES: </b></td>
+                                        <td colspan="3" id="printSerial"> <b><?php 
+                                        $imeis = getIdClienteByInvId($invId);
+                                        print_r($imeis->inSerial);                                                     
+                                        ?> </b>                                          
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                    <tr style="font-size:8px; text-align: center !important">
+                                    <td colspan="4">
+                                    <br>
+                                    <br>                                        
+                                    <b style="font-size:10px;">Atendido por: <?php echo getLoggedInUserName(); ?>  </b>
+                                    <br>
+                                    <b style="font-size:10px;"><?php echo $shop->shWeb ?>  </b>
+                                    <br>
+                                    <b style="font-size:8px;">  Cel. <?php echo $shop->shTelf ?></b>
+                                    <br>
+                                    <b>Software de Facturación Desarrolado por SAEDI.COM.CO</b>                                       
+                                    </td>                                   
+                                    </tr>                                    
+                                </tbody>                                    
+                            </table> 
+                            <div id="img"></div>                               
 
                             </div> 
                             <div class="row">                                                                        

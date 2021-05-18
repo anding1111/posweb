@@ -91,6 +91,7 @@ var printShopDoc = document.querySelector("#printShopDoc").textContent;
 var printShopDir = document.querySelector("#printShopDir").textContent;
 
 //Obtiene Datos Factura
+var printTypeName = document.querySelector("#printTypeName").textContent;
 var printFacturaNum = document.querySelector("#printFacturaNum").textContent;
 var printFacturaFech = document.querySelector("#printFacturaFech").textContent;
 var printFacturaHor = document.querySelector("#printFacturaHor").textContent;
@@ -126,7 +127,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.write(printShopDir);
     impresora.write("\n\n");
     impresora.setAlign("left");
-    impresora.write("Factura No: ");
+    impresora.write(printTypeName);
     impresora.write(printFacturaNum);
     impresora.write("\n");
     impresora.write("Fecha:      ");

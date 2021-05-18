@@ -11,14 +11,15 @@
         //collecting userinfo        
         $uFullName = formItemValidation($_POST['uFullName']);
         $uName = formItemValidation($_POST['uName']);
-        $uType = formItemValidation($_POST['uType']);
-
+        
         if(isset($_POST['uPassword'])){
             $uPassword =  formItemValidation($_POST['uPassword'] );
             $uPasswordAgain = formItemValidation($_POST['uPasswordAgain']);
+            $uType = formItemValidation($_POST['uType']);
         } else{
             $uPassword =  null;
             $uPasswordAgain = null;            
+            $uType = null;
         }
 
         if ( $uPassword == $uPasswordAgain ) { 
@@ -45,7 +46,7 @@
                 if( $uPassword != null && $uPasswordAgain != null ){
                     $update = "UPDATE users SET uFullName = '".$uFullName."' , uPassword = '".md5($uPassword)."' , uType = '".$uType."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                 } else{
-                    $update = "UPDATE users SET uFullName = '".$uFullName."' , uType = '".$uType."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
+                    $update = "UPDATE users SET uFullName = '".$uFullName."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                 }
                     $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
@@ -110,17 +111,23 @@
                                     <label>Repetir Contraseña Nueva</label>
                                     <input class="form-control" name="uPasswordAgain" required="required" type="password">
                                 </div>
-                                <?php endif; ?>
-
                                 <div class="form-group">
-                                <label>Seleccione un Perfíl</label>
+                                    <label>Seleccione un Perfíl</label>
+                                    <?php $options = array( 
+                                            "Super Administrador" => 'admin', 
+                                            "Administrador" => 'manager',
+                                            "Encargado" => 'replacement', 
+                                            "Vendedor" => 'seller'
+                                        );  ?>
                                     <select class="form-control" name="uType">
-                                        <option value="admin">Super Administrador</option>
-                                        <option value="manager" selected="selected">Administrador</option>
-                                        <option value="replacement">Encargado</option>
-										<option value="seller">Vendedor</option>
-                                    </select>
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->uType == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
                                 </div>
+                                <?php endif; ?>
 
                                 <input type="submit" value="ACTUALIZAR" class="btn btn-info btn-large" name="submit" />
 

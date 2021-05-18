@@ -3,12 +3,11 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default w3-card-4">
                     <div class="titles mb--10">
-                        Lista de Ventas
+                        Lista de Cotizaciones
                           
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-
 
                             <div class="dataTable_wrapper">                            
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-recibos" width="100%">
@@ -27,7 +26,7 @@
                                     <tbody>
                                     <?php  
 
-                                        $qry = getAllCustomers();
+                                        $qry = getAllQuotations();
                                         $invId = "";
                                         $invId2 = 0;
                                         $cName = "";
@@ -49,10 +48,7 @@
                                             <tr class="odd gradeX">
                                                <?php
                                             } 
-                                            
                                             ?> <!--</td>-->
-                                           
-                                             
                                                 <?php 
                                                     //$product = getItemNameById($data->invId);
                                                     $invIdNew = $data->invId;
@@ -64,8 +60,6 @@
                                                     }                                          
                                                    
                                                 ?>  
-												
-											
                                                 <?php 
                                                     $client = getCategoryNameById($data->cId);
                                                     $cNameNew = $client->cName;
@@ -84,14 +78,11 @@
                                                     ?>
                                                     <td style="text-align:right"> 
                                                     <?php
-                                                    $total = getAllCustomersByInvId($data->invId);                                                    
-                                                    print_r($total);
-                                                                                                      
+                                                    $total = getAllQuotationsByInvId($data->invId);                                                    
+                                                    print_r($total);                                                                                                      
                                                     }?>
                                                     </td><?php
                                             ?> 
-                                        
-                                           
                                             <?php 
                                                 
                                                     if($countAux != $count){
@@ -107,9 +98,7 @@
                                                         if($cmId != $cmIdNew){
                                                             $cmId = $cmIdNew;?>
                                                             <td style="text-align:center">
-                                                            <a href="invoice.php?invId=<?php echo $cmId; ?>&type=1" class="btn btn-default">Ver</a>
-                                                            <a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="<?php echo $cmId ?>">Anular</a>
-                                                            <?php //echo '<a href="#" id="anular-btn" class="btn btn-default btn-small" data-id="'.$cmId.'">Anular</a>';?>
+                                                            <a href="invoice.php?invId=<?php echo $cmId; ?>&type=3" class="btn btn-default">Ver</a>
                                                             </td>
                                                 </tr>                                                           
                                             <?php  } ?>

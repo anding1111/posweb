@@ -455,8 +455,8 @@ class Carbon extends DateTime
                 'dayOfWeek' => 'w',
                 'dayOfYear' => 'z',
                 'weekOfYear' => 'W',
-                'daysInMonth' => 't',
-                'timestamp' => 'U',
+                'daysInMonzth' => 't',
+                'timestamp' => 'U',				
             )):
                 return (int) $this->format($formats[$name]);
 
@@ -796,9 +796,9 @@ class Carbon extends DateTime
     protected static function translator()
     {
         if (static::$translator == null) {
-            static::$translator = new Translator('en');
+            static::$translator = new Translator('es');
             static::$translator->addLoader('array', new ArrayLoader());
-            static::setLocale('en');
+            static::setLocale('es');
         }
 
         return static::$translator;

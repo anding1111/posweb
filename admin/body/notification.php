@@ -55,7 +55,7 @@
 
                                         <tr class="odd gradeX">
                                             <td> <?php echo $i; ?> </td>
-                                            <td> <?php echo getUsernameByUserId($data->nFromWhom);  ?> </td>
+                                            <td> <?php echo getFullUsernameByUserId($data->nFromWhom);  ?> </td>
                                             <td class="center"> <?php echo $data->nMessage; ?> </td>
                                             
                                             <td class="center"> <?php 

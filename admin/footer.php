@@ -100,7 +100,8 @@ $actual_link = "$_SERVER[REQUEST_URI]";
             }
         }); 
 
-        // $('.viewTimer').hide("linear");
+        $("#start_time").val("00:00:00");
+        $("#end_time").val("23:59:59");
 
         $('#timer').click(function(){
             var showTimer = $('#timerState').data('timer'); //getter
@@ -122,7 +123,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
             interval: 30,
             minTime: '06:00',
             maxTime: '22:00',
-            defaultTime: '06:00',
+            defaultTime: '00:00:00',
             startTime: '06:00',
             dynamic: true,
             dropdown: true,
@@ -133,7 +134,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
             interval: 30,
             minTime: '06:00',
             maxTime: '22:00',
-            defaultTime: '14:00',
+            defaultTime: '23:00:59',
             startTime: '14:00',
             dynamic: true,
             dropdown: true,

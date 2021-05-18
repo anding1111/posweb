@@ -8,9 +8,6 @@ function getAllUser()
 
 function getLoggedInUserName()
 {
-	// if(isset($_SESSION['username'])){
-	// 	return $_SESSION['username'];
-    // }
 	return $_SESSION['fullusername'];
 }
 
@@ -24,6 +21,12 @@ function getUsernameByUserId($value)
 	global $conexion;
 	$qry = mysqli_fetch_object( $conexion->query( "SELECT uName from users WHERE uId = '".$value."' AND `shId` = '".$_SESSION['shId']."' " ) );
 	return $qry->uName;
+}
+function getFullUsernameByUserId($value)
+{
+	global $conexion;
+	$qry = mysqli_fetch_object( $conexion->query( "SELECT uFullName from users WHERE uId = '".$value."' AND `shId` = '".$_SESSION['shId']."' " ) );
+	return $qry->uFullName;
 }
 
 function getAllAdmin(){

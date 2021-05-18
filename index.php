@@ -67,20 +67,20 @@
                                             )") or die(mysqli_error($conexion));
     
                         ?>
-                            <div class="alert alert-success">Ingreso Satisfactorio</a>.</div>
+                            <div style="text-align:center;" class="alert alert-success">Ingreso Satisfactorio</a>.</div>
                         <?php
                         }
                         
                         if( loginDataReceive($username, $password) == 2){
                         ?>
-                            <div class="alert alert-danger">Error en usuario o contraseña</a>.
+                            <div style="text-align:center;" class="alert alert-danger">Error en usuario o contraseña</a>.
                             </div>
                         <?php
                         }
                            
                         if( loginDataReceive($username, $password) == 3){
                         ?>
-                            <div class="alert alert-danger">Debe llenar todos los campos!</a>.
+                            <div style="text-align:center;" class="alert alert-danger">Debe llenar todos los campos!</a>.
                             </div>
                         <?php
                         }

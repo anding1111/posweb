@@ -114,7 +114,7 @@
                                     <label>Tipo Impresora (Tamaño de papel)</label>
                                     <?php $options = array( 
                                             "Impresora 80mm" => 0, 
-                                            "Impresora 57mm" => 1
+                                            "Impresora 58mm" => 1
                                         );  ?>
                                     <select class="form-control" name="shPrinterType">
                                     <?php  foreach($options as $display => $value) {  ?>

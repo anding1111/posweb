@@ -18,6 +18,7 @@
                     <li class="dropdown-header">Seleccione</li>
                     <li><a href="buy-product.php"><i class="fa fa-cart-plus fa-fw"></i> Nueva Venta</a></li>
                     <li><a href="orders.php"><i class="fa fa-money fa-fw"></i> Facturas</a></li>                    
+                    <li><a href="quotations.php"><i class="fa fa-money fa-fw"></i> Cotizaciones</a></li>                    
                   </ul>
                 </li>
                 

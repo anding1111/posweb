@@ -29,38 +29,29 @@
 
                                         <tr class="odd gradeX">
                                             <td> <?php echo $i; ?> </td>
-                                            <td> <?php echo getUsernameByUserId($data->uId); ?> </td>
+                                            <td> <?php echo getFullUsernameByUserId($data->uId); ?> </td>
                                             <td> <?php 
                                             	$todayDate = new Carbon\Carbon( $data->loginTime );
-                                            	echo($todayDate->toFormattedDateString());  
+                                            	echo($todayDate);  
+                                            	// echo($todayDate->toFormattedDateString());  
 
                                              ?> </td>
                                             <td class="center"> 
-
                                             	<?php 
-
 	                                            	$inTime = new Carbon\Carbon( $data->loginTime );
 	                                            	echo($inTime->toTimeString());  
-
 	                                             ?> 
-
                                             </td>
                                             <td class="center"> 
-
                                             	<?php 
-
 	                                            	$outTime = new Carbon\Carbon( $data->logoutTime );
 	                                            	echo($outTime->toTimeString());  
-
 	                                             ?> 
-
                                             </td>
                                             <td class="center"> <?php 
-                                                   
                                                 $total = $inTime->diffInMinutes($outTime);
-
-                                                echo $total;
-
+                                                // echo $total;
+                                                echo dateDifference($data->logoutTime, $data->loginTime);
                                                 ?> 
                                             </td>
                                         </tr>

@@ -6,11 +6,6 @@ include('../vendor/autoload.php');
 
 <!DOCTYPE html>
 <html lang="es">
-<?php 
-	//setlocale(LC_TIME, 'es_ES.UTF-8');
-	//date_default_timezone_set('America/Bogota');
-	//setlocale(LC_ALL, 'es_CO.UTF-8');
-?>
 <head>
 
     <meta charset="utf-8">
@@ -51,6 +46,12 @@ include('../vendor/autoload.php');
 
 </head>
 <body>
+<?php 
+	// setlocale(LC_TIME, 'es_ES.UTF-8');
+	// date_default_timezone_set('America/Bogota');
+	// setlocale(LC_ALL, 'es_CO.UTF-8');
+    setlocale(LC_ALL, 'es_ES');
+?>
             <!-- Shop -->
             <?php
             $id = $_SESSION['shId'];
