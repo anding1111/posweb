@@ -14,6 +14,8 @@ include('../vendor/autoload.php');
     <meta name="description" content="Punto de Venta en la NUBE - Tu negocio en cualquier lugar y a cualquier hora">
     <meta name="author" content="SAEDI SAS">
 
+    <link rel="icon" type="image/png" href="../dist/img/icons/favicon.png"/>
+
     <title>miPOS | WEB</title>
 
      <!-- jQuery UI 1.12.1 -->
