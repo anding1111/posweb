@@ -86,7 +86,7 @@
                                     </tr>
                                     <?php } ?>                                                
                                     <tr>                                     
-                                        <td colspan="3" style="text-align:right"><br><b><?php echo ($type == 1 ? "SubTotal:" : "Total:");?> </b></td>
+                                        <td colspan="3" style="text-align:right"><br><span id="typeOrder"><b><?php echo ($type == 1 ? "SubTotal:" : "Total:");?> </b></span></td>
                                         <td id="printSubTotal" style="text-align:right"><br> <b>$<?php 
                                         if ($type == 3){
                                             $total = getAllQuotationsByInvId($invId);

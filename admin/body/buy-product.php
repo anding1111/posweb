@@ -32,9 +32,12 @@
             $orValue = 3;
         }
 
-        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$orValue."' ORDER BY cmId DESC LIMIT 1") );
-	    $invNum = $result->invId + 1;
-
+        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$orValue."' ORDER BY invId DESC LIMIT 1") );
+        if($result->num_rows > 0){
+            $invNum = $result->invId + 1; 
+        }else{
+            $invNum = 1;
+        }
         //logged in user ID
         $loggedInUser = $_SESSION['uId'];        
 

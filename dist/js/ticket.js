@@ -91,7 +91,7 @@ var printShopDoc = document.querySelector("#printShopDoc").textContent;
 var printShopDir = document.querySelector("#printShopDir").textContent;
 
 //Obtiene Datos Factura
-var printTypeName = document.querySelector("#printTypeName").textContent;
+var printTypeName = "Cotizacion No.: ";
 var printFacturaNum = document.querySelector("#printFacturaNum").textContent;
 var printFacturaFech = document.querySelector("#printFacturaFech").textContent;
 var printFacturaHor = document.querySelector("#printFacturaHor").textContent;
@@ -101,12 +101,17 @@ var printFacturaCel = document.querySelector("#printFacturaCel").textContent;
 var printFacturaDir = document.querySelector("#printFacturaDir").textContent;
 
 //Obtiene Valores Totales
+var typeOrder = replaceSym(document.getElementById("typeOrder").textContent);
 var printSubTotal = replaceSym(document.getElementById("printSubTotal").textContent);
-var printOldSaldo = replaceSym(document.querySelector("#printOldSaldo").textContent);
-var printTotal = replaceSym(document.querySelector("#printTotal").textContent);
-var printAbona = replaceSym(document.querySelector("#printAbona").textContent);
-var printNewSaldo = replaceSym(document.querySelector("#printNewSaldo").textContent);
-var printSerial = document.querySelector("#printSerial").textContent;
+if (typeOrder == "SubTotal:") {
+    var printTypeName = document.querySelector("#printTypeName").textContent;
+    var printOldSaldo = replaceSym(document.querySelector("#printOldSaldo").textContent);
+    var printTotal = replaceSym(document.querySelector("#printTotal").textContent);
+    var printAbona = replaceSym(document.querySelector("#printAbona").textContent);
+    var printNewSaldo = replaceSym(document.querySelector("#printNewSaldo").textContent);
+    var printSerial = document.querySelector("#printSerial").textContent;
+}
+    
 
 
 $btnImprimir.addEventListener("click", () => {
@@ -168,10 +173,11 @@ $btnImprimir.addEventListener("click", () => {
     impresora.setEmphasize(1); 
     impresora.write(lineDivider);
     impresora.setAlign("right");
-    impresora.write("Subtotal: ");
+    impresora.write(typeOrder);
     impresora.setEmphasize(0);
     impresora.write(justifyNum(printSubTotal));
     impresora.write("\n");
+    if (typeOrder == "SubTotal:") {
     impresora.setEmphasize(1);
     impresora.write("Saldo Anterior: ");
     impresora.setEmphasize(0);
@@ -195,9 +201,13 @@ $btnImprimir.addEventListener("click", () => {
     impresora.setEmphasize(1);
     impresora.write(lineDivider);
     impresora.setEmphasize(0);   
-    impresora.write("OBSERVACION: ");
+    impresora.write("OBSERVACIONES: ");
     impresora.write(printSerial);
     impresora.write("\n");
+    }
+    impresora.setAlign("center");
+    impresora.write("\n\n");
+    impresora.write("Sistema POS Web | WWW.MIPOS.PRO");    
     impresora.feed(2); // Feed 2 veces
     impresora.cut(); // Corta el papel
     impresora.cutPartial(); // Pongo este y también cut porque en ocasiones no funciona con cut, solo con cutPartial
