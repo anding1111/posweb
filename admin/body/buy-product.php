@@ -32,8 +32,10 @@
             $orValue = 3;
         }
 
-        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$orValue."' ORDER BY invId DESC LIMIT 1") );
-        if($result->num_rows > 0){
+        //generate invoice number
+        $consulta = $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$orValue."' ORDER BY invId DESC LIMIT 1");
+        if($consulta->num_rows > 0){
+            $result = mysqli_fetch_object($consulta);        
             $invNum = $result->invId + 1; 
         }else{
             $invNum = 1;

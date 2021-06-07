@@ -145,7 +145,7 @@
                                         url: "body/abono-saldo.php",
                                         type: "post",
                                         data: {dId:id, dSaldo:saldo}
-                                }).done(function(msg){                   
+                                }).done(function(msg){
                                     window.location.reload();                                              
                                 });
                             });

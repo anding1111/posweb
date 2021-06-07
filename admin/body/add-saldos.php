@@ -10,17 +10,18 @@
         //current time now
         $nowTime = date("Y-m-d H:i:s");
 
+        //logged in shop ID
+        $loggedInShop = $_SESSION['shId'];
+        
         //generate invoice number
-        $result = mysqli_fetch_object( $conexion->query("SELECT * FROM orders WHERE `shId` = '".$_SESSION['shId']."' AND `orEnable` = 1 ORDER BY invId DESC LIMIT 1") );
-        if($result->num_rows > 0){
+        $consulta = $conexion->query("SELECT * FROM orders WHERE `shId` = '".$loggedInShop."' AND `orEnable` = 1 ORDER BY invId DESC LIMIT 1");
+        if($consulta->num_rows > 0){
+            $result = mysqli_fetch_object($consulta);        
             $invNum = $result->invId + 1; 
         }else{
             $invNum = 1;
         }
-        //logged in user ID
-        //$loggedInUser = $_SESSION['uId'];
-        //logged in shop ID
-        $loggedInShop = $_SESSION['shId'];
+        
 
         $qry = $conexion->query("INSERT INTO orders VALUES(
                                 '0',
