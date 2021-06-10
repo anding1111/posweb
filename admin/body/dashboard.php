@@ -29,7 +29,7 @@
                                     <i class="fa fa-cart-arrow-down fa-5x"></i>									
                                 </div>
 								<?php
-									$qry = getTotalCustomers();									
+									$qry = getTotalOrders();									
 									?>
 								
                                 <div class="col-xs-9 text-right">

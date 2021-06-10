@@ -39,7 +39,11 @@
                                         <br>
                                         <span id="printTypeName"><b><?php echo $typeName; ?> No.: </b></span><span id="printFacturaNum"><?php echo $invId.'<br/>'; ?></span>
                                         <span id="printFacturaFech"><?php
-                                        $Fecha = getFecha($invId);                                                
+                                        if ($type == 1) {
+                                            $Fecha = getFecha($invId);
+                                        } else {
+                                            $Fecha = getFechaQuot($invId);                                            
+                                        }                                              
                                         echo fechaCastellano($Fecha->bDate).'<br/>'; ?></span>
                                         <b>Hora: </b><span id="printFacturaHor"><?php                                                                                             
                                         echo horaCastellano($Fecha->bDate).'<br/>';?></span>
@@ -96,7 +100,7 @@
                                     </tr>
                                         <?php
                                         }else{
-                                            $total = getAllCustomersByInvId($invId);
+                                            $total = getAllOrdersByInvId($invId);
                                             echo(numMiles($total));
                                             ?>                                        
                                         </b> </td>
@@ -129,15 +133,16 @@
                                         ?> </b>                                          
                                         </td>
                                     </tr>
+                                        <?php } ?>
                                     <tr>
-                                        <td><b>SERIALES: </b></td>
-                                        <td colspan="3" id="printSerial"> <b><?php 
+                                        <td><b>OBSERVACIONES: </b></td>
+                                        <td colspan="3" id="printSerial"> <b>
+                                        <?php 
                                         $imeis = getIdClienteByInvId($invId);
                                         print_r($imeis->inSerial);                                                     
                                         ?> </b>                                          
                                         </td>
                                     </tr>
-                                    <?php } ?>
                                     <tr style="font-size:8px; text-align: center !important">
                                     <td colspan="4">
                                     <br>

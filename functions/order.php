@@ -1,34 +1,35 @@
 <?php
 
-function getAllCustomers()
+function getAllOrders()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM orders WHERE `pId` != '0' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' ");
+	// return $conexion->query("SELECT invId, pId FROM orders WHERE `pId` != '0' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' ");
+	return $conexion->query("SELECT `invId`, `pId`, `cId`, SUM(`pMount`) AS totalOrder, `bDate` FROM orders WHERE `pId` != '0' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' GROUP BY `invId` ");
 }
 
 function getAllQuotations()
 {
 	global $conexion;
-	return $conexion->query("SELECT * FROM orders WHERE `pId` != '0' AND `orEnable` = 3 AND `shId` = '".$_SESSION['shId']."' ");
+	// return $conexion->query("SELECT * FROM orders WHERE `pId` != '0' AND `orEnable` = 3 AND `shId` = '".$_SESSION['shId']."' ");
+	return $conexion->query("SELECT `invId`, `pId`, `cId`, SUM(`pMount`) AS totalOrder, `bDate` FROM orders WHERE `pId` != '0' AND `orEnable` = 3 AND `shId` = '".$_SESSION['shId']."' GROUP BY `invId` ");
+
 }
 
 //Funcion para contar total Ordenes
-function getTotalCustomers()
+function getTotalOrders()
 {
 	global $conexion;
 	$query = $conexion->query("SELECT DISTINCT invId FROM orders WHERE pId != '0' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' ");	
 	return $query->num_rows;
-	
 }
+
 //Funcion que devuelve el total de precio por factura
-function getAllCustomersByInvId($invId)
+function getAllOrdersByInvId($invId)
 {
 	global $conexion;
-	$result = $conexion->query("SELECT * FROM orders WHERE invId ='$invId' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' ");
-	$total = 0;
-	while ($row = $result->fetch_assoc()) {
-		$total = $total + $row['pMount'];
-	}
+	// $result = $conexion->query("SELECT * FROM orders WHERE invId ='$invId' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' ");
+	$result = mysqli_fetch_object($conexion->query("SELECT SUM(pMount) AS Total FROM orders WHERE invId ='$invId' AND `orEnable` = 1 AND `shId` = '".$_SESSION['shId']."' GROUP BY `invId` "));
+	$total = $result->Total;
 	return $total;
 }
 //Funcion que devuelve el total de precio por factura

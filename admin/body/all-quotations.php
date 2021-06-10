@@ -24,86 +24,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php  
-
+                                    <?php 
                                         $qry = getAllQuotations();
-                                        $invId = "";
-                                        $invId2 = 0;
-                                        $cName = "";
-                                        $bDate = "";
-                                        $cmId = "";
-                                        $sn = "";                                                                         
-                                        $i = 1;
-                                        $count = 0;
-                                        $countAux = 0;                                      
-                                        //$total = 0;
                                         while($data = mysqli_fetch_object( $qry )){
-                                            //print_r($data);                                            
-                                    ?>
-                                            <!-- <td> --> <?php
-                                            $snNew = $data->invId;
-                                            if($sn != $snNew){
-                                                $sn = $snNew;
-                                                $count++;?>                                               
+                                        ?>
                                             <tr class="odd gradeX">
-                                               <?php
-                                            } 
-                                            ?> <!--</td>-->
-                                                <?php 
-                                                    //$product = getItemNameById($data->invId);
-                                                    $invIdNew = $data->invId;
-                                                    if($invId != $invIdNew){
-                                                        $invId = $invIdNew;?>
-                                                        <td> 
-                                                        <?php echo($invId); $cName = "";?>
-                                                        </td><?php
-                                                    }                                          
-                                                   
-                                                ?>  
-                                                <?php 
-                                                    $client = getCategoryNameById($data->cId);
-                                                    $cNameNew = $client->cName;
-                                                    if($cName != $cNameNew){
-                                                        $cName = $cNameNew;?>
-                                                        <td> 
-                                                        <?php echo($cName); ?>
-                                                        </td><?php
-                                                    }  
-
-                                                ?>
-                                            <?php                                                                                                 
-                                                $invIdNew2 = $data->invId;                                                                                  
-                                                if($invId2 < $invIdNew2){                                                                                              
-                                                    $invId2 = $invIdNew2;
-                                                    ?>
-                                                    <td style="text-align:right"> 
-                                                    <?php
-                                                    $total = getAllQuotationsByInvId($data->invId);                                                    
-                                                    print_r($total);                                                                                                      
-                                                    }?>
-                                                    </td><?php
-                                            ?> 
-                                            <?php 
-                                                
-                                                    if($countAux != $count){
-                                                        $countAux = $count;?>
-                                                        <td> 
-                                                        <?php echo($data->bDate); ?>
-                                                        </td><?php
-                                                    }
-                                                ?>
-
-                                             <?php
-                                                        $cmIdNew = $data->invId;
-                                                        if($cmId != $cmIdNew){
-                                                            $cmId = $cmIdNew;?>
-                                                            <td style="text-align:center">
-                                                            <a href="invoice.php?invId=<?php echo $cmId; ?>&type=3" class="btn btn-default">Ver</a>
-                                                            </td>
-                                                </tr>                                                           
-                                            <?php  } ?>
-                                            
-                                                        <?php } ?>
+                                                <td> 
+                                                <?php echo($data->invId);?>
+                                                </td>
+                                                <td> 
+                                                <?php  $client = getCategoryNameById($data->cId);
+                                                echo($client->cName); ?>
+                                                </td>
+                                                <td style="text-align:right"> 
+                                                <?php
+                                                echo($data->totalOrder); ?>
+                                                </td>                                       
+                                                <td> 
+                                                <?php echo($data->bDate); ?>
+                                                </td>
+                                                <td style="text-align:center">
+                                                <a href="invoice.php?invId=<?php echo $data->invId; ?>&type=3" class="btn btn-default">Ver</a>
+                                                </td>
+                                            </tr>                                                           
+                                        <?php } ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>

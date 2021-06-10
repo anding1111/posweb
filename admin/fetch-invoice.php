@@ -17,7 +17,7 @@ if(isset($_POST["userid"])) {
     $Fecha = getFecha($invId);                                                
     $fechaInvoice = fechaCastellano($Fecha->bDate);
     $horaInvoice = horaCastellano($Fecha->bDate);
-    $subTotalInvoice = getAllCustomersByInvId($invId);
+    $subTotalInvoice = getAllOrdersByInvId($invId);
     $saldoOldInvoice =  $qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado) - $subTotalInvoice;
     $totalInvoice =  $qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado);
     $abonaInvoice =  $qrydata->cPayment;
@@ -60,8 +60,7 @@ if(isset($_POST["userid"])) {
         $mount = $row['pMount'];
         $response .= "<tr>";
         $response .= "<td style='width:45%'>".$itemName."</td><td style='text-align:right; width:10%'>".$qty."</td><td style='text-align:right; width:20%'>".$price."</td><td style='text-align:right; width:25%'>".$mount."</td>";
-        $response .= "</tr>";
-        
+        $response .= "</tr>";        
     }
     $response .= "</tbody>    
     </table>

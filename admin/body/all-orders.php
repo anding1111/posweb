@@ -11,110 +11,42 @@
 
 
                             <div class="dataTable_wrapper">                            
-                                <table class="table table-striped table-bordered table-hover" id="dataTables-recibos" width="100%">
-                               
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-recibos" width="100%">                               
                                     <thead>
                                         <tr>
-                                            <!-- <th>#sl</th> -->
                                             <th>No.</th>
                                             <th>Cliente</th>
                                             <th style="text-align:right">Total</th>                                            
                                             <th>Fecha</th>
                                             <th style="text-align:center">Opciones</th>
-                                           
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    <?php  
-
-                                        $qry = getAllCustomers();
-                                        $invId = "";
-                                        $invId2 = 0;
-                                        $cName = "";
-                                        $bDate = "";
-                                        $cmId = "";
-                                        $sn = "";                                                                         
-                                        $i = 1;
-                                        $count = 0;
-                                        $countAux = 0;                                      
-                                        //$total = 0;
+                                    <?php
+                                        $qry = getAllOrders();
                                         while($data = mysqli_fetch_object( $qry )){
-                                            //print_r($data);                                            
                                     ?>
-                                            <!-- <td> --> <?php
-                                            $snNew = $data->invId;
-                                            if($sn != $snNew){
-                                                $sn = $snNew;
-                                                $count++;?>                                               
                                             <tr class="odd gradeX">
-                                               <?php
-                                            } 
-                                            
-                                            ?> <!--</td>-->
-                                           
-                                             
-                                                <?php 
-                                                    //$product = getItemNameById($data->invId);
-                                                    $invIdNew = $data->invId;
-                                                    if($invId != $invIdNew){
-                                                        $invId = $invIdNew;?>
-                                                        <td> 
-                                                        <?php echo($invId); $cName = "";?>
-                                                        </td><?php
-                                                    }                                          
-                                                   
-                                                ?>  
-												
-											
-                                                <?php 
-                                                    $client = getCategoryNameById($data->cId);
-                                                    $cNameNew = $client->cName;
-                                                    if($cName != $cNameNew){
-                                                        $cName = $cNameNew;?>
-                                                        <td> 
-                                                        <?php echo($cName); ?>
-                                                        </td><?php
-                                                    }  
-
-                                                ?>
-                                            <?php                                                                                                 
-                                                $invIdNew2 = $data->invId;                                                                                  
-                                                if($invId2 < $invIdNew2){                                                                                              
-                                                    $invId2 = $invIdNew2;
-                                                    ?>
-                                                    <td style="text-align:right"> 
-                                                    <?php
-                                                    $total = getAllCustomersByInvId($data->invId);                                                    
-                                                    print_r($total);
-                                                                                                      
-                                                    }?>
-                                                    </td><?php
-                                            ?> 
-                                        
-                                           
-                                            <?php 
-                                                
-                                                    if($countAux != $count){
-                                                        $countAux = $count;?>
-                                                        <td> 
-                                                        <?php echo($data->bDate); ?>
-                                                        </td><?php
-                                                    }
-                                                ?>
-
-                                             <?php
-                                                        $cmIdNew = $data->invId;
-                                                        if($cmId != $cmIdNew){
-                                                            $cmId = $cmIdNew;?>
-                                                            <td style="text-align:center">
-                                                            <a href="invoice.php?invId=<?php echo $cmId; ?>&type=1" class="btn btn-default">Ver</a>
-                                                            <a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="<?php echo $cmId ?>">Anular</a>
-                                                            <?php //echo '<a href="#" id="anular-btn" class="btn btn-default btn-small" data-id="'.$cmId.'">Anular</a>';?>
-                                                            </td>
-                                                </tr>                                                           
-                                            <?php  } ?>
-                                            
-                                                        <?php } ?>
+                                                <td> 
+                                                <?php echo($data->invId);?>
+                                                </td>
+                                                <td> 
+                                                <?php  $client = getCategoryNameById($data->cId);
+                                                echo($client->cName); ?>
+                                                </td>
+                                                <td style="text-align:right"> 
+                                                <?php
+                                                echo($data->totalOrder); ?>
+                                                </td>                                       
+                                                <td> 
+                                                <?php echo($data->bDate); ?>
+                                                </td>
+                                                <td style="text-align:center">
+                                                <a href="invoice.php?invId=<?php echo $data->invId; ?>&type=1" class="btn btn-default">Ver</a>
+                                                <a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="<?php echo $data->invId ?>">Anular</a>
+                                                </td>
+                                            </tr>                                                          
+                                        <?php } ?>
                                     </tbody>
                                     <tfoot>
                                         <tr>
@@ -140,7 +72,6 @@
                                     
                                         </div>
                                         <div class="modal-footer" style="text-align: center;">
-                                            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Anular</button> -->
                                             <button type="button" id="null-confirm" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">ANULAR FACTURA</button>
                                             <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">SALIR</button>
                                         </div>
