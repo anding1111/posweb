@@ -33,6 +33,9 @@ include('../vendor/autoload.php');
     <!-- Timeline CSS -->
     <link href="../dist/css/timeline.css" rel="stylesheet">
 
+    <!-- PrintJS CSS -->
+    <link rel="stylesheet" type="text/css" href="../dist/css/print.min.css">
+
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 

@@ -7,30 +7,46 @@
     $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE `shId` = '".$_SESSION['shId']."' ") ); 
     
     if ( @$_POST['submit'] ) {
+    
+        //collecting client info        
+        $shName = formItemValidation($_POST['shName']);
+        $shAuxName = formItemValidation($_POST['shAuxName']);
+        $shDoc = formItemValidation($_POST['shDoc']);
+        $shTelf = formItemValidation($_POST['shTelf']);
+        $shDir = formItemValidation($_POST['shDir']);
+        $shMail = formItemValidation($_POST['shMail']);       
+        $shWeb = formItemValidation($_POST['shWeb']);       
+        $shDesc = formItemValidation($_POST['shDesc']);       
+        $shSearch = formItemValidation($_POST['shSearch']);       
+        $shPrinterName = formItemValidation($_POST['shPrinterName']);       
+        $shPrinterType = formItemValidation($_POST['shPrinterType']);        
+        $shColor = formItemValidation($_POST['shColor']);
         
-         //collecting client info        
-         $shName = formItemValidation($_POST['shName']);
-         $shAuxName = formItemValidation($_POST['shAuxName']);
-         $shDoc = formItemValidation($_POST['shDoc']);
-         $shTelf = formItemValidation($_POST['shTelf']);
-         $shDir = formItemValidation($_POST['shDir']);
-         $shMail = formItemValidation($_POST['shMail']);       
-         $shWeb = formItemValidation($_POST['shWeb']);       
-         $shDesc = formItemValidation($_POST['shDesc']);       
-         $shSearch = formItemValidation($_POST['shSearch']);       
-         $shPrinterName = formItemValidation($_POST['shPrinterName']);       
-         $shPrinterType = formItemValidation($_POST['shPrinterType']);        
-         $shColor = formItemValidation($_POST['shColor']);        
+        if ($_FILES['shLogo']['size'] == 0){
+            $destination = $qry->shLogo;
+        } else {
+            // Crea nuevo nombre al logo
+            $filename   = $_SESSION['shId'] . "-logo-" . time(); // Codigo de la tienda + -logo- + time
+            $extension  = pathinfo( $_FILES["shLogo"]["name"], PATHINFO_EXTENSION ); // jpg
+            $basename   = $filename . "." . $extension; // 11-logo-2635216534.jpg
+            $source       = $_FILES["shLogo"]["tmp_name"];
+            $destination  = "logos/{$basename}"; 
+            
+            // Mueve la imagen cargada a la carpeta: logos
+            if (move_uploaded_file( $source, $destination ))  {
+                $msg = "Imagen cargada con éxito";
+            }else{
+                $msg = "No se pudo cargar la imagen";
+            }
+        }
 
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        //Actualiza los datos de la tienda
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shColor = '".$shColor."', shLogo = '".$destination."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry ) {
-
             $insertSuccess = 1;
-
         } else{
-
             $insertError = 1;
         }
     }
@@ -59,7 +75,7 @@
                                 <div class="alert alert-danger">Opps Este cliente ya está en uso. Prueba otro.</div>
                             <?php endif; ?>
                               
-                            <form role="form" method="POST" action="">
+                            <form role="form" method="POST" action="" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <label>Nombre</label>
                                     <input class="form-control" name="shName" required="required" type="text" value="<?php if(isset($qry->shName)) echo $qry->shName; ?>">
@@ -114,7 +130,9 @@
                                     <label>Tipo Impresora (Tamaño de papel)</label>
                                     <?php $options = array( 
                                             "Impresora 80mm" => 0, 
-                                            "Impresora 58mm" => 1
+                                            "Impresora 58mm" => 1,
+                                            "Impresora Media Carta" => 2,
+                                            "Impresora Completa Carta" => 3
                                         );  ?>
                                     <select class="form-control" name="shPrinterType">
                                     <?php  foreach($options as $display => $value) {  ?>
@@ -124,6 +142,19 @@
                                     <?php } ?>
                                     </select>   
                                 </div>
+
+                                <div class="form-group">
+                                    <label>Logo en factura (No se imprime en impresora térmica)</label>
+                                    <div class="form-horizontal">
+                                        <div class="col-sm-8" style="padding-left: 0px;">
+                                            <input class="form-control" name="shLogo" type="file" name="uploadfile" accept="image/png, image/gif, image/jpeg" value=""/>                                   
+                                        </div>
+                                        <div class="col-sm-4" style="padding-left: 0px; margin-bottom: 15px;">
+                                        <img id="imgLogo" src="<?php if(isset($qry->shLogo)) echo $qry->shLogo; ?>" alt="Logo" width="64" height="64">
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label>Color</label>
                                     <input class="form-control" name="shColor" required="required" type="text" data-jscolor="{}" value="<?php if(isset($qry->shColor)) echo $qry->shColor; ?>">

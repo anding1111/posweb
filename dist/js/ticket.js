@@ -91,7 +91,7 @@ var printShopDoc = document.querySelector("#printShopDoc").textContent;
 var printShopDir = document.querySelector("#printShopDir").textContent;
 
 //Obtiene Datos Factura
-var printTypeName = "Cotizacion No.: ";
+var InvoiceType = "Cotizacion No.: ";
 var printFacturaNum = document.querySelector("#printFacturaNum").textContent;
 var printFacturaFech = document.querySelector("#printFacturaFech").textContent;
 var printFacturaHor = document.querySelector("#printFacturaHor").textContent;
@@ -104,7 +104,7 @@ var printFacturaDir = document.querySelector("#printFacturaDir").textContent;
 var typeOrder = replaceSym(document.getElementById("typeOrder").textContent);
 var printSubTotal = replaceSym(document.getElementById("printSubTotal").textContent);
 if (typeOrder == "SubTotal:") {
-    var printTypeName = document.querySelector("#printTypeName").textContent;
+    var InvoiceType = document.querySelector("#InvoiceType").textContent;
     var printOldSaldo = replaceSym(document.querySelector("#printOldSaldo").textContent);
     var printTotal = replaceSym(document.querySelector("#printTotal").textContent);
     var printAbona = replaceSym(document.querySelector("#printAbona").textContent);
@@ -132,7 +132,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.write(printShopDir);
     impresora.write("\n\n");
     impresora.setAlign("left");
-    impresora.write(printTypeName);
+    impresora.write(InvoiceType);
     impresora.write(printFacturaNum);
     impresora.write("\n");
     impresora.write("Fecha:      ");
