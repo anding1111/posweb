@@ -20,6 +20,7 @@
         $shSearch = formItemValidation($_POST['shSearch']);       
         $shPrinterName = formItemValidation($_POST['shPrinterName']);       
         $shPrinterType = formItemValidation($_POST['shPrinterType']);        
+        $shTerms = formItemValidation($_POST['shTerms']);        
         $shColor = formItemValidation($_POST['shColor']);
         
         if ($_FILES['shLogo']['size'] == 0){
@@ -41,7 +42,7 @@
         }
 
         //Actualiza los datos de la tienda
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shColor = '".$shColor."', shLogo = '".$destination."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry ) {
@@ -154,12 +155,14 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="form-group">
+                                    <label>Terminos o Condiciones (aparece en la parte de abajo de la factura)</label>
+                                    <textarea class="form-control" name="shTerms" type="text"><?php if(isset($qry->shTerms)) echo $qry->shTerms; ?></textarea>
+                                </div>
                                 <div class="form-group">
                                     <label>Color</label>
                                     <input class="form-control" name="shColor" required="required" type="text" data-jscolor="{}" value="<?php if(isset($qry->shColor)) echo $qry->shColor; ?>">
                                 </div>
-                                
                                 <input type="submit" value="Actualizar Datos" class="btn btn-info btn-large" name="submit" />
 
 

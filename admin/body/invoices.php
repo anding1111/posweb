@@ -33,19 +33,19 @@
             </div>
                 <div id="identity">
                     <div class="col-xs-3 col-sm-4 col-md-6">
-                    <input type="hidden" id="numItems" value="<?php echo $numItems; ?>" class="form-control">
-                    <?php echo $shop->shName ?>
-                    <br>
-                    <?php echo $shop->shDesc ?>
-                    <br>
-                    <?php echo $shop->shDoc ?>
-                    <br>
-                    <?php echo $shop->shTelf ?>
-                    <br>
-                    <?php echo $shop->shDir ?>
+                        <input type="hidden" id="numItems" value="<?php echo $numItems; ?>" class="form-control">
+                        <?php echo $shop->shName ?>
+                        <br>
+                        <?php echo $shop->shDesc ?>
+                        <br>
+                        <?php echo $shop->shDoc ?>
+                        <br>
+                        <?php echo $shop->shTelf ?>
+                        <br>
+                        <?php echo $shop->shDir ?>
                     </div>
                     <div id="logo" class="col-xs-3 col-sm-4 col-md-6">
-                        <img id="image" src="<?php echo $shop->shLogo; ?>" alt="logo" width="240" height="100"/>
+                        <img id="image" src="<?php echo $shop->shLogo; ?>" alt="logo" width="180" height="120" style="will-change: transform; image-rendering: -webkit-optimize-contrast;"/>
                     </div>
                 </div>
                 <div style="clear:both"></div>
@@ -116,7 +116,7 @@
                     <?php } ?>     
                     <tr>
                         <td colspan="1" rowspan="5" class="blank">
-                        <div id="terms">
+                        <div id="terms" class="terms">
                         <h5>Observaciones</h5>
                             <div id="printSerial">
                             <?php 
@@ -141,7 +141,6 @@
                         </b> </td>
                     </tr>
                     <tr>
-                        <!-- <td colspan="1" class="blank"> </td> -->
                         <td colspan="2" class="balance" style="text-align:right">Saldo Anterior: </td>
                         <td class="total-value" id="printOldSaldo"><b>$<?php 
                         echo(numMiles(($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)) - $total));
@@ -171,6 +170,11 @@
                     </tr>
                     <?php } ?>
                 </table>
+                <div class="terminos" style="font-size:10px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
+                        <?php 
+                        echo $shop->shTerms;                                                     
+                        ?>
+                </div>
                 <div id="img"></div> 
                 </div>    
                 <div class="row">                                                                        
@@ -355,14 +359,24 @@
 <script src="../dist/js/print.min.js"></script>
 
 <script>
+document.getElementById("btnImprimirNormal").addEventListener("click", printNormal);
+function printNormal() {
+  printJS({
+    printable: "printerZone",
+    type: "html",
+    targetStyles: ['*'],
+    style: ['@page { size: letter portrait; margin: 0mm;} body {margin: 10;} .terms {font-weight: 800; color:red; background-color:green, font-size:96px}']
 
-$("#btnImprimirNormal").on("click", function() {
-    printJS({printable: 'printerZone',
-    type: 'html',
-    style: ['@page { size: letter portrait; margin: 0mm;} body {margin: 10;} '],
-    targetStyles: ['*']
-    });
-});
+  });
+}
+
+// $("#btnImprimirNormal").on("click", function() {
+//     printJS({printable: 'printerZone',
+//     type: 'html',
+//     style: ['@page { size: letter portrait; margin: 0mm;} body {margin: 10;} .terms {font-weight: 800; color:red; background-color:green}'],
+//     targetStyles: ['*']
+//     });
+// });
 
 function genPDF() {
     document.getElementById('printers').parentNode.style.overflow = 'visible'; //might need to do this to grandparent nodes as well, possibly.

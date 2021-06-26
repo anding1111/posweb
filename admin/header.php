@@ -48,7 +48,6 @@ include('../vendor/autoload.php');
     <!-- jQuery 3.4.1 -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>
 
-
 </head>
 <body>
 <?php 

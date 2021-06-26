@@ -27,6 +27,7 @@ body.login {
     width: 800px; 
     margin: 0 auto; 
     background-color: white;
+    line-height: 1;
 }
 
 table.normal-printer { 
@@ -68,7 +69,7 @@ table.normal-printer th, table.normal-printer td {
     margin-top: 0px; 
     border: 1px solid #fff; 
     max-width: 540px; 
-    max-height: 100px; 
+    max-height: 140px; 
     overflow: hidden; 
 }
 #logohelp { 
@@ -138,6 +139,17 @@ table.normal-printer th, table.normal-printer td {
     letter-spacing: 10px; 
     border-bottom: 1px solid black; 
     padding: 0 0 8px 0; margin: 0 0 8px 0; 
+}
+
+#terminos { 
+    margin: 3px 0 0 0; 
+    text-transform: uppercase;
+    text-align: justify;
+    text-justify: inter-word;
+    line-height: 1;
+    font-size: 8px; 
+    letter-spacing: 2px; 
+    
 }
 
 .delete-wpr { 
