@@ -4,7 +4,7 @@
 $server_db = "localhost";
 $user_db = "root";
 $password_db = "";
-$database_db = "teinnova";
+$database_db = "mipospro_mipos";
 
 //PRODUCTION
 // $server_db = "localhost";
