@@ -63,13 +63,24 @@ table.normal-printer th, table.normal-printer td {
 }
 
 #logo { 
+    text-align: left; 
+    float: left; 
+    position: relative; 
+    margin-top: 0px; 
+    /* border: 1px solid #fff;  */
+    max-width: 540px; 
+    max-height: 140px; 
+    overflow: hidden; 
+}
+#dataShop { 
     text-align: right; 
     float: right; 
     position: relative; 
-    margin-top: 0px; 
-    border: 1px solid #fff; 
+    margin-top: 0px;
+    margin-bottom: 0px;
+    /* border: 1px solid #fff; 
     max-width: 540px; 
-    max-height: 140px; 
+    max-height: 140px;  */
     overflow: hidden; 
 }
 #logohelp { 
@@ -85,7 +96,7 @@ table.normal-printer th, table.normal-printer td {
 
 #meta { 
     margin-top: 1px; 
-    width: 300px; 
+    max-width: 400px; 
     float: right; 
 }
 #meta td { 
@@ -152,7 +163,7 @@ table.normal-printer th, table.normal-printer td {
     
 }
 
-.delete-wpr { 
+/* .delete-wpr { 
     position: relative; 
 }
 .delete { 
@@ -165,7 +176,7 @@ table.normal-printer th, table.normal-printer td {
     padding: 0px 3px; 
     border: 1px solid; top: -6px; left: -22px; 
     font-family: Verdana; 
-    font-size: 12px; }
+    font-size: 12px; } */
 /*End invoice normal printer*/
 
 @media(min-width:768px) {

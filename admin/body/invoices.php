@@ -13,7 +13,17 @@
     $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND  `orEnable` = '".$type."' AND shId = '".$loggedInShop."' GROUP BY cId"));
     $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId, orEnable FROM `orders` WHERE `shId` = '".$loggedInShop."' AND `orEnable` = '".$type."' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND shId = '".$loggedInShop."' AND `orEnable` = '".$type."' AND invId BETWEEN 0 AND '$invId' "));
 
-    $typeName = "Factura";
+    $typeInvoice = $shop->shInvoiceType;
+
+    if ($typeInvoice == 0) {
+        $typeName = "Factura";
+    }elseif($typeInvoice == 1){
+        $typeName = "Recibo";
+    }elseif($typeInvoice == 2){
+        $typeName = "Remision";
+    }else {
+        $typeName = "Salida de Almacen";
+    }
     //Validate type order
     if ($type == 3) {
         $typeName = "Cotización";
@@ -32,7 +42,10 @@
             <span id="InvoiceType"><b><?php echo $typeName; ?></b></span>
             </div>
                 <div id="identity">
-                    <div class="col-xs-3 col-sm-4 col-md-6">
+                    <div id="logo" class="col-xs-3 col-sm-4 col-md-6">
+                        <img id="image" src="<?php echo $shop->shLogo; ?>" alt="logo" width="180" height="120" style="will-change: transform; image-rendering: -webkit-optimize-contrast;"/>
+                    </div>
+                    <div id="dataShop" class="col-xs-3 col-sm-4 col-md-6">
                         <input type="hidden" id="numItems" value="<?php echo $numItems; ?>" class="form-control">
                         <?php echo $shop->shName ?>
                         <br>
@@ -43,9 +56,6 @@
                         <?php echo $shop->shTelf ?>
                         <br>
                         <?php echo $shop->shDir ?>
-                    </div>
-                    <div id="logo" class="col-xs-3 col-sm-4 col-md-6">
-                        <img id="image" src="<?php echo $shop->shLogo; ?>" alt="logo" width="180" height="120" style="will-change: transform; image-rendering: -webkit-optimize-contrast;"/>
                     </div>
                 </div>
                 <div style="clear:both"></div>
@@ -116,15 +126,21 @@
                     <?php } ?>     
                     <tr>
                         <td colspan="1" rowspan="5" class="blank">
-                        <div id="terms" class="terms">
+                        <h5>OBSERVACIONES:</h5>
+                        <div class="terminos" style="font-size:12px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
+                            <?php 
+                            echo $shop->shTerms;                                                     
+                            ?>
+                        </div>
+                        <!-- <div id="terms" class="terms">
                         <h5>Observaciones</h5>
                             <div id="printSerial">
                             <?php 
-                            $imeis = getIdClienteByInvId($invId);
-                            print_r($imeis->inSerial);                                                     
+                            //$imeis = getIdClienteByInvId($invId);
+                            //print_r($imeis->inSerial); 
                             ?>                                          
                             </div>
-                        </div>
+                        </div> -->
                         </td>
                         <td colspan="2" style="text-align:right"><span id="typeOrder"><b><?php echo ($type == 1 ? "SubTotal: " : "Total: ");?> </b></span></td>
                         <td class="total-value" id="printSubTotal" ><b> $<?php 
@@ -170,11 +186,11 @@
                     </tr>
                     <?php } ?>
                 </table>
-                <div class="terminos" style="font-size:10px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
+                <!-- <div class="terminos" style="font-size:10px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
                         <?php 
-                        echo $shop->shTerms;                                                     
+                        //echo $shop->shTerms;                                                     
                         ?>
-                </div>
+                </div> -->
                 <div id="img"></div> 
                 </div>    
                 <div class="row">                                                                        

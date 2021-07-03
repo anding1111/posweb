@@ -21,6 +21,7 @@
         $shPrinterName = formItemValidation($_POST['shPrinterName']);       
         $shPrinterType = formItemValidation($_POST['shPrinterType']);        
         $shTerms = formItemValidation($_POST['shTerms']);        
+        $shInvoiceType = formItemValidation($_POST['shInvoiceType']);
         $shColor = formItemValidation($_POST['shColor']);
         
         if ($_FILES['shLogo']['size'] == 0){
@@ -42,7 +43,7 @@
         }
 
         //Actualiza los datos de la tienda
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry ) {
@@ -73,7 +74,7 @@
                             <?php endif; ?>
 
                             <?php if(isset($uniquenessError)) : ?>
-                                <div class="alert alert-danger">Opps Este cliente ya está en uso. Prueba otro.</div>
+                                <div class="alert alert-danger">Opps Este nombre de tienda ya está en uso. Prueba otro.</div>
                             <?php endif; ?>
                               
                             <form role="form" method="POST" action="" enctype="multipart/form-data">
@@ -108,6 +109,22 @@
                                 <div class="form-group">
                                     <label>Descripción (Eslogan)</label>
                                     <input class="form-control" name="shDesc" required="required" type="text" value="<?php if(isset($qry->shDesc)) echo $qry->shDesc; ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo de Recibo (Nombre del recibo para el cliente)</label>
+                                    <?php $options = array( 
+                                            "Factura" => 0, 
+                                            "Recibo" => 1, 
+                                            "Remision" => 2,
+                                            "Salida de Almacen" => 3
+                                        );  ?>
+                                    <select class="form-control" name="shInvoiceType">
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->shInvoiceType == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
                                 </div>
                                 <div class="form-group">
                                     <label>Busqueda (Metodo de busqueda en el modulo ventas)</label>
