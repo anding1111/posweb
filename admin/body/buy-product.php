@@ -68,15 +68,15 @@
 			
 			if($pQty>0){
 				
-				if ($idif<0){
+				if ($idif<0 && $_SESSION['shInventory'] == 0 ){
 					echo '<script language="javascript">alert("¡No hay inventario suficiente de '.$qryt->pName.'!");</script>';					
 				}else{					
-                    if ($idif<10){
-                    echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
-                    }
+                    // if ($idif<10){
+                    // echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
+                    // }
 
                     //Update Qty on items  
-                    if ($orValue == 1) {
+                    if ($orValue == 1 && $_SESSION['shInventory'] == 0 ) {
                         $update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
                         $qryf = $conexion->query($update) or die(mysqli_error($conexion));     
                     }
@@ -430,13 +430,28 @@
         deleted++;
         subAmount(1);
     }
+
+    //Validate Inventory available
+    function availableItem() {
+    let x = document.forms["myForm"]["fname"].value;
+        if (x == "") {
+            alert("Name must be filled out");
+            return false;
+        }
+    }
+
     function subAmount(row = null) {
         //console.log("Nueva "+ row)
         if(row == null){
             var row = $("#product_info_table tbody tr").length;
-        }                                
-        if(row) {                                    
-            var subAmount = Number($("#rate_"+row).val()) * Number($("#qty_"+row).val());        
+        }                               
+        if(row) { 
+            var diferenceItem = Number($("#disp_"+row).val()) - Number($("#qty_"+row).val());
+            if(diferenceItem < 0 ){
+                janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + $("#disp_"+row).val() + "</b> Unidades de " + $("#name_"+row).val() + "!");
+                $("#qty_"+row).val($("#disp_"+row).val());
+            }
+            var subAmount = Number($("#rate_"+row).val()) * Number($("#qty_"+row).val());      
             $("#amount_"+row).val(subAmount);                           
             getTotal();
         } else {

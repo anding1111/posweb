@@ -22,6 +22,7 @@
         $shPrinterType = formItemValidation($_POST['shPrinterType']);        
         $shTerms = formItemValidation($_POST['shTerms']);        
         $shInvoiceType = formItemValidation($_POST['shInvoiceType']);
+        $shInventory = formItemValidation($_POST['shInventory']);
         $shColor = formItemValidation($_POST['shColor']);
         
         if ($_FILES['shLogo']['size'] == 0){
@@ -43,7 +44,7 @@
         }
 
         //Actualiza los datos de la tienda
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shInventory = '".$shInventory."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry ) {
@@ -135,6 +136,20 @@
                                     <select class="form-control" name="shSearch">
                                     <?php  foreach($options as $display => $value) {  ?>
                                         <option value='<?= $value ?>' <?php if($qry->shSearch == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
+                                </div>
+                                <div class="form-group">
+                                    <label>Descontar del Inventario (Al vender los productos disminuyen del inventario)</label>
+                                    <?php $options = array( 
+                                            "SI" => 0, 
+                                            "NO" => 1
+                                        );  ?>
+                                    <select class="form-control" name="shInventory">
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->shInventory == trim($value)) { ?>selected='selected'<?php } ?>>
                                             <?= $display ?>
                                         </option>
                                     <?php } ?>

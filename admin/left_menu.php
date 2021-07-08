@@ -1,4 +1,36 @@
-
+<body>
+<?php 
+	// setlocale(LC_TIME, 'es_ES.UTF-8');
+	// date_default_timezone_set('America/Bogota');
+	// setlocale(LC_ALL, 'es_CO.UTF-8');
+    setlocale(LC_ALL, 'es_ES');
+?>
+  <!-- Shop -->
+  <?php
+  $id = $_SESSION['shId'];
+  $shop = getShopNameById($id);
+  ?>
+      <!-- /.navbar-header -->
+  <ul class="nav navbar-top-links navbar-user">
+  
+      <!-- /.dropdown -->
+      <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="fa fa-user-circle fa-fw"></i><strong> <?php echo getLoggedInUserName(); ?> </strong> <!--<i class="fa fa-user fa-fw"></i>-->  <i style="color:#D4D4D4;" class="fa fa-caret-down"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-user">
+          <input type="hidden" id="shPrinter" value="<?php echo $shop->shPrinterName; ?>">
+          <input type="hidden" id="printerType" value="<?php echo $shop->shPrinterType; ?>">
+              <li class="divider"></li>
+              <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+              </li>
+          </ul>
+          <!-- /.dropdown-user -->
+      </li>
+      <!-- /.dropdown -->
+  </ul>
+  <!-- </nav> -->
+  <!-- /.navbar-top-links -->
     <div id="wrapper">
         <div class="overlay"></div>
         <!-- Sidebar -->
