@@ -31,7 +31,7 @@
                                                 <?php echo($data->invId);?>
                                                 </td>
                                                 <td> 
-                                                <?php  $client = getCategoryNameById($data->cId);
+                                                <?php  $client = getClientNameById($data->cId);
                                                 echo($client->cName); ?>
                                                 </td>
                                                 <td style="text-align:right"> 

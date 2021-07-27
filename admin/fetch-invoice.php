@@ -13,7 +13,7 @@ if(isset($_POST["userid"])) {
     $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY cId"));
     $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
 
-    $result = getCategoryNameById($qrydata->cId);
+    $result = getClientNameById($qrydata->cId);
     $Fecha = getFecha($invId);                                                
     $fechaInvoice = fechaCastellano($Fecha->bDate);
     $horaInvoice = horaCastellano($Fecha->bDate);

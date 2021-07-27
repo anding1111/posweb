@@ -78,7 +78,7 @@
                                     <select class="form-control" name="cId">
                                     <?php  
 
-                                        $qry = getAllCategories();
+                                        $qry = getAllClients();
                                         while($row = mysqli_fetch_object( $qry )){
                                     ?>
 

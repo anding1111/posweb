@@ -34,7 +34,7 @@
                                        
                                        <tr class="odd gradeX">
                                            <?php                                               
-                                               $client = getCategoryNameById($data->cId);
+                                               $client = getClientNameById($data->cId);
                                                $abonos = getAllSaldosBetween($data->cId,$data->invId);
                                                ?>
                                                   <td> 

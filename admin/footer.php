@@ -414,14 +414,6 @@ $actual_link = "$_SERVER[REQUEST_URI]";
                         "url": "../bower_components/datatables/Spanish.json"                
                     },             
                     'sDom': 't',
-                    //"pageLength": 25,
-                    // "columnDefs": [
-                    //                     {
-                    //                         "targets": [ 3 ],
-                    //                         "visible": false,
-                    //                         "searchable": false
-                    //                     }
-                    //         ],                
                     "footerCallback": function ( row, data, start, end, display ) {
                         var api = this.api(), data;
                         // Remove the formatting to get integer data for summation

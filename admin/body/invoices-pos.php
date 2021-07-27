@@ -30,181 +30,7 @@
     }
 ?>
         <div class="row">
-        <?php 
-        if($shop->shPrinterType == 2){
-        ?>
-            <!-- Start model invoice for normal printer -->
-            <div id="page-wrap" class="w3-card-4">
-                
-            <!-- Printer DIV Zone -->
-            <div id="printerZone">
-            <div id="header">
-            <span id="InvoiceType"><b><?php echo $typeName; ?></b></span>
-            </div>
-                <div id="identity">
-                    <div id="logo" class="col-xs-3 col-sm-4 col-md-6">
-                        <img id="image" src="<?php echo $shop->shLogo; ?>" alt="logo" width="180" height="120" style="will-change: transform; image-rendering: -webkit-optimize-contrast;"/>
-                    </div>
-                    <div id="dataShop" class="col-xs-3 col-sm-4 col-md-6">
-                        <input type="hidden" id="numItems" value="<?php echo $numItems; ?>" class="form-control">
-                        <?php echo $shop->shName ?>
-                        <br>
-                        <?php echo $shop->shDesc ?>
-                        <br>
-                        <?php echo $shop->shDoc ?>
-                        <br>
-                        <?php echo $shop->shTelf ?>
-                        <br>
-                        <?php echo $shop->shDir ?>
-                    </div>
-                </div>
-                <div style="clear:both"></div>
-                <div id="customer">
-                    <div class="col-xs-3 col-sm-4 col-md-6">
-                        <br>
-                        <b><span id="printFacturaClient"><?php  
-                        $result = getCategoryNameById($qrydata->cId);                                      
-                        echo $result->cName.'<br/>'; ?> </span></b>
-                        <b><span id="printFacturaDoc"><?php                                           
-                        echo $result->cDoc.'<br/>'; ?> </span></b>
-                        <b><span id="printFacturaCel"><?php                                          
-                        echo $result->cTelf.'<br/>'; ?> </span></b>
-                        <b><span id="printFacturaDir"><?php                                           
-                        echo $result->cDir.'<br/>'; ?> </span></b>
-                        <input type="hidden" id="numItems" value="<?php echo($numItems); ?>" class="form-control">
-                    </div>
-                    <div class="col-xs-3 col-sm-4 col-md-6">
-                        <table id="meta" class="normal-printer">
-                            <tr>
-                                <td class="meta-head"><span id="InvoiceType"><b><?php echo $typeName; ?> No. </b></span></td>
-                                <td><span id="printFacturaNum"><?php echo $invId.'<br/>'; ?></span></td>
-                            </tr>
-                            <tr>
-                                <td class="meta-head"><b>Fecha</b></td>
-                                <td><span id="printFacturaFech"><?php
-                            if ($type == 1) {
-                                $Fecha = getFecha($invId);
-                            } else {
-                                $Fecha = getFechaQuot($invId);                                            
-                            }                                              
-                            echo fechaCastellano($Fecha->bDate).'<br/>'; ?></span></td>
-                            </tr>
-                            <tr>
-                                <td class="meta-head"><b>Hora</b></td>
-                                <td>
-                                    <div class="due"><span id="printFacturaHor"><?php                                                                                             
-                                echo horaCastellano($Fecha->bDate).'<br/>';?></span>
-                                </div></td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <table id="items" class="normal-printer">
-                    <tr>
-                        <th>Producto</th>
-                        <th style="text-align:right">Cant.</th>
-                        <th style="text-align:right">Vr. Unit.</th>
-                        <th style="text-align:right">Vr. Total</th>
-                    </tr>
-                <?php while ($row = $qry->fetch_assoc()) {
-                    ?>
-                    <tr>                                           
-                        <td class="description"> <?php
-                        $pId= getItemNameById($row['pId']);                                                    
-                        echo $pId->pName;
-                        ?> </td>
-                        <td style="text-align:right"> <?php
-                        echo(numMiles($row['pQty']));
-                        ?> </td> 
-                        <td style="text-align:right"> <?php
-                        echo(numMiles($row['pPrice']));
-                        ?> </td>
-                        <td style="text-align:right"> <?php
-                        echo(numMiles($row['pMount']));
-                        ?> </td> 
-                    </tr>
-                    <?php } ?>     
-                    <tr>
-                        <td colspan="1" rowspan="5" class="blank">
-                        <h5>OBSERVACIONES:</h5>
-                        <div class="terminos" style="font-size:12px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
-                            <?php 
-                            echo $shop->shTerms;                                                     
-                            ?>
-                        </div>
-                        <!-- <div id="terms" class="terms">
-                        <h5>Observaciones</h5>
-                            <div id="printSerial">
-                            <?php 
-                            //$imeis = getIdClienteByInvId($invId);
-                            //print_r($imeis->inSerial); 
-                            ?>                                          
-                            </div>
-                        </div> -->
-                        </td>
-                        <td colspan="2" style="text-align:right"><span id="typeOrder"><b><?php echo ($type == 1 ? "SubTotal: " : "Total: ");?> </b></span></td>
-                        <td class="total-value" id="printSubTotal" ><b> $<?php 
-                        if ($type == 3){
-                            $total = getAllQuotationsByInvId($invId);
-                            echo(numMiles($total));
-                            ?>
-                        </b> </td>
-                        <?php
-                        }else{
-                            $total = getAllOrdersByInvId($invId);
-                            echo(numMiles($total));
-                            ?>                                        
-                        </b> </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="balance" style="text-align:right">Saldo Anterior: </td>
-                        <td class="total-value" id="printOldSaldo"><b>$<?php 
-                        echo(numMiles(($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)) - $total));
-                        ?> </b>                                          
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align:right"><b>Total: </b></td>
-                        <td class="total-value" id="printTotal"> <b>$<?php 
-                        echo(numMiles($qrydata->cPayment + ($qrysaldo->total - $qrysaldo->pagado)));
-                        ?> </b>                                          
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" class="balance" style="text-align:right">Abona: </td>
-                        <td class="total-value" id="printAbona"> <b>$<?php 
-                        echo(numMiles($qrydata->cPayment));
-                        ?> </b>                                        
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="text-align:right"><b>Nuevo Saldo: </b></td>
-                        <td class="total-value" id="printNewSaldo"> <b>$<?php 
-                        echo(numMiles($qrysaldo->total - $qrysaldo->pagado));
-                        ?> </b>                                          
-                        </td>
-                    </tr>
-                    <?php } ?>
-                </table>
-                <!-- <div class="terminos" style="font-size:10px !important; text-align: justify; text-justify: inter-word; line-height: 1.6;">
-                        <?php 
-                        //echo $shop->shTerms;                                                     
-                        ?>
-                </div> -->
-                <div id="img"></div> 
-                </div>    
-                <div class="row">                                                                        
-                    <div class="btn text-center" role="group" style="width:100%;">
-                        <button class="btn btn-info btn-large" type="button" style="font-size:22px; width:30%;vertical-align:middle;" onclick="window.location.href='../admin/buy-product.php'">SALIR</a></button>
-                        <button class="btn btn-info btn-large" type="button" style="font-size:24px; width:30%;vertical-align:middle;" id="btnImprimirNormal">IMPRIMIR</span></button>
-                        <!-- <button class="btn btn-info btn-large" type="button" style="font-size:22px; width:30%;vertical-align:middle;" onclick="printPDF()">PDF</span></button> -->
-                    </div>
-                </div>      
-            </div>
-            <!-- End model invoice for normal printer -->
-            <?php    
-            } else {            
-            ?>
+           
                 <div class="col-lg-6 col-lg-offset-3">
                     <div class="panel panel-default w3-card-4">                        
                         <!-- /.panel-heading -->
@@ -232,7 +58,7 @@
                                         <b>Hora: </b><span id="printFacturaHor"><?php                                                                                             
                                         echo horaCastellano($Fecha->bDate).'<br/>';?></span>
                                         <b>Cliente: </b><span id="printFacturaClient"><?php  
-                                        $result = getCategoryNameById($qrydata->cId);                                      
+                                        $result = getClientNameById($qrydata->cId);                                      
                                         echo $result->cName.'<br/>'; ?> </span>
                                         <b>Documento: </b><span id="printFacturaDoc"><?php                                           
                                         echo $result->cDoc.'<br/>'; ?> </span>
@@ -336,7 +162,7 @@
                                     <br>
                                     <b style="font-size:8px;">  Cel. <?php echo $shop->shTelf ?></b>
                                     <br>
-                                    <b>Software de Facturación Desarrolado por SAEDI.COM.CO</b>                                       
+                                    <b>Software de Facturación miPOS.pro</b>                                       
                                     </td>                                   
                                     </tr>                                    
                                 </tbody>                                    
@@ -358,9 +184,7 @@
                     <!-- /.panel -->
                 </div>
                 <!-- /.col-lg-12 -->
-            <?php
-            }
-            ?>
+           
             </div>
             <!-- /.row -->
         </div>
@@ -375,24 +199,6 @@
 <script src="../dist/js/print.min.js"></script>
 
 <script>
-document.getElementById("btnImprimirNormal").addEventListener("click", printNormal);
-function printNormal() {
-  printJS({
-    printable: "printerZone",
-    type: "html",
-    targetStyles: ['*'],
-    style: ['@page { size: letter portrait; margin: 0mm;} body {margin: 10;} .terms {font-weight: 800; color:red; background-color:green, font-size:96px}']
-
-  });
-}
-
-// $("#btnImprimirNormal").on("click", function() {
-//     printJS({printable: 'printerZone',
-//     type: 'html',
-//     style: ['@page { size: letter portrait; margin: 0mm;} body {margin: 10;} .terms {font-weight: 800; color:red; background-color:green}'],
-//     targetStyles: ['*']
-//     });
-// });
 
 function genPDF() {
     document.getElementById('printers').parentNode.style.overflow = 'visible'; //might need to do this to grandparent nodes as well, possibly.

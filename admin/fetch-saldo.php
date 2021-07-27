@@ -15,7 +15,7 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 	if($query->num_rows > 0){
 		$qry = mysqli_fetch_object($query);
 		$saldoCliente = $qry->total - $qry->pagado;
-		$client = getCategoryNameById($qry->cId);
+		$client = getClientNameById($qry->cId);
 	}
 	
 	$data = array();

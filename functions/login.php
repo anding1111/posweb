@@ -18,6 +18,8 @@ function loginDataReceive($username, $password){
 			$_SESSION['uId']		= $myData->uId;
 			$_SESSION['shId']		= $myData->shId;			
 			$_SESSION['shInventory']=getShopNameById($myData->shId)->shInventory;
+			$_SESSION['clientDefault']=getClientsDefault()[0];
+			$_SESSION['clientQuotation']=getClientsDefault()[1];
 
 			return 1;
 

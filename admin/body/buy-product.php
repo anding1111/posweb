@@ -107,7 +107,7 @@
                     $sn ='';
                     
                     //Update Price                    
-                    // $qrys = $conexion->query("UPDATE product SET 
+                    //     $qrys = $conexion->query("UPDATE product SET 
                     //     cId = '".$cId."',
                     //     pId = '".$pId."', 
                     //     pPrice = '".$pPrice."', 
@@ -206,12 +206,12 @@
                                             <div class="form-inline">
                                                 <fieldset class="scheduler-border">
                                                     <legend class="scheduler-border">CLIENTE</legend>                                                    
-                                                    <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" required/>
-                                                    <input type="hidden" id="cId" name="cId" value="0">
-                                                        <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
+                                                    <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" value="<?php echo $_SESSION['clientDefault']['name'];?>" required/>
+                                                    <input type="hidden" id="cId" name="cId" value="<?php echo $_SESSION['clientDefault']['id'];?>">
+                                                    <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
                                                         <label style="font-size:12px; width:25%;">Saldo: </label>
                                                         <input class="form-control" style="text-align:center; font-size:18px; background-color:coral; width:72%;" id="saldoCliente" name="saldoCliente" value="0" readonly>
-                                                        </div>
+                                                    </div>
                                                 </fieldset>
                                             </div>
                                             </td>                                            
@@ -272,7 +272,7 @@
         $('#oculta-saldo').hide("linear");      
 
         $("#gross_total").val(0); 
-        $('#autocomplete_customer').val('');   
+        //$('#autocomplete_customer').val('');   
         $( "#autocomplete" ).focus();
         $(window).keydown(function(event){
             if(event.keyCode == 13) {
@@ -376,87 +376,111 @@
         var html = '<tr id="row_'+num_row+'">'+                  
                    '<td id="ocultar-smartphone" style="width:10%"><input type="hidden" name="pId_value[]" id="pId_value_'+num_row+'" class="form-control"><input type="text" name="code[]" id="disp_'+num_row+'" class="form-control" disabled><input type="hidden" name="code_value[]" id="disp_value_'+num_row+'" class="form-control"></td>'+
                    '<td style="width:36%"><input type="text" name="name[]" id="name_'+num_row+'" class="form-control" disabled><input type="hidden" name="name_value[]" id="name_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:12%"><input type="number" min="1" name="qty[]" id="qty_'+num_row+'" class="form-control" required oninput="subAmount('+num_row+')"><input type="hidden" name="cost_value[]" id="cost_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:15%"><input type="text" name="rate[]" id="rate_'+num_row+'" class="form-control" required oninput="subAmount('+num_row+')"><input type="hidden" name="rate_value[]" id="rate_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:12%"><input type="number" min="1" name="qty[]" id="qty_'+num_row+'" class="form-control" required oninput="subAmount()"><input type="hidden" name="cost_value[]" id="cost_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:15%"><input type="text" name="rate[]" id="rate_'+num_row+'" class="form-control" required oninput="subAmount()"><input type="hidden" name="rate_value[]" id="rate_value_'+num_row+'" class="form-control"></td>'+
                    '<td id="ocultar-smartphone" style="width:18%"><input type="text" name="amount[]" id="amount_'+num_row+'" class="form-control" value="" readonly></td>'+
                    '<td style="width:9%; text-align:center;"><button type="button" class="btn btn-default" onclick="removeRow(\''+num_row+'\')"><i class="fa fa-close"></i></button></td>'+
                    '</tr>';
-        if(count_table_tbody_tr >= 1) {
-            $("#product_info_table tbody tr:last").after(html);  
-        } else {
-                $("#product_info_table tbody").html(html);
-            }
-
-            $.ajax({
-                url: "body/select-product.php",
-                type: 'post',
-                data: {row_id : row_id},
-                dataType: 'json',
-                success:function(response) {
-            
+        $.ajax({
+            url: "body/select-product.php",
+            type: 'post',
+            data: {row_id : row_id},
+            dataType: 'json',
+            success:function(response) {
+                var addItem = true;
+                var indexRow = 1;
+                var qtyProduct = 1;
+                for (let index = 1; index <= tableSize; index++) {
+                    idProduct = $("#product_info_table tr:eq(" + index + ") td:eq(0) input:eq(0)").val();
+                    if (response.pId == idProduct) {
+                        qtyProduct = $("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val();
+                        indexRow = index;
+                        addItem = false;
+                        break;                                                           
+                    }
+                } 
+                if (addItem) {
+                    
+                    if(count_table_tbody_tr > 0) {
+                        $("#product_info_table tbody tr:last").after(html);  
+                    } else {
+                        $("#product_info_table tbody").html(html);
+                    }          
+    
                     // setting the rate value into the rate input field	   
                     $("#pId_value_"+num_row).val(response.pId);
-
+    
                     // $("#code_"+num_row).val(response.pBarCode);
                     // $("#code_value_"+num_row).val(response.pBarCode);
+                    
                     $("#disp_"+num_row).val(response.pQuantity);
-                    $("#disp_value_"+num_row).val(response.pQuantity);
-
+                    // $("#disp_value_"+num_row).val(response.pQuantity);
+    
                     $("#name_"+num_row).val(response.pName);
-                    $("#name_value_"+num_row).val(response.pName);
+                    // $("#name_value_"+num_row).val(response.pName);
                     
                     $("#rate_"+num_row).val(response.pPrice);
-                    $("#rate_value_"+num_row).val(response.pPrice);
-
+                    // $("#rate_value_"+num_row).val(response.pPrice);
+    
                     $("#qty_"+num_row).val(1);
-                    $("#qty_value_"+num_row).val(1);
-
+                    // $("#qty_value_"+num_row).val(1);
+    
                     $("#cost_value_"+num_row).val(response.pCost);
-
+    
                     var total = Number(response.pPrice) * 1;
                     //total = total.toFixed(2);
                     $("#amount_"+num_row).val(total);
-                    //$("#amount_value_"+num_row).val(total);		  	            
-                    subAmount();                
-                } // /success
-            }); // /ajax function to fetch the product data 
+                    // $("#amount_value_"+num_row).val(total);	
+                } else {
+                    $("#product_info_table tr:eq(" + indexRow + ") td:eq(2) input:eq(0)").val(parseFloat(qtyProduct)+1);
+                }
+                subAmount(); 
+                              
+            } // /success
+        }); // /ajax function to fetch the product data 
 
      return false; 
     }  
 
     function removeRow(tr_id) {
-        //console.log(tr_id);
         $("#product_info_table tbody tr#row_"+tr_id).remove();
         deleted++;
-        subAmount(1);
+        subAmount();
     }
 
-    //Validate Inventory available
-    function availableItem() {
-    let x = document.forms["myForm"]["fname"].value;
-        if (x == "") {
-            alert("Name must be filled out");
-            return false;
-        }
-    }
-
-    function subAmount(row = null) {
-        //console.log("Nueva "+ row)
-        if(row == null){
-            var row = $("#product_info_table tbody tr").length;
-        }                               
-        if(row) { 
-            var diferenceItem = Number($("#disp_"+row).val()) - Number($("#qty_"+row).val());
+    function subAmount() {
+        
+        var row = $("#product_info_table tbody tr").length;
+        console.log("Largo " + row);
+        for (let index = 1; index <= row; index++) {
+            var dispItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(0) input:eq(1)").val());
+            var qtyItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val());
+            var diferenceItem = dispItem - qtyItem;
             if(diferenceItem < 0 ){
-                janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + $("#disp_"+row).val() + "</b> Unidades de " + $("#name_"+row).val() + "!");
-                $("#qty_"+row).val($("#disp_"+row).val());
+                janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + dispItem + "</b> Unidades de " + $("#product_info_table tr:eq(" + index + ") td:eq(1) input:eq(0)").val() + "!");
+                $("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val(dispItem);
+
             }
-            var subAmount = Number($("#rate_"+row).val()) * Number($("#qty_"+row).val());      
-            $("#amount_"+row).val(subAmount);                           
-            getTotal();
-        } else {
-            alert('No hay productos');
+            totalItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val()) * Number($("#product_info_table tr:eq(" + index + ") td:eq(3) input:eq(0)").val());
+            $("#product_info_table tr:eq(" + index + ") td:eq(4) input:eq(0)").val(totalItem);
         }
+        getTotal(); 
+                                     
+        // if(row) { 
+        //     var diferenceItem = Number($("#disp_"+row).val()) - Number($("#qty_"+row).val());
+        //     //$("#product_info_table tr:eq(" + indexRow + ") td:eq(2) input:eq(0)").val(parseFloat(qtyProduct)+1);
+
+        //     // console.log(diferenceItem);
+        //     if(diferenceItem < 0 ){
+        //         janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + $("#disp_"+row).val() + "</b> Unidades de " + $("#name_"+row).val() + "!");
+        //         $("#qty_"+row).val($("#disp_"+row).val());
+        //     }
+        //     var subAmount = Number($("#rate_"+row).val()) * Number($("#qty_"+row).val());      
+        //     $("#amount_"+row).val(subAmount);                           
+        //     getTotal();
+        // } else {
+        //     alert('No hay productos');
+        // }
     }
     function getTotal(){                                                
         var totalSubAmount = 0;
@@ -475,13 +499,13 @@
         $("#num_rows").val(tableSize - deleted);
     }                               
 
-    function imprimir() {
-        var divToPrint=document.getElementById("printer");
-        newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
-        newWin.print();
-        newWin.close();
-    }
+    // function imprimir() {
+    //     var divToPrint=document.getElementById("printer");
+    //     newWin= window.open("");
+    //     newWin.document.write(divToPrint.outerHTML);
+    //     newWin.print();
+    //     newWin.close();
+    // }
    
     const selectElement = document.querySelector('.fPago');
 

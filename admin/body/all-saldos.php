@@ -27,7 +27,7 @@
                                 ?>
                                             <tr class="odd gradeX">
                                                 <?php                                               
-                                                $client = getCategoryNameById($data->cId);
+                                                $client = getClientNameById($data->cId);
                                                 ?>
                                                 <td> 
                                                 <?php

@@ -62,7 +62,7 @@
                                     <i class="fa fa-address-book fa-5x"></i>
                                 </div>
 								<?php
-									$qry = getTotalCategories();									
+									$qry = getTotalClients();									
 									?>
 								
                                 <div class="col-xs-9 text-right">

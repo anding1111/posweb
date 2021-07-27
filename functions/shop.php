@@ -21,3 +21,10 @@ function getTotalShops()
 	return $query->num_rows;
 	
 }
+
+function checkPrinterType()
+{
+	global $conexion;
+	$typeInvoice = mysqli_fetch_object($conexion->query("SELECT `shPrinterType` FROM shop WHERE shId = '".$_SESSION['shId']."' "));
+	return $typeInvoice->shPrinterType;
+}

@@ -25,7 +25,7 @@
                                     <tbody>
                                     <?php  
 
-                                        $qry = getAllCategories();
+                                        $qry = getAllClients();
 
                                         $i = 1;
 

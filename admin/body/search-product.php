@@ -3,7 +3,6 @@
 include('../../autoloadfunctions.php');
 
 $con = new mysqli($server_db, $user_db, $password_db, $database_db);
-// $con = new mysqli("localhost", "fixcomc1_teinnova", "TEINNOVA.COM.CO","fixcomc1_teinnova");
 // Check connection
 if (!$con) {
 	die("Falló la conexión: " . mysqli_connect_error());
@@ -23,13 +22,12 @@ if (!$con) {
 		echo json_encode($response);
 	   }
 	   
-	   //exit;
 
 	   //Autocomplete Client
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
-		$query = "SELECT * FROM client WHERE cName like '%".$search."%' AND clEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
+		$query = "SELECT * FROM client WHERE cName like '%".$search."%' AND (clEnable = '1' OR clEnable = '3' OR clEnable = '4') AND `shId` = '".$_SESSION['shId']."' ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();

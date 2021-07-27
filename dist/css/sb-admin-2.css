@@ -59,7 +59,7 @@ table.normal-printer th, table.normal-printer td {
     float: left; 
 }
 #customer { 
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 #logo { 
@@ -67,7 +67,6 @@ table.normal-printer th, table.normal-printer td {
     float: left; 
     position: relative; 
     margin-top: 0px; 
-    /* border: 1px solid #fff;  */
     max-width: 540px; 
     max-height: 140px; 
     overflow: hidden; 
@@ -78,16 +77,7 @@ table.normal-printer th, table.normal-printer td {
     position: relative; 
     margin-top: 0px;
     margin-bottom: 0px;
-    /* border: 1px solid #fff; 
-    max-width: 540px; 
-    max-height: 140px;  */
     overflow: hidden; 
-}
-#logohelp { 
-    text-align: left; 
-    display: none; 
-    font-style: italic; 
-    padding: 10px 5px;
 }
 
 #customer-title { 
@@ -96,8 +86,9 @@ table.normal-printer th, table.normal-printer td {
 
 #meta { 
     margin-top: 1px; 
-    max-width: 400px; 
+    max-width: 600px; 
     float: right; 
+    min-width: 400px;
 }
 #meta td { 
     text-align: right; 
@@ -142,14 +133,15 @@ table.normal-printer th, table.normal-printer td {
 
 #terms { 
     text-align: center; 
-    margin: 5px 0 0 0; 
+    margin: 5px 0 15px 0; 
 }
 #terms h5 { 
     text-transform: uppercase; 
     font: 13px Helvetica, Sans-Serif; 
     letter-spacing: 10px; 
     border-bottom: 1px solid black; 
-    padding: 0 0 8px 0; margin: 0 0 8px 0; 
+    padding: 0 0 8px 0;
+    margin: 0 0 8px 0; 
 }
 
 #terminos { 
@@ -162,21 +154,6 @@ table.normal-printer th, table.normal-printer td {
     letter-spacing: 2px; 
     
 }
-
-/* .delete-wpr { 
-    position: relative; 
-}
-.delete { 
-    display: block; 
-    color: #000; 
-    text-decoration: none; 
-    position: absolute; 
-    background: #EEEEEE; 
-    font-weight: bold; 
-    padding: 0px 3px; 
-    border: 1px solid; top: -6px; left: -22px; 
-    font-family: Verdana; 
-    font-size: 12px; } */
 /*End invoice normal printer*/
 
 @media(min-width:768px) {
@@ -740,14 +717,6 @@ table.dataTable thead .sorting:after {
     color: #fff !important;     
     text-shadow:none;   
 }
-
-/* @font-face {
-    font-family: 'Balloon';
-    src: url(../font/Balloon.TTF) format('truetype');
-} */
- 
- /*///////////////////////////////////////////////////////////////////////////////////////////////////*/
- /*//////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 body,
 html { height: 100%;}
@@ -1704,8 +1673,6 @@ body, html, root, document{
 .popUpFundo.white{
     background-color:#555;
 }
-
-
 /*
 That part is just for the form
 */
