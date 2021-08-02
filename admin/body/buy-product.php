@@ -206,8 +206,8 @@
                                             <div class="form-inline">
                                                 <fieldset class="scheduler-border">
                                                     <legend class="scheduler-border">CLIENTE</legend>                                                    
-                                                    <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" value="<?php echo $_SESSION['clientDefault']['name'];?>" required/>
-                                                    <input type="hidden" id="cId" name="cId" value="<?php echo $_SESSION['clientDefault']['id'];?>">
+                                                    <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" value="<?php echo $NameClientDefault = ($_SESSION['shClientDefault'] == 1) ? $_SESSION['clientDefault']['name'] : ''; ?>" required >
+                                                    <input type="hidden" id="cId" name="cId" value="<?php echo $IdClientDefault = ($_SESSION['shClientDefault'] == 1) ? $_SESSION['clientDefault']['id'] : ''; ?>" >
                                                     <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
                                                         <label style="font-size:12px; width:25%;">Saldo: </label>
                                                         <input class="form-control" style="text-align:center; font-size:18px; background-color:coral; width:72%;" id="saldoCliente" name="saldoCliente" value="0" readonly>
@@ -451,7 +451,6 @@
     function subAmount() {
         
         var row = $("#product_info_table tbody tr").length;
-        console.log("Largo " + row);
         for (let index = 1; index <= row; index++) {
             var dispItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(0) input:eq(1)").val());
             var qtyItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val());
@@ -465,22 +464,7 @@
             $("#product_info_table tr:eq(" + index + ") td:eq(4) input:eq(0)").val(totalItem);
         }
         getTotal(); 
-                                     
-        // if(row) { 
-        //     var diferenceItem = Number($("#disp_"+row).val()) - Number($("#qty_"+row).val());
-        //     //$("#product_info_table tr:eq(" + indexRow + ") td:eq(2) input:eq(0)").val(parseFloat(qtyProduct)+1);
-
-        //     // console.log(diferenceItem);
-        //     if(diferenceItem < 0 ){
-        //         janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + $("#disp_"+row).val() + "</b> Unidades de " + $("#name_"+row).val() + "!");
-        //         $("#qty_"+row).val($("#disp_"+row).val());
-        //     }
-        //     var subAmount = Number($("#rate_"+row).val()) * Number($("#qty_"+row).val());      
-        //     $("#amount_"+row).val(subAmount);                           
-        //     getTotal();
-        // } else {
-        //     alert('No hay productos');
-        // }
+        
     }
     function getTotal(){                                                
         var totalSubAmount = 0;
@@ -499,14 +483,6 @@
         $("#num_rows").val(tableSize - deleted);
     }                               
 
-    // function imprimir() {
-    //     var divToPrint=document.getElementById("printer");
-    //     newWin= window.open("");
-    //     newWin.document.write(divToPrint.outerHTML);
-    //     newWin.print();
-    //     newWin.close();
-    // }
-   
     const selectElement = document.querySelector('.fPago');
 
     selectElement.addEventListener('change', (event) => {

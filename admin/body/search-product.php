@@ -23,7 +23,7 @@ if (!$con) {
 	   }
 	   
 
-	   //Autocomplete Client
+	//Autocomplete Client
 	if(isset($_POST['search_customer'])){
 		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   

@@ -12,14 +12,16 @@ function loginDataReceive($username, $password){
 			
 			//fetching data from db
 			$myData = mysqli_fetch_object( $qry );
-			$_SESSION['username']	= $username;
-			$_SESSION['fullusername']	= $myData->uFullName;
-			$_SESSION['uType']		= $myData->uType;
-			$_SESSION['uId']		= $myData->uId;
-			$_SESSION['shId']		= $myData->shId;			
-			$_SESSION['shInventory']=getShopNameById($myData->shId)->shInventory;
-			$_SESSION['clientDefault']=getClientsDefault()[0];
-			$_SESSION['clientQuotation']=getClientsDefault()[1];
+			$_SESSION['username']	      = $username;
+			$_SESSION['fullusername']	  = $myData->uFullName;
+			$_SESSION['uType']		      = $myData->uType;
+			$_SESSION['uId']		      = $myData->uId;
+			$_SESSION['shId']		      = $myData->shId;
+			$ShopData = getShopNameById($myData->shId);	
+			$_SESSION['shInventory']      = $ShopData->shInventory;
+			$_SESSION['shClientDefault']  = $ShopData->shClientDefault;
+			$_SESSION['clientDefault']    = getClientsDefault()[0];
+			$_SESSION['clientQuotation']  = getClientsDefault()[1];
 
 			return 1;
 
