@@ -28,3 +28,34 @@ function checkPrinterType()
 	$typeInvoice = mysqli_fetch_object($conexion->query("SELECT `shPrinterType` FROM shop WHERE shId = '".$_SESSION['shId']."' "));
 	return $typeInvoice->shPrinterType;
 }
+function checkStatusShop()
+{
+	global $conexion;
+	$queryPay = mysqli_fetch_object($conexion->query("SELECT * FROM shop WHERE shId = '".$_SESSION['shId']."' "));
+
+	//Actualiza los datos de la tienda
+	if ($queryPay->shEnable == 1){
+		if (date("Y-m-d H:i:s") > $queryPay->shDatePlan){
+			$update = "UPDATE shop SET `shEnable` = 3 WHERE `shId` = '".$_SESSION['shId']."' ";
+			$qryUpdate = $conexion->query($update) or die(mysqli_error($conexion));
+			if ( $qryUpdate ) {
+				$UpdatePay = 1;
+			} else{
+				$UpdatePay = -1;
+			}
+			//return $UpdatePay;
+		}
+	}
+}
+
+	//Genera Refeferencia de pago
+	function genReference($n) {
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$randomString = '';
+	
+		for ($i = 0; $i < $n; $i++) {
+			$index = rand(0, strlen($characters) - 1);
+			$randomString .= $characters[$index];
+		}
+		return 'MIPOS-' . $_SESSION['shId'] . date('m') . '-' . $randomString;
+	}

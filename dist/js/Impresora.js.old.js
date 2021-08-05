@@ -61,16 +61,6 @@ class Impresora {
             .then(r => r.json())
             .then(respuestaDecodificada => respuestaDecodificada === nombreImpresora);
     }
-    static setImpresoraSilencioso(nombreImpresora, ruta) {
-        if (ruta) URL_PLUGIN = ruta;
-        return fetch(URL_PLUGIN + "/impresora_silencioso", {
-                method: "PUT",
-                body: JSON.stringify(nombreImpresora),
-            })
-            .then(r => r.json())
-            .then(respuestaDecodificada => respuestaDecodificada === nombreImpresora);
-        }
-    
 
     static getImpresora(ruta) {
         if (ruta) URL_PLUGIN = ruta;
@@ -81,11 +71,6 @@ class Impresora {
     static getImpresoras(ruta) {
         if (ruta) URL_PLUGIN = ruta;
         return fetch(URL_PLUGIN + "/impresoras")
-            .then(r => r.json());
-    }
-
-    static getImpresorasRemotas(ip) {
-        return fetch(URL_PLUGIN + "/impresoras_remotas?ip=" + ip)
             .then(r => r.json());
     }
 
@@ -188,18 +173,6 @@ class Impresora {
         this.validarTipo(tipo);
         let payload = contenido.concat(",").concat(medida.toString());
         this.operaciones.push(new OperacionTicket(tipo, payload));
-    }
-    imprimirEnImpresoraConNombreEIp(nombreImpresora, ip) {
-        const payload = {
-            operaciones: this.operaciones,
-            impresora: nombreImpresora,
-            ip: ip,
-        };
-        return fetch(this.ruta + "/imprimir_y_reenviar", {
-            method: "POST",
-            body: JSON.stringify(payload),
-        })
-            .then(r => r.json());
     }
 
 }

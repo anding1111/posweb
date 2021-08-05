@@ -1,15 +1,53 @@
 <body>
+<script>
+      //Funcion para convertir un numero en moneda separada por miles
+      function numMiles(num){
+                  var numero = Number(num).toLocaleString('es-CO');;
+                  return numero;
+              }; 
+
+  // Funcion para obtener el numero de un string 
+  function numInt( i ) {
+      var num = Number(i.replace(/[\$,\.]/g, '')*1);
+      return num;
+  };   
+</script>
 <?php 
-	// setlocale(LC_TIME, 'es_ES.UTF-8');
-	// date_default_timezone_set('America/Bogota');
-	// setlocale(LC_ALL, 'es_CO.UTF-8');
-    setlocale(LC_ALL, 'es_ES');
-?>
-  <!-- Shop -->
-  <?php
+  setlocale(LC_ALL, 'es_ES');
+
+  // Shop  
   $id = $_SESSION['shId'];
   $shop = getShopNameById($id);
+
+  //Validate Pay
+  if ($shop->shEnable == 3){
+    // load the last run time from a file, database, etc
+    //if(time() >= $_SESSION['last_run'] + (60 * 1)) { // 60 * 5 es 5 minutos
+      // Si el tiempo es mayor a 1 minuto
+    ?>
+    <div class="alertPay warning">
+      <span class="closebtn">&times;</span> 
+      <form style="text-align: center;">
+        <span class="spanPay"><strong>¡Hola <?php echo $shop->shName; ?>!</strong> Tienes una factura pendiente </span>
+        <span class="spanPay">
+          <script
+          src="https://checkout.wompi.co/widget.js"
+          data-render="button"
+          data-public-key="pub_prod_RFgJ2fOjDPgigvVXTpLThQCGZ3ZV2xxS"
+          data-currency="COP"
+          data-amount-in-cents="<?php echo ($shop->shCostPlan) * 100; ?>"
+          data-reference="<?php echo $shop->shReference; ?> "
+          data-redirect-url="https://cloud.mipos.pro/admin/validate.php"
+          >
+          </script>
+        </span>
+      </form>
+    </div>
+    <?php
+    //}
+  }
   ?>
+
       <!-- /.navbar-header -->
   <ul class="nav navbar-top-links navbar-user">
   

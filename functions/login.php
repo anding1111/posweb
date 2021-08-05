@@ -22,6 +22,8 @@ function loginDataReceive($username, $password){
 			$_SESSION['shClientDefault']  = $ShopData->shClientDefault;
 			$_SESSION['clientDefault']    = getClientsDefault()[0];
 			$_SESSION['clientQuotation']  = getClientsDefault()[1];
+			//$_SESSION['last_run']         = time();
+			checkStatusShop();
 
 			return 1;
 

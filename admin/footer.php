@@ -76,18 +76,6 @@ $actual_link = "$_SERVER[REQUEST_URI]";
 
     <script>
 
-    //Funcion para convertir un numero en moneda separada por miles
-    function numMiles(num){
-                    var numero = Number(num).toLocaleString('es-CO');;
-                    return numero;
-                }; 
-
-    // Funcion para obtener el numero de un string 
-    function numInt( i ) {
-        var num = Number(i.replace(/[\$,\.]/g, '')*1);
-        return num;
-    };    
-
     $(document).ready(function() { 
 
         $('#aboutInfo').click(function(){   

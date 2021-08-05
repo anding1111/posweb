@@ -131,6 +131,7 @@
             <div class="row">
                 <div class="col-lg-12 smartphone">
                     <div class="panel panel-default w3-card-4">
+                    <!-- <div class="panel panel-default w3-card-4"> -->
                         <div class="titles mb--10">
                         <?php echo $shop->shName?>
                         </div>
@@ -138,7 +139,7 @@
                         <div class="panel-body">
 
                             <?php if(isset($insertSuccess)) : ?>
-                                <div class="alert alert-success">El producto fue comprado con éxito</div>
+                                <div class="alert alert-success">Venta realizada con éxito</div>
                             <?php 
                                     //redirectTo('buy-product.php', 0);                                    
                                     $mariae = "invoice.php?invId=".$invNum."&type=".$orValue;

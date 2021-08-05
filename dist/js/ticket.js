@@ -1,9 +1,12 @@
-const RUTA_API = "http://localhost:8000";
+//const RUTA_API = "http://localhost:8000";
 // const $impresoraSeleccionada = "POS-80C",
 //Configura la impresora
-const $impresoraSeleccionada = document.querySelector("#shPrinter").value;
+//const $impresoraSeleccionada = document.querySelector("#shPrinter").value;
 
-$btnImprimir = document.querySelector("#btnImprimir");
+//$btnImprimir = document.querySelector("#btnImprimir");
+
+const $impresoraSeleccionada = document.querySelector("#shPrinter").value,
+      $btnImprimir = document.querySelector("#btnImprimir");
 
 var invoiceTableArray = [];
 
@@ -116,7 +119,8 @@ if (typeOrder == "SubTotal:") {
 
 $btnImprimir.addEventListener("click", () => {
     readTable();
-    let impresora = new Impresora(RUTA_API);   
+    // let impresora = new Impresora(RUTA_API);  
+    let impresora = new Impresora();   
     impresora.setFontSize(2, 2);   
     impresora.setAlign("center");
     impresora.setEmphasize(1);
@@ -212,7 +216,8 @@ $btnImprimir.addEventListener("click", () => {
     impresora.cut(); // Corta el papel
     impresora.cutPartial(); // Pongo este y también cut porque en ocasiones no funciona con cut, solo con cutPartial
     impresora.cash();
-    impresora.end();
+    impresora.imprimirEnImpresora($impresoraSeleccionada);
+    //impresora.end();
         // .then(valor => {
         //     loguear("Al imprimir: " + valor);
         // });
