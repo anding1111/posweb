@@ -94,7 +94,8 @@
 						'".$nowTime."',
                         '".$inSerial."',                 
                         '".$orValue."',                 
-                        '".$loggedInShop."'             
+                        '".$loggedInShop."',          
+                        '".$_SESSION['clId']."'            
 						
                         )") or die(mysqli_error($conexion));
 

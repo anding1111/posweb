@@ -16,13 +16,13 @@ function loginDataReceive($username, $password){
 			$_SESSION['fullusername']	  = $myData->uFullName;
 			$_SESSION['uType']		      = $myData->uType;
 			$_SESSION['uId']		      = $myData->uId;
+			$_SESSION['clId']		      = $myData->id;
 			$_SESSION['shId']		      = $myData->shId;
 			$ShopData = getShopNameById($myData->shId);	
 			$_SESSION['shInventory']      = $ShopData->shInventory;
 			$_SESSION['shClientDefault']  = $ShopData->shClientDefault;
 			$_SESSION['clientDefault']    = getClientsDefault()[0];
 			$_SESSION['clientQuotation']  = getClientsDefault()[1];
-			//$_SESSION['last_run']         = time();
 			checkStatusShop();
 
 			return 1;
