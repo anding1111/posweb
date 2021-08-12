@@ -38,7 +38,8 @@ if ( @$_POST['dId'] ) {
                             '".$nowTime."',
                             '',
                             '1',
-                            '".$loggedInShop."'
+                            '".$loggedInShop."',
+                            '".$_SESSION['clId']."'
                         )") or die(mysqli_error($con));
 	
 }
