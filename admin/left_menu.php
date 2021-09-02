@@ -1,3 +1,4 @@
+
 <body>
 <script>
       //Funcion para convertir un numero en moneda separada por miles
@@ -48,20 +49,35 @@
   }
   ?>
 
-      <!-- /.navbar-header -->
-  <ul class="nav navbar-top-links navbar-user">
+<!-- /.navbar-header -->
+<ul class="nav navbar-top-links navbar-user">
+   <!-- /.dropdown Stores-->
+   <?php
+   $stores = getAllStores(); 
+   if ( $stores->num_rows > 1 ) { ?>
+    <div class="fleft">
+      <select id="cd-dropdown" class="cd-dropdown">
+    <?php while($row = mysqli_fetch_array($stores) ){
+            if (intval($_SESSION['idStore']) == intval($row['stId'])) {
+              echo '<option class="icon-stack" value="' . $row['stId'] . '" selected>' . $row['stName'] . '</option>';
+            } else {
+              echo '<option class="icon-stack" value="' . $row['stId'] . '">' . $row['stName'] . '</option>';
+            }
+          
+          } ?>
+      </select>   
+    </div>
+  <?php } ?>
   
-      <!-- /.dropdown -->
       <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           <i class="fa fa-user-circle fa-fw"></i><strong> <?php echo getLoggedInUserName(); ?> </strong> <!--<i class="fa fa-user fa-fw"></i>-->  <i style="color:#D4D4D4;" class="fa fa-caret-down"></i>
           </a>
           <ul class="dropdown-menu dropdown-user">
-          <input type="hidden" id="shPrinter" value="<?php echo $shop->shPrinterName; ?>">
-          <input type="hidden" id="printerType" value="<?php echo $shop->shPrinterType; ?>">
-              <li class="divider"></li>
-              <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
-              </li>
+            <input type="hidden" id="shPrinter" value="<?php echo $shop->shPrinterName; ?>">
+            <input type="hidden" id="printerType" value="<?php echo $shop->shPrinterType; ?>">
+            <li class="divider"></li>
+            <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Salir</a></li>
           </ul>
           <!-- /.dropdown-user -->
       </li>

@@ -127,7 +127,11 @@
                         <div class="terminos" style="font-size:12px !important; text-align: justify; text-justify: inter-word; line-height: 1.6; padding-bottom:20px;">
                         <span><b>OBSERVACIONES: </b></span>
                             <?php 
-                            $imeis = getIdClienteByInvId($invId);
+                            if ($type == 3) {
+                                $imeis = getIdClienteByInvIdQuotation($invId);
+                            }else{
+                                $imeis = getIdClienteByInvId($invId);
+                            }
                             print_r($imeis->inSerial);                                                      
                             ?>
                         </div>

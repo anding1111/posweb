@@ -114,6 +114,7 @@ $(document).ready(function () {
     }
   }
 
+
 //   $("#button-popUp").on("click", function(){
 //     var myText = $("#myText").val();
 //     janelaPopUp.abre( "asdf", $("#size").val() + " "  + $(this).html() + ' ' + $("#mode").val(),  $("#title").val() ,  myText)

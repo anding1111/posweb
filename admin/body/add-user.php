@@ -11,6 +11,7 @@
         $uPassword =  formItemValidation($_POST['uPassword'] );
         $uPasswordAgain = formItemValidation($_POST['uPasswordAgain']);
         $uType = formItemValidation($_POST['uType']);
+        $idStore = formItemValidation($_POST['idStore']);
      
         if ( $uPassword == $uPasswordAgain ) { 
 
@@ -40,7 +41,8 @@
                                         0,
                                         '".$loggedInUser."',
                                         '".$nowTime."',
-                                        '".$loggedInShop."'
+                                        '".$loggedInShop."',
+                                        '".$idStore."'
                     )") or die(mysqli_error($con));
 
                 if ( $qry ) {
@@ -146,6 +148,21 @@
                                     </select>
                                     
                                 </div>
+                                <?php $stores = getAllStores(); 
+                                    if ( $stores->num_rows > 1 ) { ?>
+                                    <div class="form-group">
+                                        <label>Seleccione Ubicación (Local o Bodega)</label>
+                                        <select class="form-control" name="idStore">
+                                        <?php while($row = mysqli_fetch_array($stores) ){
+                                                    if (intval($_SESSION['idStore']) == intval($row['stId'])) {
+                                                        echo '<option value="' . $row['stId'] . '" selected>' . $row['stName'] . '</option>';
+                                                    } else {
+                                                        echo '<option value="' . $row['stId'] . '">' . $row['stName'] . '</option>';
+                                                    }
+                                                } ?>
+                                        </select>   
+                                    </div>
+                                <?php } ?>
 
                                 <input type="submit" value="Añadir Ahora" class="btn btn-info btn-large" name="submit" />
 

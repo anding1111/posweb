@@ -23,3 +23,4 @@ session_start();
 	require('functions/supplier.php');
 	require('functions/shop.php');
 	require('functions/values.php');
+	require('functions/store.php');

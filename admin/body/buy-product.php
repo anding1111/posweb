@@ -95,7 +95,8 @@
                         '".$inSerial."',                 
                         '".$orValue."',                 
                         '".$loggedInShop."',          
-                        '".$_SESSION['clId']."'            
+                        '".$_SESSION['usId']."',            
+                        '".$_SESSION['idStore']."'            
 						
                         )") or die(mysqli_error($conexion));
 
@@ -157,8 +158,8 @@
                                     <!-- </div> -->
                                     <div class="form-group w3-card-4b">
                                         <div class="topleft">
-                                            <label style="font-size:14px">INGRESE EL NOMBRE DEL PRODUCTO:</label> <br>
-                                            <input type="text" id="autocomplete" class="form-control" style="margin-bottom: 8px;"/>
+                                            <label style="font-size:14px">Ingrese Nombre Del Producto:</label> <br>
+                                            <input type="text" id="autocomplete" class="form-control el-input__inner" style="margin-bottom: 8px;"/>
                                         </div>
                                         <div class="topright">
                                             <div><p>                                           
@@ -207,7 +208,7 @@
                                             <td>
                                             <div class="form-inline">
                                                 <fieldset class="scheduler-border">
-                                                    <legend class="scheduler-border">CLIENTE</legend>                                                    
+                                                    <legend class="scheduler-border control-label">CLIENTE <a class="control-label" style="cursor: pointer;">Nuevo</a></legend>                                                    
                                                     <input type="text" id="autocomplete_customer" class="form-control" style="width:100%;" value="<?php echo $NameClientDefault = ($_SESSION['shClientDefault'] == 1) ? $_SESSION['clientDefault']['name'] : ''; ?>" required >
                                                     <input type="hidden" id="cId" name="cId" value="<?php echo $IdClientDefault = ($_SESSION['shClientDefault'] == 1) ? $_SESSION['clientDefault']['id'] : ''; ?>" >
                                                     <div class="form-inline" id="oculta-saldo" style="width:100%; padding-top:10px;">
@@ -376,12 +377,12 @@
         var num_row = count_table_tbody_tr + 1 + deleted;
         tableSize = num_row;
         var html = '<tr id="row_'+num_row+'">'+                  
-                   '<td id="ocultar-smartphone" style="width:10%"><input type="hidden" name="pId_value[]" id="pId_value_'+num_row+'" class="form-control"><input type="text" name="code[]" id="disp_'+num_row+'" class="form-control" disabled><input type="hidden" name="code_value[]" id="disp_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:36%"><input type="text" name="name[]" id="name_'+num_row+'" class="form-control" disabled><input type="hidden" name="name_value[]" id="name_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:12%"><input type="number" min="1" name="qty[]" id="qty_'+num_row+'" class="form-control" required oninput="subAmount()"><input type="hidden" name="cost_value[]" id="cost_value_'+num_row+'" class="form-control"></td>'+
-                   '<td style="width:15%"><input type="text" name="rate[]" id="rate_'+num_row+'" class="form-control" required oninput="subAmount()"><input type="hidden" name="rate_value[]" id="rate_value_'+num_row+'" class="form-control"></td>'+
-                   '<td id="ocultar-smartphone" style="width:18%"><input type="text" name="amount[]" id="amount_'+num_row+'" class="form-control" value="" readonly></td>'+
-                   '<td style="width:9%; text-align:center;"><button type="button" class="btn btn-default" onclick="removeRow(\''+num_row+'\')"><i class="fa fa-close"></i></button></td>'+
+                   '<td id="ocultar-smartphone" style="width:10%"><input type="hidden" name="pId_value[]" id="pId_value_'+num_row+'" class="form-control"><input type="text" name="code[]" id="disp_'+num_row+'" class="form-control el-input__inner" disabled><input type="hidden" name="code_value[]" id="disp_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:36%"><input type="text" name="name[]" id="name_'+num_row+'" class="form-control el-input__inner" disabled><input type="hidden" name="name_value[]" id="name_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:12%"><input type="number" min="1" name="qty[]" id="qty_'+num_row+'" class="form-control el-input__inner" required oninput="subAmount()"><input type="hidden" name="cost_value[]" id="cost_value_'+num_row+'" class="form-control"></td>'+
+                   '<td style="width:15%"><input type="text" name="rate[]" id="rate_'+num_row+'" class="form-control el-input__inner" required oninput="subAmount()"><input type="hidden" name="rate_value[]" id="rate_value_'+num_row+'" class="form-control"></td>'+
+                   '<td id="ocultar-smartphone" style="width:18%"><input type="text" name="amount[]" id="amount_'+num_row+'" class="form-control el-input__inner" value="" readonly></td>'+
+                   '<td style="width:9%; text-align:center;"><button type="button" class="btn btn-default el-input__inner" onclick="removeRow(\''+num_row+'\')"><i class="fa fa-close"></i></button></td>'+
                    '</tr>';
         $.ajax({
             url: "body/select-product.php",

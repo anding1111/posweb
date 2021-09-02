@@ -16,8 +16,9 @@ function loginDataReceive($username, $password){
 			$_SESSION['fullusername']	  = $myData->uFullName;
 			$_SESSION['uType']		      = $myData->uType;
 			$_SESSION['uId']		      = $myData->uId;
-			$_SESSION['clId']		      = $myData->id;
+			$_SESSION['usId']		      = $myData->id;
 			$_SESSION['shId']		      = $myData->shId;
+			$_SESSION['idStore']		  = $myData->idStore;
 			$ShopData = getShopNameById($myData->shId);	
 			$_SESSION['shInventory']      = $ShopData->shInventory;
 			$_SESSION['shClientDefault']  = $ShopData->shClientDefault;

@@ -11,6 +11,7 @@
         //collecting userinfo        
         $uFullName = formItemValidation($_POST['uFullName']);
         $uName = formItemValidation($_POST['uName']);
+        $idStore = formItemValidation($_POST['idStore']);
         
         if(isset($_POST['uPassword'])){
             $uPassword =  formItemValidation($_POST['uPassword'] );
@@ -28,9 +29,9 @@
                 
                 if ( !checkUniqueUsername( $uName ) ) {
                     if( $uPassword != null && $uPasswordAgain != null ){
-                        $update = "UPDATE users SET uFullName = '".$uFullName."' , uName = '".$uName."' , uPassword = '".md5($uPassword)."' , uType = '".$uType."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
+                        $update = "UPDATE users SET uFullName = '".$uFullName."' , uName = '".$uName."' , uPassword = '".md5($uPassword)."' , uType = '".$uType."', idStore = '".$idStore."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                     } else{
-                        $update = "UPDATE users SET uFullName = '".$uFullName."' , uName = '".$uName."' , uType = '".$uType."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
+                        $update = "UPDATE users SET uFullName = '".$uFullName."' , uName = '".$uName."' , uType = '".$uType."', idStore = '".$idStore."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                     }
                     $qry = $conexion->query($update) or die(mysqli_error($conexion));
                     if ( $qry ) {
@@ -44,7 +45,7 @@
                 }
             } else{
                 if( $uPassword != null && $uPasswordAgain != null ){
-                    $update = "UPDATE users SET uFullName = '".$uFullName."' , uPassword = '".md5($uPassword)."' , uType = '".$uType."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
+                    $update = "UPDATE users SET uFullName = '".$uFullName."' , uPassword = '".md5($uPassword)."' , uType = '".$uType."', idStore = '".$idStore."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                 } else{
                     $update = "UPDATE users SET uFullName = '".$uFullName."' WHERE `uId` = '".$getUId."' AND `shId` = '".$_SESSION['shId']."' ";
                 }
@@ -52,6 +53,9 @@
 
                 if ( $qry ) {
                     $insertSuccess = 1;
+                    if ($getUId == $_SESSION['uId']) {
+                        $_SESSION['idStore'] = $idStore;
+                    }
                 } else{
                     $insertError = 1;
                 }
@@ -103,12 +107,12 @@
                                 
                                 <?php if(checkAdmin()) : ?>
                                 <div class="form-group">
-                                    <label>Contraseña Nueva</label>
+                                    <label>Nueva Contraseña</label>
                                     <input class="form-control" name="uPassword" required="required" type="password">
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Repetir Contraseña Nueva</label>
+                                    <label>Repetir Nueva Contraseña</label>
                                     <input class="form-control" name="uPasswordAgain" required="required" type="password">
                                 </div>
                                 <div class="form-group">
@@ -127,6 +131,21 @@
                                     <?php } ?>
                                     </select>   
                                 </div>
+                                <?php $stores = getAllStores(); 
+                                    if ( $stores->num_rows > 1 ) { ?>
+                                    <div class="form-group">
+                                        <label>Seleccione Ubicación (Almacén o Bodega)</label>
+                                        <select class="form-control" name="idStore">
+                                        <?php while($row = mysqli_fetch_array($stores) ){
+                                                    if (intval($qry->idStore) == intval($row['stId'])) {
+                                                        echo '<option value="' . $row['stId'] . '" selected>' . $row['stName'] . '</option>';
+                                                    } else {
+                                                        echo '<option value="' . $row['stId'] . '">' . $row['stName'] . '</option>';
+                                                    }
+                                                } ?>
+                                        </select>   
+                                    </div>
+                                <?php } ?>
                                 <?php endif; ?>
 
                                 <input type="submit" value="ACTUALIZAR" class="btn btn-info btn-large" name="submit" />

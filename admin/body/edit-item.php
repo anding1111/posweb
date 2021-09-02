@@ -3,7 +3,7 @@
     $getPId = $_GET['pId'];
 
     //collect all informaion from database
-    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pID = '$getPId' AND `shId` = '".$_SESSION['shId']."' ") );
+    $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pID = '$getPId' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ") );
     $existingPName = $qry->pName;
     
     if ( @$_POST['submit'] ) {      
@@ -24,7 +24,7 @@
             
             if ( !checkUniqueUsername( $pName ) ) {
 
-                $update = "UPDATE items SET pName = '".$pName."', pIdBrand = '".$pIdBrand."', pBarCode = '".$pBarCode."', pQuantity = '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
+                $update = "UPDATE items SET pName = '".$pName."', pIdBrand = '".$pIdBrand."', pBarCode = '".$pBarCode."', pQuantity = '".$pQuantity."', pCost = '".$pCost."', pPrice = '".$pPrice."' WHERE pId = '".$getPId."' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
                
                 if ( $qry ) {
@@ -45,7 +45,7 @@
 
         } else{       
                     
-                $update = "UPDATE items SET pBarCode = '".$pBarCode."', pIdBrand = '".$pIdBrand."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
+                $update = "UPDATE items SET pBarCode = '".$pBarCode."', pIdBrand = '".$pIdBrand."' WHERE pId = '".$getPId."' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
                 $qry = $conexion->query($update) or die(mysqli_error($conexion));
                 //$qry = mysql_query($update) or die(mysql_error());
 
@@ -61,7 +61,7 @@
             
             //current time now
               
-            $update = "UPDATE items SET pQuantity = '".$pQuantity."' WHERE pId = '".$getPId."' AND `shId` = '".$_SESSION['shId']."' ";
+            $update = "UPDATE items SET pQuantity = '".$pQuantity."' WHERE pId = '".$getPId."' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
             $qry = $conexion->query($update) or die(mysqli_error($conexion));
             //$qry = mysql_query($update) or die(mysql_error());
 

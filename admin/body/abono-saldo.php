@@ -39,7 +39,8 @@ if ( @$_POST['dId'] ) {
                             '',
                             '1',
                             '".$loggedInShop."',
-                            '".$_SESSION['clId']."'
+                            '".$_SESSION['usId']."',
+                            '".$_SESSION['idStore']."'
                         )") or die(mysqli_error($con));
 	
 }

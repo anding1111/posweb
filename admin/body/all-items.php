@@ -37,8 +37,13 @@
                                             <td style="text-align:right"> <?php echo $data->pQuantity; ?> </td> 
                                             <td style="text-align:right"> <?php echo $data->pCost; ?> </td>   
                                             <td style="text-align:right"> <?php echo $data->pCost * $data->pQuantity; ?> </td>                                  
-                                            <td style="text-align:center" data-pId="<?php echo $data->pId; ?>"> <button class="del-cata btn btn-danger" data-did="<?php echo $data->pId; ?>">Borrar</button>  </td>
-
+                                            <td style="text-align:center" data-pId="<?php echo $data->pId; ?>">
+                                            <button class="del-cata btn btn-danger" data-did="<?php echo $data->pId; ?>">Borrar</button>
+                                            <?php $stores = getAllStores(); 
+                                            if ( $stores->num_rows > 1 ) { ?>
+                                            <a href="#transfer_modal" class=" itemInfo btn btn-default btn-small" id="pId" data-toggle="modal" data-id="<?php echo $data->pId ?>">Trasladar</a>
+                                            <?php } ?>
+                                        </td>
                                         </tr>
                                         
                                     <?php $i++; } ?>
@@ -54,48 +59,90 @@
                                     </tfoot>
                                 </table>                                
 
-                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <h1>¿Quieres eliminar este producto??</h1>
-                                        </div>
-                                        <div class="modal-footer">
-                                           <!-- <button id="del-confirm"></button> -->
-                                            <input id="del-confirm" type="button" name="yes" value="Yes" class="btn btn-primary" />
-                                            <input type="button" name="no" value="No" class="btn btn-danger" />
-                                        </div>
-                                    </div>
-                                    <!-- /.modal-content -->
-                                
-                                </div>
-                                <!-- /.modal-dialog -->
-                            </div>
+            <!-- Modal Transfer -->
+            <div class="modal fade" id="transfer_modal" role="dialog">
+                <div class="modal-dialog">                            
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <label class="modal-title" style="width: 100%; text-align:center;">TRASLADAR PRODUCTO</label>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
 
-                             <script type="text/javascript">
-                                $(function(){
-                                    $(".del-cata").click(function(){
-                                        //alert($(this).data("did"));
-                                        var row = $(this);
-                                        var id = $(this).data("did");
-                                        if(confirm("Estás seguro?")){
-                                            $.ajax({
-                                                url: "body/delete-item.php",
-                                                type: "post",
-                                                data: {dId:id}
-                                            }).done(function(msg){
-                                                row.closest("tr").remove();
+                        </div>
+                        <div class="modal-footer" style="text-align: center; margin-top:40px;">
+                            <button type="button" id="transfer-confirm" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">TRASLADAR PRODUCTO</button>
+                            <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">SALIR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin Modal Transfer -->  
+            <script type="text/javascript">
+            $(document).ready(function() { 
+                $('.itemInfo').click(function(){   
+                    var item_id = $(this).data('id');
+                    // AJAX request
+                    $.ajax({
+                        url: 'fetch-item.php',
+                        type: 'post',
+                        data: {item_id},
+                        success: function(response){ 
+                        // Add response in Modal body
+                        $('.modal-body').html(response);
+                        // Display Modal
+                        var numItems = $('#numItems').val();
+                        if (numItems < 2) {
+                            $('#transfer-confirm').prop('disabled', true);
+                        } else {
+                            $('#transfer-confirm').prop('disabled', false);
+                        }
+                        $('#transfer_modal').modal('show'); 
+                        }
+                    });
+                });
+                
+                $("#transfer-confirm").click(function(){                     
+                var pId = $('#idItem').val();
+                var store_receive = $('#store_receive').val();
+                var qty_send = Number($('#transferQty').val());
+                $.ajax({
+                        url: "body/transfer-item.php",
+                        type: "post",
+                        data: {pId, store_receive, qty_send}
+                }).done(function(msg){  
+                    window.location.reload();                                              
+                });
+                });
+            });
+            function qtyTransfer(){
+                var qty_out = $('#qtyItem').val();
+                var qty_transfer = $('#transferQty').val();
+                if (Number(qty_transfer) > Number(qty_out)){
+                    $('#transferQty').val(Number(qty_out));
+                }
+            }
+            
+            $(function(){
+                $(".del-cata").click(function(){
+                    //alert($(this).data("did"));
+                    var row = $(this);
+                    var id = $(this).data("did");
+                    if(confirm("Estás seguro?")){
+                        $.ajax({
+                            url: "body/delete-item.php",
+                            type: "post",
+                            data: {dId:id}
+                        }).done(function(msg){
+                            row.closest("tr").remove();
 
-                                            });
-                                        }
-                                    });
-                                });
+                        });
+                    }
+                });
+            });
 
-                                </script>  
+            </script>  
                             </div>
                             
                             <!-- /.table-responsive -->

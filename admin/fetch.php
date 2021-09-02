@@ -19,8 +19,8 @@ $connect = mysqli_connect($server_db, $user_db, $password_db, $database_db);
 $columns = array('pId', 'pQty', 'pMount');
 $columnss = array('invId', 'Pagado');
 
-$query = "SELECT orders.pId, orders.cId, SUM(orders.pQty) AS pQty, SUM(orders.pMount) AS pMount, SUM(orders.inCost * orders.pQty) AS pCost, items.pIdBrand FROM `orders` INNER JOIN items ON orders.pId = items.pId WHERE orders.orEnable = '1' AND orders.shId = '".$_SESSION['shId']."' AND ";
-$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY `invId`) AS subquery WHERE ";
+$query = "SELECT orders.pId, orders.cId, SUM(orders.pQty) AS pQty, SUM(orders.pMount) AS pMount, SUM(orders.inCost * orders.pQty) AS pCost, items.pIdBrand FROM `orders` INNER JOIN items ON orders.pId = items.pId WHERE orders.orEnable = '1' AND orders.shId = '".$_SESSION['shId']."' AND orders.idStore = ".$_SESSION['idStore']." AND ";
+$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `orders` WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']."  AND `idStore` = ".$_SESSION['idStore']." GROUP BY `invId`) AS subquery WHERE ";
 
 if($_POST["is_date_search"] == "yes")
 if($_POST["start_date"] == ''){
@@ -107,7 +107,7 @@ while($row = mysqli_fetch_array($result))
 
 function get_all_data($connect)
 {
- $query = "SELECT * FROM orders WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' ";
+ $query = "SELECT * FROM orders WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
  $result = mysqli_query($connect, $query);
  return mysqli_num_rows($result);
 }

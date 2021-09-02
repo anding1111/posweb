@@ -47,10 +47,10 @@ $actual_link = "$_SERVER[REQUEST_URI]";
     <script src="../bower_components/jqueryui/dist/js/jquery-ui.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
    
     <!-- DataTables 1.10.22 Script -->
-    <script type="text/javascript" src="../bower_components/datatables/JSZip-2.5.0/jszip.min.js"></script>
+    <!-- <script type="text/javascript" src="../bower_components/datatables/JSZip-2.5.0/jszip.min.js"></script>
     <script type="text/javascript" src="../bower_components/datatables/pdfmake-0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="../bower_components/datatables/pdfmake-0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="../bower_components/datatables/DataTables-1.10.22/js/jquery.dataTables.min.js"></script>
@@ -59,415 +59,440 @@ $actual_link = "$_SERVER[REQUEST_URI]";
     <script type="text/javascript" src="../bower_components/datatables/Buttons-1.6.4/js/buttons.bootstrap.min.js"></script>
     <script type="text/javascript" src="../bower_components/datatables/Buttons-1.6.4/js/buttons.html5.min.js"></script>
     <script type="text/javascript" src="../bower_components/datatables/Buttons-1.6.4/js/buttons.print.min.js"></script>
-    <script type="text/javascript" src="../bower_components/datatables/Scroller-2.0.3/js/dataTables.scroller.min.js"></script>
-    <!-- <script type="text/javascript" src="../bower_components/datatables/media/js/datatables.min.js"></script> -->
-
+    <script type="text/javascript" src="../bower_components/datatables/Scroller-2.0.3/js/dataTables.scroller.min.js"></script> -->
+    <!-- <script ESTE NO type="text/javascript" src="../bower_components/datatables/media/js/datatables.min.js"></script> -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/scroller/2.0.4/js/dataTables.scroller.min.js"></script>
+    
     <!-- Timer Picker JS -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-
+    
     <!-- Impresora JavaScript -->
     <script src="../dist/js/Impresora.js"></script>   
     
     <!-- JS Color Picker -->
-    <script src="../dist/js/jscolor.min.js"></script>   
-
-    <script>
-
-    $(document).ready(function() { 
-
-        $('#aboutInfo').click(function(){   
-            $('#about_modal').modal('show');             
-        });        
-
-        $('.cViewInv').each(function(e){
-            if($(this).val() == 1){
-                $(this).attr("checked", "checked");
-            }
-        }); 
-
-        $("#start_time").val("00:00:00");
-        $("#end_time").val("23:59:59");
-
-        $('#timer').click(function(){
-            var showTimer = $('#timerState').data('timer'); //getter
-            if(showTimer == 0){
-                $('.viewTimer').show("swing");
-                $("#start_time").val("06:00:00");
-                $("#end_time").val("14:00:00");
-                $('#timerState').data('timer',1); //setter
-            } else {
-                $('.viewTimer').hide("swing");
-                $("#start_time").val("00:00:00");
-                $("#end_time").val("23:59:59");
-                $('#timerState').data('timer',0); //setter
-
-            }
-        });
-        $('.input-timerstart').timepicker({
-            timeFormat: 'HH:mm:ss',
-            interval: 30,
-            minTime: '06:00',
-            maxTime: '22:00',
-            defaultTime: '00:00:00',
-            startTime: '06:00',
-            dynamic: true,
-            dropdown: true,
-            scrollbar: true
-        });
-        $('.input-timerend').timepicker({
-            timeFormat: 'HH:mm:ss',
-            interval: 30,
-            minTime: '06:00',
-            maxTime: '22:00',
-            defaultTime: '23:00:59',
-            startTime: '14:00',
-            dynamic: true,
-            dropdown: true,
-            scrollbar: true
-        });
-
-        $('table.display').DataTable({
-            responsive: true,
-            scrollX: true,
-			"language": {
-                "url": "../bower_components/datatables/Spanish.json"                    
-            }
-        });
-
-        // Tabla recibos
-        $('#dataTables-recibos').DataTable( {
-            responsive: true,
-            scrollX: true,
-            "language": {
-                "url": "../bower_components/datatables/Spanish.json"
-                
-            },            
-            "footerCallback": function ( row, data, start, end, display ) {
-                var api = this.api(), data;
+    <script src="../dist/js/jscolor.min.js"></script> 
     
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };    
+    <!-- Select Store JS -->
+    <script type="text/javascript" src="../dist/js/jquery.dropdown.js"></script>
+    <script type="text/javascript">
+        $( function() {
+            $( '#cd-dropdown' ).dropdown( {
+                gutter : 5,
+                stack : false,
+                delay : 100,
+                slidingIn : 100
+            } );
+        });
+
+    </script>
+
+<script>
+
+$(document).ready(function() { 
+
+    $('#aboutInfo').click(function(){   
+        $('#about_modal').modal('show');             
+    });        
+
+    $('.cViewInv').each(function(e){
+        if($(this).val() == 1){
+            $(this).attr("checked", "checked");
+        }
+    }); 
+
+    $("#start_time").val("00:00:00");
+    $("#end_time").val("23:59:59");
+
+    $('#timer').click(function(){
+        var showTimer = $('#timerState').data('timer'); //getter
+        if(showTimer == 0){
+            $('.viewTimer').show("swing");
+            $("#start_time").val("06:00:00");
+            $("#end_time").val("14:00:00");
+            $('#timerState').data('timer',1); //setter
+        } else {
+            $('.viewTimer').hide("swing");
+            $("#start_time").val("00:00:00");
+            $("#end_time").val("23:59:59");
+            $('#timerState').data('timer',0); //setter
+
+        }
+    });
+    $('.input-timerstart').timepicker({
+        timeFormat: 'HH:mm:ss',
+        interval: 30,
+        minTime: '06:00',
+        maxTime: '22:00',
+        defaultTime: '00:00:00',
+        startTime: '06:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+    });
+    $('.input-timerend').timepicker({
+        timeFormat: 'HH:mm:ss',
+        interval: 30,
+        minTime: '06:00',
+        maxTime: '22:00',
+        defaultTime: '23:00:59',
+        startTime: '14:00',
+        dynamic: true,
+        dropdown: true,
+        scrollbar: true
+    });
+
+    $('table.display').DataTable({
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"                    
+        }
+    });
+
+    // Tabla recibos
+    $('#dataTables-recibos').DataTable( {
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"
             
-                // Total over this page
-                pageTotal = api
-                    .column( 2, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );                
-    
-                // Update footer
-                $( api.column( 2 ).footer() ).html(
-                    '$'+numMiles(pageTotal)
-                );                
-            }
-                
-        });
+        },            
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
 
-        // Tablas credito y compras
-        $('#dataTables-credito-compra').DataTable( {
-            responsive: true,
-            scrollX: true,
-            "language": {
-                "url": "../bower_components/datatables/Spanish.json"
-                
-            },            
-            "footerCallback": function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-    
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };    
-               
-                // Total over this page
-                pageTotal = api
-                    .column( 1, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );                
-    
-                // Update footer
-                $( api.column( 1 ).footer() ).html(
-                    '$' + numMiles(pageTotal) 
-                );
-                
-            }
-            
-        });
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };    
+        
+            // Total over this page
+            pageTotal = api
+                .column( 2, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );                
 
-        // Tablas Historial compras
-        $('#dataTables-all-compra').DataTable( {
-            responsive: true,
-            scrollX: true,
-            "language": {
-                "url": "../bower_components/datatables/Spanish.json"
-                
-            },            
-            "footerCallback": function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-    
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };    
-               
-                // Total over this page
-                pageTotal = api
-                    .column( 1, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );                
-                // Abono over this page
-                pageAbono = api
-                    .column( 2, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );                
-                // Saldo over this page
-                pageSaldo = api
-                    .column( 3, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );                
-    
-                // Update footer
-                $( api.column( 1 ).footer() ).html(
-                    '$' + numMiles(pageTotal) 
-                );
-                $( api.column( 2 ).footer() ).html(
-                    '$' + numMiles(pageAbono) 
-                );
-                $( api.column( 3 ).footer() ).html(
-                    '$' + numMiles(pageSaldo) 
-                );
-                
-            }
+            // Update footer
+            $( api.column( 2 ).footer() ).html(
+                '$'+numMiles(pageTotal)
+            );                
+        }
             
-        });
-        // Tablas Historial credito
-        $('#dataTables-all-credito').DataTable( {
-            responsive: true,
-            scrollX: true,
-            "language": {
-                "url": "../bower_components/datatables/Spanish.json"
-                
-            },            
-            "footerCallback": function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-    
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };   
-               
-                              
-                // Abono over this page
-                pageAbono = api
-                    .column( 3, { page: 'current'} )
-                    .data()
-                    .reduce( function (a, b) {
-                        return intVal(a) + intVal(b);
-                    }, 0 );  
-    
-                // Update footer               
-                $( api.column( 3 ).footer() ).html(
-                    '$' + numMiles(pageAbono) 
-                );
-                
-            }
-            
-        });
+    });
 
-        // Tabla inventarios
-        $('#dataTables-inventario').DataTable( {
-            responsive: true,
-            scrollX: true,
-            "language": {
-                "url": "../bower_components/datatables/Spanish.json"
-                
-            },            
-            "footerCallback": function ( row, data, start, end, display ) {
-                var api = this.api(), data;
-    
-                // Remove the formatting to get integer data for summation
-                var intVal = function ( i ) {
-                    return typeof i === 'string' ?
-                        i.replace(/[\$,]/g, '')*1 :
-                        typeof i === 'number' ?
-                            i : 0;
-                };    
-               
-                // Total qty
-                pageQty = api
-                    .column( 3, { page: 'current'} )
+    // Tablas credito y compras
+    $('#dataTables-credito-compra').DataTable( {
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"
+            
+        },            
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };    
+            
+            // Total over this page
+            pageTotal = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );                
+
+            // Update footer
+            $( api.column( 1 ).footer() ).html(
+                '$' + numMiles(pageTotal) 
+            );
+            
+        }
+        
+    });
+
+    // Tablas Historial compras
+    $('#dataTables-all-compra').DataTable( {
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"
+            
+        },            
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };    
+            
+            // Total over this page
+            pageTotal = api
+                .column( 1, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );                
+            // Abono over this page
+            pageAbono = api
+                .column( 2, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );                
+            // Saldo over this page
+            pageSaldo = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );                
+
+            // Update footer
+            $( api.column( 1 ).footer() ).html(
+                '$' + numMiles(pageTotal) 
+            );
+            $( api.column( 2 ).footer() ).html(
+                '$' + numMiles(pageAbono) 
+            );
+            $( api.column( 3 ).footer() ).html(
+                '$' + numMiles(pageSaldo) 
+            );
+            
+        }
+        
+    });
+    // Tablas Historial credito
+    $('#dataTables-all-credito').DataTable( {
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"
+            
+        },            
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };   
+            
+                            
+            // Abono over this page
+            pageAbono = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );  
+
+            // Update footer               
+            $( api.column( 3 ).footer() ).html(
+                '$' + numMiles(pageAbono) 
+            );
+            
+        }
+        
+    });
+
+    // Tabla inventarios
+    $('#dataTables-inventario').DataTable( {
+        responsive: true,
+        scrollX: true,
+        "language": {
+            "url": "../bower_components/datatables/Spanish.json"
+            
+        },            
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+            var intVal = function ( i ) {
+                return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                        i : 0;
+            };    
+            
+            // Total qty
+            pageQty = api
+                .column( 3, { page: 'current'} )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+            // Total unitario
+            pageMountUnit = api
+                    .column( 4, { page: 'current'} )
                     .data()
                     .reduce( function (a, b) {
                         return intVal(a) + intVal(b);
                     }, 0 );
-                // Total unitario
-                pageMountUnit = api
-                        .column( 4, { page: 'current'} )
-                        .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
-                // Total total
-                pageMountTotal = api
-                        .column( 5, { page: 'current'} )
-                        .data()
-                        .reduce( function (a, b) {
-                            return intVal(a) + intVal(b);
-                        }, 0 );
-          
+            // Total total
+            pageMountTotal = api
+                    .column( 5, { page: 'current'} )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+        
 
-                // Update footer
-                $( api.column( 3 ).footer() ).html(
-                    numMiles(pageQty) + ' Unidades');
-                $( api.column( 4 ).footer() ).html(
-                    '$' + numMiles(pageMountUnit));              
-                $( api.column( 5 ).footer() ).html(
-                    '$' + numMiles(pageMountTotal) 
-                );
-                
-            }
+            // Update footer
+            $( api.column( 3 ).footer() ).html(
+                numMiles(pageQty) + ' Unidades');
+            $( api.column( 4 ).footer() ).html(
+                '$' + numMiles(pageMountUnit));              
+            $( api.column( 5 ).footer() ).html(
+                '$' + numMiles(pageMountTotal) 
+            );
             
+        }
+        
+    });
+
+        $('.input-daterange').datepicker({
+            todayBtn:'linked',
+            //format: "yyyy-mm-dd",
+            autoclose: true,
+            closeText: 'Cerrar',
+            prevText: '<Ant',
+            nextText: 'Sig>',
+            currentText: 'Hoy',
+            monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+            dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+            dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+            dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+            weekHeader: 'Sm',
+            dateFormat: 'yy-mm-dd',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ''
         });
 
-            $('.input-daterange').datepicker({
-                todayBtn:'linked',
-                //format: "yyyy-mm-dd",
-                autoclose: true,
-                closeText: 'Cerrar',
-                prevText: '<Ant',
-                nextText: 'Sig>',
-                currentText: 'Hoy',
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-                weekHeader: 'Sm',
-                dateFormat: 'yy-mm-dd',
-                firstDay: 1,
-                isRTL: false,
-                showMonthAfterYear: false,
-                yearSuffix: ''
-            });
+        fetch_data('no');
 
-            fetch_data('no');
-
-            function fetch_data(is_date_search, start_date='', end_date='', start_time='00:00:00', end_time='23:59:59', radio='1', checkbox='0') {
+        function fetch_data(is_date_search, start_date='', end_date='', start_time='00:00:00', end_time='23:59:59', radio='1', checkbox='0') {
+        
+            var st_date = $("#start_date").val();
+            var en_date = $("#end_date").val();            
             
-                var st_date = $("#start_date").val();
-                var en_date = $("#end_date").val();            
-                
-                var dataTable = $('#order_data').DataTable({
-                    "scrollY": "200px",
-                    "scrollX": true,
-                    "scrollCollapse": true,
-                    "paging": false,
-                    "processing" : true,
-                    "serverSide" : true,
-                    "order" : [],
-                    "ajax" : {
-                        url:"fetch.php",
-                        type:"POST",
-                        data:{
-                        is_date_search:is_date_search, start_date:start_date, end_date:end_date, start_time:start_time, end_time:end_time, radio:radio, checkbox:checkbox
-                        }
-                    },
-                    "language": {
-                        "url": "../bower_components/datatables/Spanish.json"                
-                    },             
-                    'sDom': 't',
-                    "footerCallback": function ( row, data, start, end, display ) {
-                        var api = this.api(), data;
-                        // Remove the formatting to get integer data for summation
-                        var intVal = function ( i ) {
-                            return typeof i === 'string' ?
-                                i.replace(/[\$,\.]/g, '')*1 :
-                                typeof i === 'number' ?
-                                    i : 0;
-                        };
-
-                        // Total Qty
-                        pageQty = api
-                            .column( 1, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 ); 
-                        
-                        // Total Mount
-                        pageTotal = api
-                            .column( 2, { page: 'current'} )
-                            .data()
-                            .reduce( function (a, b) {
-                                return intVal(a) + intVal(b);
-                            }, 0 );
-
-                        // Total Saldo              
-                        // pageAbono = api                    
-                        //     .cell(0, 3, { page: 'current'})
-                        //     .data();               
-
-                        // Update footer
-                        $( api.column( 1 ).footer() ).html(
-                            pageQty + ' Unidades');
-                        $( api.column( 2 ).footer() ).html(
-                            '$' + numMiles(pageTotal)); 
-
-                        // Update Total   
-                        var efectivo = data[0][4];                
-                        $("#totales").html('Total Caja: $' + numMiles(efectivo));                   
-                        // $("#totales").html('Total Caja: $' + numMiles(pageAbono));                   
-                    
+            var dataTable = $('#order_data').DataTable({
+                "scrollY": "200px",
+                "scrollX": true,
+                "scrollCollapse": true,
+                "paging": false,
+                "processing" : true,
+                "serverSide" : true,
+                "order" : [],
+                "ajax" : {
+                    url:"fetch.php",
+                    type:"POST",
+                    data:{
+                    is_date_search:is_date_search, start_date:start_date, end_date:end_date, start_time:start_time, end_time:end_time, radio:radio, checkbox:checkbox
                     }
-                
-                });                      
-           
-            } 
+                },
+                "language": {
+                    "url": "../bower_components/datatables/Spanish.json"                
+                },             
+                'sDom': 't',
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,\.]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
 
-            $('#search').click(function(){
-                var start_date = $('#start_date').val();
-                var end_date = $('#end_date').val();
-                var start_time = $('#start_time').val();
-                var end_time = $('#end_time').val();
-                var radio = $('.radio:checked').val();
-                var checkbox = $('#checkbox').val();
-                $('#order_data').DataTable().destroy();
-                fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
-                // if(start_date != '' || end_date !='') {
-                //     $('#order_data').DataTable().destroy();
-                //     fetch_data('yes', start_date, end_date, radio);
-                // } else {
-                //     alert("Ambas Fechas son Requeridas!");
-                // }
-            });
-    });
-    </script>
+                    // Total Qty
+                    pageQty = api
+                        .column( 1, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 ); 
+                    
+                    // Total Mount
+                    pageTotal = api
+                        .column( 2, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Total Saldo              
+                    // pageAbono = api                    
+                    //     .cell(0, 3, { page: 'current'})
+                    //     .data();               
+
+                    // Update footer
+                    $( api.column( 1 ).footer() ).html(
+                        pageQty + ' Unidades');
+                    $( api.column( 2 ).footer() ).html(
+                        '$' + numMiles(pageTotal)); 
+
+                    // Update Total   
+                    var efectivo = data[0][4];                
+                    $("#totales").html('Total Caja: $' + numMiles(efectivo));                   
+                    // $("#totales").html('Total Caja: $' + numMiles(pageAbono));                   
+                
+                }
+            
+            });                      
+        
+        } 
+
+        $('#search').click(function(){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            var start_time = $('#start_time').val();
+            var end_time = $('#end_time').val();
+            var radio = $('.radio:checked').val();
+            var checkbox = $('#checkbox').val();
+            $('#order_data').DataTable().destroy();
+            fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
+            // if(start_date != '' || end_date !='') {
+            //     $('#order_data').DataTable().destroy();
+            //     fetch_data('yes', start_date, end_date, radio);
+            // } else {
+            //     alert("Ambas Fechas son Requeridas!");
+            // }
+        });
+});
+</script>
 
 <!-- </body>
 

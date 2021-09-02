@@ -8,10 +8,10 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 if(isset($_POST["userid"])) {
 
     $invId = $_POST['userid'];
-    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' ");
+    $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ");
     $numItems =  $qry->num_rows;
-    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY cId"));
-    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
+    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = ".$invId." AND `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." GROUP BY cId"));
+    $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment FROM `orders` WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND invId BETWEEN 0 AND '$invId' "));
 
     $result = getClientNameById($qrydata->cId);
     $Fecha = getFecha($invId);                                                
@@ -42,14 +42,14 @@ if(isset($_POST["userid"])) {
 
     $response .= "<div class='col-sm-12' style='margin-top: 15px;'>";
     $response .= "<table class='table table-hover' border='0' width='100%'>";
-    $response .= "<thead style='display: block;'>
+    $response .= "<thead>
     <tr>                                
     <th style='width:45%'>Producto</th>                                
     <th style='width:10%; text-align:right'>Cant.</th>
     <th style='width:20%; text-align:right'>Vr. Unit.</th>
     <th style='width:25%; text-align:right'>Vr. Total</th>
     </tr>
-    <tbody style='display: block; max-height: 30vh; overflow-y: auto; overflow-x: hidden;'>";
+    <tbody style='max-height: 30vh; overflow-y: auto; overflow-x: hidden;'>";
 
     while( $row = $qry->fetch_assoc() ){
         $id = $row['pId'];

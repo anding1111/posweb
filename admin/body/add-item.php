@@ -11,32 +11,44 @@
         $pQuantity = formItemValidation($_POST['pQuantity']);  
         $pCost = formItemValidation($_POST['pCost']);   
         $pPrice = formItemValidation($_POST['pPrice']);
+
+        //generate invoice number
+        $consulta = $conexion->query("SELECT * FROM items ORDER BY pId DESC LIMIT 1");
+        if($consulta->num_rows > 0){
+            $result = mysqli_fetch_object($consulta);        
+            $idAux = $result->idAux + 1; 
+        }else{
+            $idAux = 1;
+        }
           
         //logged in shop ID
         $loggedInShop = $_SESSION['shId']; 
-             
+        $stores = getAllStores(); 
+        while($row = mysqli_fetch_array($stores) ){
+            $qry = $conexion->query("INSERT INTO items VALUES(
+                                    '0',                                        
+                                    '".$pBarCode."',
+                                    '".$pName."',  
+                                    '".$pIdBrand."',                                      
+                                    '".$pQuantity."',
+                                    '".$pCost."',                                       
+                                    '".$pPrice."',
+                                    '1',
+                                    '".$loggedInShop."',
+                                    '".$row['stId']."',
+                                    '".$idAux."'
+                )") or die(mysqli_error($conexion));
+            }
+            
+        if ( $qry ) {
+            
+            $insertSuccess = 1;
 
-                $qry = $conexion->query("INSERT INTO items VALUES(
-                                        '0',                                        
-                                        '".$pBarCode."',
-                                        '".$pName."',  
-                                        '".$pIdBrand."',                                      
-                                        '".$pQuantity."',
-                                        '".$pCost."',                                       
-                                        '".$pPrice."',
-                                        '1',
-                                        '".$loggedInShop."'
-                                        
-                    )") or die(mysqli_error($conexion));
-                   
-                if ( $qry ) {
-                    
-                    $insertSuccess = 1;
+        } else{
 
-                } else{
+            $insertError = 1;
+        }
 
-                    $insertError = 1;
-                }
     }
 ?>
 

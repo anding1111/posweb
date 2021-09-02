@@ -11,8 +11,8 @@ if (!$con) {
 	//Autocomplete Product
 	if(isset($_POST['search'])){
 		$search = mysqli_real_escape_string($con,$_POST['search']);
-	   
-		$query = "SELECT * FROM items WHERE pName like '%".$search."%' AND pEnable = '1' AND `shId` = '".$_SESSION['shId']."' ";
+	   //Busca en Ventas y entradas de productos
+		$query = "SELECT * FROM items WHERE pName like '%".$search."%' AND pEnable = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();
