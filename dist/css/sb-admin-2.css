@@ -133,7 +133,8 @@ table.normal-printer th, table.normal-printer td {
 }
 #items td.total-value { 
     border-left: 0; 
-    padding: 5px; 
+    padding: 5px;
+    text-align: right; 
 }
 
 #items td.balance { 

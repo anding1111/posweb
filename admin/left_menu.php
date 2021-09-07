@@ -107,7 +107,8 @@
                     <li><a href="quotations.php"><i class="fa fa-edit fa-fw"></i> Cotizaciones</a></li>                    
                   </ul>
                 </li>
-                
+
+                <?php if(checkAdmin() || checkManager()) : ?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-usd fa-fw"></i> Contabilidad <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -117,7 +118,8 @@
                     <li><a href="saldo-history.php"><i class="fa fa-calculator fa-fw"></i> Historial Creditos</a></li> 
                   </ul>
                 </li>
-                 
+                <?php endif; ?>
+
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sort-alpha-asc fa-fw"></i> Productos <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -139,6 +141,7 @@
                   </ul>
                 </li>
 
+                <?php if(checkAdmin() || checkManager()) : ?>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-vcard-o fa-fw"></i> Poveedores <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -149,7 +152,7 @@
                     <li><a href="balances.php"><i class="fa fa-book fa-fw"></i> Saldos</a></li>
                   </ul>
                 </li>
-
+                
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-users fa-fw"></i> Usuarios <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -158,6 +161,7 @@
                     <li><a href="users.php"><i class="fa fa-users fa-fw"></i> Lista Usuarios</a></li>                    
                   </ul>
                 </li>
+                <?php endif; ?>
 
                 <?php if(checkAdmin()) : ?>
                 <li>

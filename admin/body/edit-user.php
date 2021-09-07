@@ -118,10 +118,12 @@
                                 <div class="form-group">
                                     <label>Seleccione un Perfíl</label>
                                     <?php $options = array( 
-                                            "Super Administrador" => 'admin', 
-                                            "Administrador" => 'manager',
-                                            "Encargado" => 'replacement', 
-                                            "Vendedor" => 'seller'
+                                            "Administrador" => 'admin', 
+                                            "Jefe Almacén" => 'manager',
+                                            "Jefe Ventas" => 'replacement', 
+                                            "Vendedor" => 'seller',
+                                            "Asesor Comercial" => 'adviser',
+                                            "Almacenista" => 'storer'
                                         );  ?>
                                     <select class="form-control" name="uType">
                                     <?php  foreach($options as $display => $value) {  ?>

@@ -52,7 +52,7 @@ function checkManager()
 	return 0;
 }
 
-function checkClark()
+function checkSeller()
 {
 	if ( $_SESSION['uType'] == 'clark' ) {
 		return 1;

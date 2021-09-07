@@ -49,7 +49,7 @@ $qry = $con->query("SELECT * FROM orders ORDER BY `cmId` ASC");
 //Actualiza items con su store y su idAux
 if(isset($_GET["items"])) {
 $n = 11;
-$qry = $con->query("SELECT * FROM items ORDER BY `pId` ASC");
+$qry = $con->query("SELECT * FROM items WHERE `idAux` = 0 ORDER BY `pId` ASC");
     while($row = mysqli_fetch_array($qry) ){
         $store = storeById($row['shId'])->stId;
         $update = "UPDATE items SET idStore = '".$store."', idAux = '".$n."' WHERE pId = '".$row['pId']."' ";
