@@ -1249,11 +1249,8 @@ input[type=checkbox] {
 	border: 2px solid #FFF;
 }
 .float:hover {
-    /* color: #007F7F; */
     color: rgba(131,98,247,1);
-	/* background-color:#fff; */
     background-image: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,200,1));
-	/*border-color: #007F7F;*/
 	width:70px;
 	height:70px;
 	bottom:35px;
@@ -1261,7 +1258,6 @@ input[type=checkbox] {
 	border-radius:50px;
 	text-align:center;
 	box-shadow: 3px 4px 3px #999;
-	/* border: 3px solid #007F7F; */
 	border: 3px solid rgba(233,111,234,1);
 }
 .my-float{
@@ -1269,6 +1265,29 @@ input[type=checkbox] {
 }
 .my-float:hover{
 	margin-top:21px;
+}
+.float-np{
+	position:fixed;
+	width:50px;
+	height:50px;
+	bottom:50%;
+	right:30px;
+    background-color: rgba(255, 255, 255, 0.5);
+	color:#3B486F;
+	border-radius:40px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;	
+	border: 1px solid #FFF;
+}
+.float-np:hover {
+    background-color: rgba(255, 255, 255, 0.7);
+    /* color:#03d3e2; */
+}
+.my-float-np{
+    padding-top: 10px;
+}
+.my-float-np:hover{
+    color: #011a2e;
 }
 
 .my-login{
@@ -1873,4 +1892,58 @@ That part is just for the form
   padding: 5px;
   color: #fff;
   border-style: none;
+}
+/* Style Export Datatables Buttons*/
+.dt-button.btn-export {	
+	padding: 8px 20px;
+	background: #2D7890;
+	color: #fff;
+	border-radius: 10px !important;
+	border:none;
+	margin-top: 10px;
+	width: 200px;
+	height: 46px;
+	font-size: 18px;
+    }
+
+.dt-button.btn-export:hover {
+    background: #fff;
+	color: #2D7890;
+    border: 1px solid #000;	
+}	
+
+.col-centered{    
+	display: flex;    
+    justify-content: center;
+}
+
+button.dt-button, div.dt-button, a.dt-button {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    margin-right: 0.333em;
+    margin-bottom: 0.333em;
+    padding: 0.5em 1em;
+    border: 1px solid #999;
+    border-radius: 2px;
+    cursor: pointer;
+    font-size: 0.88em;
+    line-height: 1.6em;
+    color: black;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: #e9e9e9;
+    background-image: -webkit-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -moz-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -ms-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: -o-linear-gradient(top, #fff 0%, #e9e9e9 100%);
+    background-image: linear-gradient(to bottom, #fff 0%, #e9e9e9 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='white', EndColorStr='#e9e9e9');
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-decoration: none;
+    outline: none;
+    text-overflow: ellipsis;
 }

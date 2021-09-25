@@ -69,13 +69,7 @@
                             <div id="printinf">
                                 <br />
                                 <table id="order_data" class="table table-bordered table-striped" width="100%">
-                                <thead>
-                                    <tr>
-                                       <th>Nombre</th>
-                                       <th>Cantidad</th>                                           
-                                       <th>Total</th>
-                                    </tr>
-                                </thead>
+                                
                                 <tfoot>
                                    <tr>
                                        <th colspan="1" style="text-align:right">Total:</th>                                       
@@ -85,17 +79,14 @@
                                </tfoot>
                                 </table>
                                 <table class="table table-bordered" id="table_credito">
-                                    <tbody id="resume_credito" class="form-inline" style="font-size:22px; color:#31B0D5;">
+                                    <tbody id="resume_credito" class="form-inline" style="font-size:22px; color:#2D7890;">
                                     <tr>
                                         <th colspan="4" class="text-center" id="totales"></th>                            
                                     </tr>                    
                                     </tbody>
                                 </table>
                             </div>
-                                
                             </div>
-
-                            
                             </div>
                             
                             <!-- /.table-responsive -->

@@ -1,10 +1,20 @@
  <?php
     $invId = $_GET['invId'];
     $type = $_GET['type'];
-    global $conexion;
-    
+    // global $conexion;
     //logged in shop ID
     $loggedInShop = $_SESSION['shId'];
+
+    //Get Prev and Next ID Invoice
+    $getPrevNext = $conexion->query("SELECT * FROM orders 
+    WHERE ( 
+            invId = IFNULL((SELECT MIN(invId) FROM orders WHERE invId > ".$invId." AND orEnable = 1 AND shId = ".$loggedInShop." AND idStore = ".$_SESSION['idStore']."),".$invId.") 
+            OR  invid = IFNULL((SELECT MAX(invId) FROM orders WHERE invId < ".$invId." AND orEnable = 1 AND shId = ".$loggedInShop." AND idStore = ".$_SESSION['idStore']."),".$invId.")
+          ) AND shId = ".$loggedInShop." AND idStore = ".$_SESSION['idStore']." GROUP BY invID ASC;");
+    $data = array();
+    while ($row = $getPrevNext->fetch_row()) {
+        $data[] = $row[1];
+    }
 
     $qry = $conexion->query("SELECT * FROM orders WHERE invId = ".$invId." AND `pId` != 0 AND `orEnable` = '".$type."' AND `shId` = '".$loggedInShop."' ");
     
@@ -189,6 +199,14 @@
             <!-- /.row -->
         </div>
         <!-- /.row -->
+        <!--Floating Button-->
+        <a style="left: 30px !important;" href="invoice.php?invId=<?php echo $data[0];?>&type=1" class="float-np">
+            <b><i style="font-weight:bolder;" class="fa fa-angle-left fa-2x my-float-np"></i></b>
+        </a>
+        <a href="invoice.php?invId=<?php echo $data[1];?>&type=1" class="float-np">
+            <b><i style="font-weight:bolder ;" class="fa fa-angle-right fa-2x my-float-np"></i></b>
+        </a>
+        <!--/Floating Button-->
 <!-- Imprimir Recibo JavaScript -->
 <script src="../dist/js/ticket.js"></script>
 <!-- Crea html en canvas Javascript -->

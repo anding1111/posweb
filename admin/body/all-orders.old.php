@@ -9,6 +9,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
 
+
                             <div class="dataTable_wrapper">                            
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-recibos" width="100%">                               
                                     <thead>
@@ -20,6 +21,33 @@
                                             <th style="text-align:center">Opciones</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                    <?php
+                                        $qry = getAllOrders();
+                                        while($data = mysqli_fetch_object( $qry )){
+                                    ?>
+                                            <tr class="odd gradeX">
+                                                <td> 
+                                                <?php echo($data->invId);?>
+                                                </td>
+                                                <td> 
+                                                <?php  $client = getClientNameById($data->cId);
+                                                echo($client->cName); ?>
+                                                </td>
+                                                <td style="text-align:right"> 
+                                                <?php
+                                                echo($data->totalOrder); ?>
+                                                </td>                                       
+                                                <td> 
+                                                <?php echo($data->bDate); ?>
+                                                </td>
+                                                <td style="text-align:center">
+                                                <a href="invoice.php?invId=<?php echo $data->invId; ?>&type=1" class="btn btn-default">Ver</a>
+                                                <a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="<?php echo $data->invId ?>">Anular</a>
+                                                </td>
+                                            </tr>                                                          
+                                        <?php } ?>
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th colspan="2" style="text-align:right">Total:</th>
@@ -55,7 +83,6 @@
                             $(document).ready(function() { 
                                 $('.invoiceInfo').click(function(){   
                                     var userid = $(this).data('id');
-                                    console.log(userid);
                                     // AJAX request
                                     $.ajax({
                                         url: 'fetch-invoice.php',

@@ -57,4 +57,8 @@ include('../vendor/autoload.php');
     <link rel="stylesheet" type="text/css" href="../dist/css/style6.css" />
 	<script src="../dist/js/modernizr.custom.63321.js"></script>
 
+    
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+
 </head>

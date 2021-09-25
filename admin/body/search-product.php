@@ -8,11 +8,16 @@ if (!$con) {
 	die("Falló la conexión: " . mysqli_connect_error());
    }
 
+$searchItemBy = "pName";
+if ($_SESSION['shSearch'] == 1) {
+	$searchItemBy = "pBarCode";
+}
+
 	//Autocomplete Product
 	if(isset($_POST['search'])){
 		$search = mysqli_real_escape_string($con,$_POST['search']);
 	   //Busca en Ventas y entradas de productos
-		$query = "SELECT * FROM items WHERE pName like '%".$search."%' AND pEnable = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
+		$query = "SELECT * FROM items WHERE ".$searchItemBy." like '%".$search."%' AND pEnable = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
 		$result = mysqli_query($con,$query);
 	   
 		$response = array();

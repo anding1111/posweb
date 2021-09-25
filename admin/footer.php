@@ -77,7 +77,7 @@ $actual_link = "$_SERVER[REQUEST_URI]";
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+    <!-- <script src="../dist/js/sb-admin-2.js"></script> -->
     
     <!-- Impresora JavaScript -->
     <script src="../dist/js/Impresora.js"></script>   
@@ -163,39 +163,39 @@ $(document).ready(function() {
     });
 
     // Tabla recibos
-    $('#dataTables-recibos').DataTable( {
-        responsive: true,
-        scrollX: true,
-        "language": {
-            "url": "../bower_components/datatables/Spanish.json"
+    // $('#dataTables-recibos').DataTable( {
+    //     responsive: true,
+    //     scrollX: true,
+    //     "language": {
+    //         "url": "../bower_components/datatables/Spanish.json"
             
-        },            
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
+    //     },            
+    //     "footerCallback": function ( row, data, start, end, display ) {
+    //         var api = this.api(), data;
 
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };    
+    //         // Remove the formatting to get integer data for summation
+    //         var intVal = function ( i ) {
+    //             return typeof i === 'string' ?
+    //                 i.replace(/[\$,]/g, '')*1 :
+    //                 typeof i === 'number' ?
+    //                     i : 0;
+    //         };    
         
-            // Total over this page
-            pageTotal = api
-                .column( 2, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );                
+    //         // Total over this page
+    //         pageTotal = api
+    //             .column( 2, { page: 'current'} )
+    //             .data()
+    //             .reduce( function (a, b) {
+    //                 return intVal(a) + intVal(b);
+    //             }, 0 );                
 
-            // Update footer
-            $( api.column( 2 ).footer() ).html(
-                '$'+numMiles(pageTotal)
-            );                
-        }
+    //         // Update footer
+    //         $( api.column( 2 ).footer() ).html(
+    //             '$'+numMiles(pageTotal)
+    //         );                
+    //     }
             
-    });
+    // });
 
     // Tablas credito y compras
     $('#dataTables-credito-compra').DataTable( {
@@ -406,8 +406,7 @@ $(document).ready(function() {
         function fetch_data(is_date_search, start_date='', end_date='', start_time='00:00:00', end_time='23:59:59', radio='1', checkbox='0') {
         
             var st_date = $("#start_date").val();
-            var en_date = $("#end_date").val();            
-            
+            var en_date = $("#end_date").val();
             var dataTable = $('#order_data').DataTable({
                 "scrollY": "200px",
                 "scrollX": true,
@@ -423,10 +422,66 @@ $(document).ready(function() {
                     is_date_search:is_date_search, start_date:start_date, end_date:end_date, start_time:start_time, end_time:end_time, radio:radio, checkbox:checkbox
                     }
                 },
+                columns: [{
+                        title: "Nombre",
+                    },
+                    { 
+                        title: "Cantidad",
+                        render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                        className: 'text-right',
+                    },
+                    { 
+                        title: "Valor($)",
+                        render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                        className: 'text-right',
+                        
+                    }
+                ],
                 "language": {
                     "url": "../bower_components/datatables/Spanish.json"                
                 },             
-                'sDom': 't',
+                dom: 
+                    "<'row'<'col-sm-12't>>" +
+                    "<'row'<'col-sm-12 col-centered text-center'B>>",
+                    
+                buttons: [{
+                    text: 'COPIAR&nbsp;&nbsp;<i class="fa fa-lg fa-copy"></i>',
+                    extend: 'copy',
+                    title: 'REPORTE DE VENTAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    },{
+                    text: 'EXCEL&nbsp;&nbsp;<i class="fa fa-lg fa-file-excel-o"></i>',
+                    extend: 'excel',
+                    exportOptions: { orthogonal: 'export' },
+                    title: 'REPORTE DE VENTAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    }, {
+                    text: 'PDF&nbsp;&nbsp;<i class="fa fa-lg fa-file-pdf-o"></i>',
+                    extend: 'pdf',
+                    title: 'REPORTE DE VENTAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    }, {
+                    text: 'IMPRIMIR&nbsp;&nbsp;<i class="fa fa-lg fa-print"></i>',
+                    extend: 'print',
+                    title: 'REPORTE DE VENTAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    }
+                ],
                 "footerCallback": function ( row, data, start, end, display ) {
                     var api = this.api(), data;
                     // Remove the formatting to get integer data for summation
@@ -464,9 +519,15 @@ $(document).ready(function() {
                     $( api.column( 2 ).footer() ).html(
                         '$' + numMiles(pageTotal)); 
 
-                    // Update Total   
+                    // Update Total 
+                    var efectivo = 0;
+                    try{
+                    console.log(data[0][4]);
                     var efectivo = data[0][4];                
-                    $("#totales").html('Total Caja: $' + numMiles(efectivo));                   
+                    }catch(e){
+                        console.error(e.message," porque no existe el objeto");
+                    }
+                    $("#totales").html('Total Caja: $' + numMiles(efectivo));  
                     // $("#totales").html('Total Caja: $' + numMiles(pageAbono));                   
                 
                 }

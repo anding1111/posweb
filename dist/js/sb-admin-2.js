@@ -113,12 +113,114 @@ $(document).ready(function () {
       setTimeout(function(){ div.style.display = "none"; }, 600);
     }
   }
-
-
-//   $("#button-popUp").on("click", function(){
-//     var myText = $("#myText").val();
-//     janelaPopUp.abre( "asdf", $("#size").val() + " "  + $(this).html() + ' ' + $("#mode").val(),  $("#title").val() ,  myText)
-//   });
-//   janelaPopUp.abre( "example", 'p red',  'Example' ,  'chosse a configuration and click the color!');
-//   setTimeout(function(){janelaPopUp.fecha('example');}, 2000);
+//Datatables Ajax Response
+  var ordersTbl = '';
+  $(function() {
+      // draw function [called if the database updates]
+      function draw_data() {
+          if ($.fn.dataTable.isDataTable('#dataTables-recibos') && ordersTbl != '') {
+              ordersTbl.draw(true)
+          } else {
+              load_data();
+          }
+      }
   
+      function load_data() {
+          ordersTbl = $('#dataTables-recibos').DataTable({
+             
+              "processing": true,
+              "serverSide": true,
+              "language": {
+                    "url": "../bower_components/datatables/Spanish.json"
+                },  
+              "ajax": {
+                  url: "./fetch-orders.php",
+                  method: 'POST'
+              },
+              columns: [{
+                      data: 'id',
+                  },
+                  {
+                      data: 'name',
+                  },
+                  {
+                      data: 'total_order',
+                      render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                      className: 'text-right',
+                  },
+                  {
+                      data: 'order_date',
+                  },
+                  {
+                      data: null,
+                      orderable: false,
+                      className: 'text-center',
+                      render: function(data, type, row, meta) {
+                          return '<a href="invoice.php?invId='+ (row.id) + '&type=1" class="btn btn-default">Ver</a><a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="'+ (row.id) + '">Anular</a>';
+                      }
+                  }
+              ],
+              "footerCallback": function ( row, data, start, end, display ) {
+                        var api = this.api(), data;
+            
+                        // Remove the formatting to get integer data for summation
+                        var intVal = function ( i ) {
+                            return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '')*1 :
+                                typeof i === 'number' ?
+                                    i : 0;
+                        };    
+                    
+                        // Total over this page
+                        pageTotal = api
+                            .column( 2, { page: 'current'} )
+                            .data()
+                            .reduce( function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0 );                
+            
+                        // Update footer
+                        $( api.column( 2 ).footer() ).html(
+                            '$'+numMiles(pageTotal)
+                        );                
+                    },
+                drawCallback: function(settings) {
+                    $('.invoiceInfo').click(function(){   
+                        var userid = $(this).data('id');
+                        // AJAX request
+                        $.ajax({
+                            url: 'fetch-invoice.php',
+                            type: 'post',
+                            data: {userid: userid},
+                            success: function(response){ 
+                            // Add response in Modal body
+                            $('.modal-body').html(response);
+                            // Display Modal
+                            $('#null_modal').modal('show'); 
+                            }
+                        });
+                    });
+                    $("#null-confirm").click(function(){                     
+                    var id = $('#numInvoice').val(); 
+                    //var saldo = $('#saAbona').val(); 
+                    $.ajax({
+                            url: "body/null-invoice.php",
+                            type: "post",
+                            data: {invId:id}
+                    }).done(function(msg){                   
+                        window.location.reload();                                              
+                    });
+                });
+            },
+          
+              "order": [
+                  [0, "desc"]
+              ],
+              initComplete: function(settings) {
+                  $('.paginate_button').addClass('p-1')
+              }
+          });
+      }
+      load_data()
+     
+  });

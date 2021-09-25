@@ -11,7 +11,11 @@
         //collecting userinfo        
         $uFullName = formItemValidation($_POST['uFullName']);
         $uName = formItemValidation($_POST['uName']);
+        if ( $stores->num_rows > 1 ) {
         $idStore = formItemValidation($_POST['idStore']);
+        } else {
+            $idStore = $_SESSION['idStore'];
+        }
         
         if(isset($_POST['uPassword'])){
             $uPassword =  formItemValidation($_POST['uPassword'] );
