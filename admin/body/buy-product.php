@@ -27,7 +27,7 @@
         $loggedInShop = $_SESSION['shId'];
 
         $orValue = 1;
-        //Validate Order or Cotization
+        //Validate Order or Quotation
         if ($pSubmit == "COTIZAR") {
             $orValue = 3;
         }
@@ -61,22 +61,17 @@
 			$pPrice = formItemValidation($_POST['rate'][$i]);
             $pMount = formItemValidation($_POST['amount'][$i]);
             $pCost = formItemValidation($_POST['cost_value'][$i]); 
-
-            //Query Qty products    
+            //Query Qty Products    
             $qryt = mysqli_fetch_object( $conexion->query("SELECT * FROM items WHERE pId = '$pId'") );
-            $idif = $qryt->pQuantity - $pQty;            
-			
+            $idif = $qryt->pQuantity - $pQty;  
+            
 			if($pQty>0){
 				
 				if ($idif<0 && $_SESSION['shInventory'] == 0 ){
 					echo '<script language="javascript">alert("¡No hay inventario suficiente de '.$qryt->pName.'!");</script>';					
 				}else{					
-                    // if ($idif<10){
-                    // echo '<script language="javascript">alert("¡'.$qryt->pName.' menor a 10 unidades!");</script>';
-                    // }
-
                     //Update Qty on items  
-                    if ($orValue == 1 && $_SESSION['shInventory'] == 0 ) {
+                    if ($orValue == 1 && $_SESSION['shInventory'] != 1 ) {
                         $update = "UPDATE items SET pQuantity = '".$idif."' WHERE pId = '".$pId."' ";
                         $qryf = $conexion->query($update) or die(mysqli_error($conexion));     
                     }
@@ -107,15 +102,6 @@
                         $qryse = $conexion->query($update) or die(mysqli_error($conexion)); 
                     }
                     $sn ='';
-                    
-                    //Update Price                    
-                    //     $qrys = $conexion->query("UPDATE product SET 
-                    //     cId = '".$cId."',
-                    //     pId = '".$pId."', 
-                    //     pPrice = '".$pPrice."', 
-                    //     pAddedBy = '".$loggedInUser."', 
-                    //     pEntryDate = '".$nowTime."' 
-                    //     WHERE cId = '".$cId."' AND pId = '".$pId."' ")or die(mysqli_error($conexion));
 				}  
 					
 			} 
@@ -160,6 +146,7 @@
                                         <div class="topleft">
                                             <label style="font-size:14px">Ingrese Nombre Del Producto:</label> <br>
                                             <input type="text" id="autocomplete" class="form-control el-input__inner" style="margin-bottom: 8px;"/>
+                                            <input type="hidden" id="shInventory" value="<?php echo $_SESSION['shInventory']; ?>" >
                                         </div>
                                         <div class="topright">
                                             <div><p>                                           
@@ -458,7 +445,8 @@
             var dispItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(0) input:eq(1)").val());
             var qtyItem = Number($("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val());
             var diferenceItem = dispItem - qtyItem;
-            if(diferenceItem < 0 ){
+            var inventory = Number($("#shInventory").val());
+            if(diferenceItem < 0 && inventory == 0 ){
                 janelaPopUp.abre( "notInventory", "p red alert",  "Inventario Insuficiente" ,  "¡Solo hay <b>" + dispItem + "</b> Unidades de " + $("#product_info_table tr:eq(" + index + ") td:eq(1) input:eq(0)").val() + "!");
                 $("#product_info_table tr:eq(" + index + ") td:eq(2) input:eq(0)").val(dispItem);
 

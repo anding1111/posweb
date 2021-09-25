@@ -143,10 +143,11 @@
                                     </select>   
                                 </div>
                                 <div class="form-group">
-                                    <label>Descontar del Inventario (Al vender los productos disminuyen del inventario)</label>
+                                    <label>Manejo de Inventarios</label>
                                     <?php $options = array( 
-                                            "SI" => 0, 
-                                            "NO" => 1
+                                            "Descontar del Inventario" => 0, 
+                                            "No descontar del Inventario" => 1, 
+                                            "Permitir Inventario negativo" => 2
                                         );  ?>
                                     <select class="form-control" name="shInventory">
                                     <?php  foreach($options as $display => $value) {  ?>

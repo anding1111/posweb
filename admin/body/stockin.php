@@ -107,7 +107,7 @@ $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 
                                 <div class="form-group">
                                 <label>CANTIDAD</label>
-                                <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0">
+                                <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0" oninput="promCost()">
                                 <input class="form-control" id="pQty" name="pQty" type="hidden" value="0">
                             </div> 
 
@@ -188,7 +188,7 @@ $( function() {
 function promCost() {
     var subAmount = (Number($("#pCostOld").val())) * Number($("#pQty").val()) + Number($("#pCostNew").val()) * Number($("#pQuantity").val());
     var qtys = Number($("#pQty").val()) + Number($("#pQuantity").val());
-    if($("#pCostOld").val() > 0){   
+    if($("#pCostOld").val() > 0 && (qtys >= Number($("#pQuantity").val()))){   
         var prom = Math.round( subAmount / qtys);
     }else{
         var prom = Number($("#pCostNew").val());
