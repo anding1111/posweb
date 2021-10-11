@@ -2,20 +2,26 @@
 
 include('../../autoloadfunctions.php');
 
+$con = new mysqli($server_db, $user_db, $password_db, $database_db);
+// Check connection
+if (!$con) {
+	die("Falló la conexión: " . mysqli_connect_error());
+   }
+
+// $searchItemBy = "pName";
+// if ($_SESSION['shSearch'] == 1) {
+// 	$searchItemBy = "pBarCode";
+// }
+
 	//Autocomplete Product
 	if(isset($_POST['search'])){
-		$search = mysqli_real_escape_string($conexion,$_POST['search']);
+		$search = mysqli_real_escape_string($con,$_POST['search']);
 	   //Busca en Ventas y entradas de productos
-	   $query = "SELECT * FROM items WHERE `pName` like '%{$search}%' AND `pEnable` = '1' AND `idStore` = ".$_SESSION['idStore']." AND `shId` = ".$_SESSION['shId']." ";
-	   $queryBarCode = "SELECT * FROM items WHERE `pBarCode` like '{$search}' AND `pEnable` = '1' AND `idStore` = ".$_SESSION['idStore']." AND `shId` = ".$_SESSION['shId']." ";
-		
+	   $query = "SELECT * FROM items WHERE pName like '%".$search."%' AND pEnable = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
+	   $queryBarCode = "SELECT * FROM items WHERE pBarCode like '".$search."' AND `pEnable` = '1' AND `idStore` = ".$_SESSION['idStore']." AND `shId` = ".$_SESSION['shId']." ";
+
 	    // $queryByCode = ($_SESSION['shSearch'] == 1) ? $queryBarCode : $query;
-		$result = mysqli_query($conexion,($_SESSION['shSearch'] == 1) ? $queryBarCode : $query);
-		// if ($_SESSION['shSearch'] == 0) {
-		// 	$result = mysqli_query($conexion, $query);
-		// } else {
-		// 	$result = mysqli_query($conexion, $queryBarCode);
-		// }
+		$result = mysqli_query($con,($_SESSION['shSearch'] == 1) ? $queryBarCode : $query);
 	   
 		$response = array();
 		while($row = mysqli_fetch_array($result) ){
@@ -23,23 +29,22 @@ include('../../autoloadfunctions.php');
 		  $response[] = array("value"=>$row['pId'],"label"=>$row['pName']);
 		}	   
 		echo json_encode($response);
-		
 	   }
 	   
 
 	//Autocomplete Client
 	if(isset($_POST['search_customer'])){
-		$search = mysqli_real_escape_string($conexion,$_POST['search_customer']);
+		$search = mysqli_real_escape_string($con,$_POST['search_customer']);
 	   
 		$query = "SELECT * FROM client WHERE cName like '%".$search."%' AND (clEnable = '1' OR clEnable = '3' OR clEnable = '4') AND `shId` = '".$_SESSION['shId']."' ";
-		$result = mysqli_query($conexion,$query);
+		$result = mysqli_query($con,$query);
 	   
 		$response = array();
 		while($row = mysqli_fetch_array($result) ){
 
 			//Read Credit Client
 			$id = $row['cId'];
-			$qrys = $conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$id' AND `shId` = '".$_SESSION['shId']."' ");
+			$qrys = $con->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId FROM `orders` WHERE `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' GROUP BY invId) AS subquery WHERE cId = '$id' AND `shId` = '".$_SESSION['shId']."' ");
 			$abonoCliente = 0;
 			if($qrys->num_rows > 0){
 				$qryss = mysqli_fetch_object($qrys);
@@ -53,11 +58,11 @@ include('../../autoloadfunctions.php');
 
 	   	   //Autocomplete IMEI
 	if(isset($_POST['search_imei'])){
-		$search = mysqli_real_escape_string($conexion,$_POST['search_imei']);
+		$search = mysqli_real_escape_string($con,$_POST['search_imei']);
 	   
 		// $query = "SELECT * FROM serials WHERE seSerial like'%".$search."%'";
 		$query = "SELECT * FROM serials WHERE seSerial like '%".$search."%' AND `shId` = '".$_SESSION['shId']."' ";
-		$result = mysqli_query($conexion,$query);		
+		$result = mysqli_query($con,$query);		
 		// $row = mysqli_fetch_array($result);
 
 		$response = array();
@@ -77,9 +82,9 @@ include('../../autoloadfunctions.php');
 
 	      //Respone Supplier Saldo
 	if(isset($_POST['supplier'])){
-		$search = mysqli_real_escape_string($conexion,$_POST['supplier']);
+		$search = mysqli_real_escape_string($con,$_POST['supplier']);
 		$query = "SELECT `suId`, SUM(`puTotal`) AS Total, SUM(`puPayment`) AS Abonos FROM `purchases` WHERE `suId` = '$search' AND `shId` = '".$_SESSION['shId']."' GROUP BY `suId`";
-		$result = mysqli_query($conexion,$query);
+		$result = mysqli_query($con,$query);
 		$qry = mysqli_fetch_object($result);
 		$saldo = 0;		
 		$data = array();

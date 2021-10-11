@@ -11,7 +11,6 @@
 								<td class="title-pay">
 									<img src="../../dist/img/logo-mipos.png" alt="logo SAEDI" style="width: 100%; max-width: 300px" />
 								</td>
-
 								<td>
 									Referencia #: <span id="referencia"></span> <br />
 									Fecha: <span id="fecha"></span> <br />

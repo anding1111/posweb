@@ -254,7 +254,8 @@
 
 <script type="text/javascript">
     var tableSize = 0; 
-    var deleted = 0;                                                                         						
+    var deleted = 0;
+    var searchByBarCode = <?php echo ($_SESSION['shSearch'] == 1) ? 'true' : 'false' ;?>;
 
     $(document).ready(function(){ 
         
@@ -278,7 +279,6 @@
 
     });
     $( function() {
-
         // Single Select
         $( "#autocomplete" ).autocomplete({
             autoFocus: true,
@@ -297,19 +297,31 @@
                 },
                 success: function( data ) {
                     response( data );
+                    if (searchByBarCode) {
+                        // Set selection on Barcode Mode
+                        let item = data[0];
+                        if (item !== undefined){
+                            getProductData(item.value);
+                        }
+                        $('#autocomplete').val(''); // display the selected text 
+                        $( "#autocomplete" ).autocomplete( "close" );
+                    }
                 }
                 });
             },
+            // Set selection on Name Mode
             select: function (event, ui) {
             // Set selection
             getProductData(ui.item.value);
-            $('#autocomplete').val(''); // display the selected text            
+            $('#autocomplete').val(''); // display the selected text  
                 return false;
-            }
+            },
+            
         });
         // Single Select Client
         $( "#autocomplete_customer" ).autocomplete({
             autoFocus: true,
+            // autoSelectFirst: true,
             classes: {
                 "ui-autocomplete": "highlight"
             },
