@@ -236,6 +236,16 @@ $(document).ready(function() {
 
     // Tablas Historial compras
     $('#dataTables-all-compra').DataTable( {
+       
+        dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+        "<'row'<'col-sm-12'tr>>" +
+        "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
+        "<'row'<'col-sm-12 col-centered text-center'B>>",
+        buttons: [
+            'copyHtml5',
+            'excelHtml5',
+            'pdfHtml5'
+        ],
         responsive: true,
         scrollX: true,
         "language": {
