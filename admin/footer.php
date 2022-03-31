@@ -163,41 +163,6 @@ $(document).ready(function() {
         }
     });
 
-    // Tabla recibos
-    // $('#dataTables-recibos').DataTable( {
-    //     responsive: true,
-    //     scrollX: true,
-    //     "language": {
-    //         "url": "../bower_components/datatables/Spanish.json"
-            
-    //     },            
-    //     "footerCallback": function ( row, data, start, end, display ) {
-    //         var api = this.api(), data;
-
-    //         // Remove the formatting to get integer data for summation
-    //         var intVal = function ( i ) {
-    //             return typeof i === 'string' ?
-    //                 i.replace(/[\$,]/g, '')*1 :
-    //                 typeof i === 'number' ?
-    //                     i : 0;
-    //         };    
-        
-    //         // Total over this page
-    //         pageTotal = api
-    //             .column( 2, { page: 'current'} )
-    //             .data()
-    //             .reduce( function (a, b) {
-    //                 return intVal(a) + intVal(b);
-    //             }, 0 );                
-
-    //         // Update footer
-    //         $( api.column( 2 ).footer() ).html(
-    //             '$'+numMiles(pageTotal)
-    //         );                
-    //     }
-            
-    // });
-
     // Tablas credito y compras
     $('#dataTables-credito-compra').DataTable( {
         responsive: true,
@@ -234,71 +199,6 @@ $(document).ready(function() {
         
     });
 
-    // Tablas Historial compras
-    $('#dataTables-all-compra').DataTable( {
-       
-        dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
-        "<'row'<'col-sm-12'tr>>" +
-        "<'row'<'col-sm-5'i><'col-sm-7'p>>" +
-        "<'row'<'col-sm-12 col-centered text-center'B>>",
-        buttons: [
-            'copyHtml5',
-            'excelHtml5',
-            'pdfHtml5'
-        ],
-        responsive: true,
-        scrollX: true,
-        "language": {
-            "url": "../bower_components/datatables/Spanish.json"
-            
-        },            
-        "footerCallback": function ( row, data, start, end, display ) {
-            var api = this.api(), data;
-
-            // Remove the formatting to get integer data for summation
-            var intVal = function ( i ) {
-                return typeof i === 'string' ?
-                    i.replace(/[\$,]/g, '')*1 :
-                    typeof i === 'number' ?
-                        i : 0;
-            };    
-            
-            // Total over this page
-            pageTotal = api
-                .column( 1, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );                
-            // Abono over this page
-            pageAbono = api
-                .column( 2, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );                
-            // Saldo over this page
-            pageSaldo = api
-                .column( 3, { page: 'current'} )
-                .data()
-                .reduce( function (a, b) {
-                    return intVal(a) + intVal(b);
-                }, 0 );                
-
-            // Update footer
-            $( api.column( 1 ).footer() ).html(
-                '$' + numMiles(pageTotal) 
-            );
-            $( api.column( 2 ).footer() ).html(
-                '$' + numMiles(pageAbono) 
-            );
-            $( api.column( 3 ).footer() ).html(
-                '$' + numMiles(pageSaldo) 
-            );
-            
-        }
-        
-    });
     // Tablas Historial credito
     $('#dataTables-all-credito').DataTable( {
         responsive: true,
@@ -412,6 +312,7 @@ $(document).ready(function() {
             yearSuffix: ''
         });
 
+        //Section Financials
         fetch_data('no');
 
         function fetch_data(is_date_search, start_date='', end_date='', start_time='00:00:00', end_time='23:59:59', radio='1', checkbox='0') {
@@ -539,13 +440,12 @@ $(document).ready(function() {
                         console.error(e.message," porque no existe el objeto");
                     }
                     $("#totales").html('Total Caja: $' + numMiles(efectivo));  
-                    // $("#totales").html('Total Caja: $' + numMiles(pageAbono));                   
                 
                 }
             
             });                      
         
-        } 
+        }; 
 
         $('#search').click(function(){
             var start_date = $('#start_date').val();
@@ -556,13 +456,175 @@ $(document).ready(function() {
             var checkbox = $('#checkbox').val();
             $('#order_data').DataTable().destroy();
             fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
-            // if(start_date != '' || end_date !='') {
-            //     $('#order_data').DataTable().destroy();
-            //     fetch_data('yes', start_date, end_date, radio);
-            // } else {
-            //     alert("Ambas Fechas son Requeridas!");
-            // }
         });
+
+        //Section Purchases
+        fetch_data_purchases('no');
+
+        function fetch_data_purchases(is_date_search, start_date='', end_date='') {
+        
+            var st_date = $("#start_date").val();
+            var en_date = $("#end_date").val();
+            var dataTable = $('#dataTables-all-compra').DataTable({
+                "scrollY": "200px",
+                "scrollX": true,
+                "scrollCollapse": true,
+                // "paging": false,
+                "processing" : true,
+                "serverSide" : true,
+                "order" : [],
+                "ajax" : {
+                    url:"fetch-purchases.php",
+                    type:"POST",
+                    data:{
+                    is_date_search:is_date_search, start_date:start_date, end_date:end_date
+                    }
+                },
+                columns: [{
+                        title: "Proveedor",
+                    },
+                    { 
+                        title: "Total($)",
+                        render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                        className: 'text-right',
+                    },
+                    { 
+                        title: "Abono($)",
+                        render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                        className: 'text-right',
+                        
+                    },
+                    { 
+                        title: "Saldo($)",
+                        render: $.fn.dataTable.render.number( '.', ',', 0 ),
+                        className: 'text-right',
+                        
+                    },
+                    { 
+                        title: "Fecha",
+                        
+                    },
+                    { 
+                        title: "Factura",
+                        
+                    },
+                    { 
+                        title: "Detalle",
+                        
+                    }
+                ],
+                "language": {
+                    "url": "../bower_components/datatables/Spanish.json"                
+                },             
+                dom: "<'row'<'col-sm-6'l><'col-sm-6'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>"+
+                "<'row'<'col-sm-12 col-centered text-center'B>>",
+                "lengthMenu": [[-1, 10, 25, 50], ["Todo", 10, 25, 50]],
+                    
+                buttons: [{
+                    text: 'COPIAR&nbsp;&nbsp;<i class="fa fa-lg fa-copy"></i>',
+                    extend: 'copy',
+                    title: 'REPORTE DE COMPRAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    },{
+                    text: 'EXCEL&nbsp;&nbsp;<i class="fa fa-lg fa-file-excel-o"></i>',
+                    extend: 'excel',
+                    exportOptions: { orthogonal: 'export' },
+                    title: 'REPORTE DE COMPRAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    }, {
+                    text: 'PDF&nbsp;&nbsp;<i class="fa fa-lg fa-file-pdf-o"></i>',
+                    extend: 'pdf',
+                    title: 'REPORTE DE COMPRAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    filename: function () {
+                                var currentDate = new Date();						
+                                var d = currentDate.getFullYear()+'-'+(currentDate.getMonth()+1)+'-'+currentDate.getDate()+'_'+currentDate.getHours() + "-" + currentDate.getMinutes() + "-" + currentDate.getSeconds();
+                                return d;
+                            }
+                    }, {
+                    text: 'IMPRIMIR&nbsp;&nbsp;<i class="fa fa-lg fa-print"></i>',
+                    extend: 'print',
+                    title: 'REPORTE DE COMPRAS  -  miPOS',
+                    className: 'dt-button btn-export',
+                    }
+                ],
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,\.]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total
+                    pageTotalPurchases = api
+                        .column( 1, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 ); 
+                    
+                    // Total Abono
+                    pageAbonoPurchases = api
+                        .column( 2, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Total Saldo
+                    pageSaldoPurchases = api
+                        .column( 3, { page: 'current'} )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+
+                    // Update footer
+                    $( api.column( 1 ).footer() ).html(
+                        '$' + numMiles(pageTotalPurchases)); 
+                    $( api.column( 2 ).footer() ).html(
+                        '$' + numMiles(pageAbonoPurchases)); 
+                    $( api.column( 3 ).footer() ).html(
+                        '$' + numMiles(pageSaldoPurchases)); 
+
+                    // Update Total 
+                    var efectivo = 0;
+                    try{
+                    console.log(data[0][4]);
+                    var efectivo = data[0][4];                
+                    }catch(e){
+                        console.error(e.message," porque no existe el objeto");
+                    }
+                    $("#totales").html('Total Caja: $' + numMiles(efectivo));  
+                
+                }
+            
+            });                      
+        
+        } 
+
+        $('#search_purchases').click(function(){
+            var start_date = $('#start_date').val();
+            var end_date = $('#end_date').val();
+            $('#dataTables-all-compra').DataTable().destroy();
+            fetch_data_purchases('yes', start_date, end_date);
+        });
+
 });
 </script>
 

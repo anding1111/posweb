@@ -22,7 +22,7 @@ $columnss = array('invId', 'Pagado');
 $query = "SELECT orders.pId, orders.cId, SUM(orders.pQty) AS pQty, SUM(orders.pMount) AS pMount, SUM(orders.inCost * orders.pQty) AS pCost, items.pIdBrand FROM `orders` INNER JOIN items ON orders.pId = items.pId WHERE orders.orEnable = '1' AND orders.shId = '".$_SESSION['shId']."' AND orders.idStore = ".$_SESSION['idStore']." AND ";
 $querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `orders` WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']."  AND `idStore` = ".$_SESSION['idStore']." GROUP BY `invId`) AS subquery WHERE ";
 
-if($_POST["is_date_search"] == "yes")
+// if($_POST["is_date_search"] == "yes")
 if($_POST["start_date"] == ''){
   $_POST["start_date"] = '2020-01-01';
 }
@@ -30,9 +30,7 @@ if($_POST["end_date"] == ''){
   $_POST["end_date"] = '2100-01-01';
 }
 {
-//  $query .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
  $query .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
-//  $querys .= 'bDate BETWEEN "'.$_POST["start_date"].'" AND "'.$_POST["end_date"]." 23:59:59".'" AND ';
  $querys .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
 }
 
@@ -52,13 +50,10 @@ if(isset($_POST["order"]))
 {
  $query .= 'ORDER BY '.$columns[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir'].' 
  ';
-//  $querys .= 'ORDER BY '.$columnss[$_POST['order']['0']['column']].' '.$_POST['order']['0']['dir'].' 
-//  ';
 }
 else
 {
  $query .= 'ORDER BY pId ASC ';
-//  $querys .= 'ORDER BY invId ASC ';
 }
 
 $query1 = '';

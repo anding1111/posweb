@@ -1,16 +1,16 @@
 <?php 
 
 //LOCAL
-// $server_db = "localhost";
-// $user_db = "root";
-// $password_db = "";
-// $database_db = "mipospro_mipos";
+$server_db = "localhost";
+$user_db = "root";
+$password_db = "";
+$database_db = "mipospro_mipos";
 
 //PRODUCTION
-$server_db = "localhost";
-$user_db = "mipospro_mipos";
-$password_db = "MIPOS.MIPOS.PRO";
-$database_db = "mipospro_mipos";
+// $server_db = "localhost";
+// $user_db = "mipospro_mipos";
+// $password_db = "MIPOS.MIPOS.PRO";
+// $database_db = "mipospro_mipos";
 
 //PRODUCTION
 // $server_db = "localhost";
