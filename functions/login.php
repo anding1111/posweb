@@ -3,7 +3,7 @@
 function loginDataReceive($username, $password){
 
 	if ( checkFormValidation($username) AND checkFormValidation($password) ) {
-		$myUsername = $username;
+		$myUsername = strtolower($username);
 		$myPassword = md5($password);
 		global $conexion;
 		$qry = $conexion->query("SELECT * FROM users WHERE (uName = '". $myUsername."' AND uPassword='". $myPassword ."') AND uFlag = '1'  ");
