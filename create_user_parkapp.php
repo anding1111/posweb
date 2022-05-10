@@ -69,15 +69,22 @@ if ($boton == "btnActualizar") {
 }
 
 ///////////////////// BUSCAR POR NOMBRE - SEARCH BY NAME /////////////////////////////
-if ($boton == "btnBuscarNombre") {
-     $Nombre = $_POST['User'];
-     echo "Nombre: " . $Nombre . "\n";
-     $stmt = $link->prepare("SELECT shId, shName FROM shop WHERE shName = ?");
-     $stmt->bind_param("s", $Nombre);
+if ($boton == "btnBuscar") {
+     $User = $_POST['User'];
+     $Password = md5($_POST['Password']);
+     $stmt = $link->prepare("SELECT user, password FROM usuarios WHERE user = ?");
+     $stmt->bind_param("s", $User);
      $stmt->execute();
-     $stmt->bind_result($shId, $shName);
-     while ($stmt->fetch()) {
-          echo $shId . "," . $shName . "\n";
+     $stmt->bind_result($user, $password);
+     $stmt->fetch();
+     if ($stmt->num_rows() > 0) {
+          if ($user == $User && $password == $Password) {
+               echo "correcto";
+          } else {
+               echo "incorrecto";
+          }
+     } else {
+          echo "no existe";
      }
      $stmt->close();
 }
