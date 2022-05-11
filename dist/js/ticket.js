@@ -217,6 +217,7 @@ $btnImprimir.addEventListener("click", () => {
     impresora.cutPartial(); // Pongo este y también cut porque en ocasiones no funciona con cut, solo con cutPartial
     impresora.cash();
     impresora.imprimirEnImpresora($impresoraSeleccionada);
+    impresora.imprimirEnImpresoraConNombreEIp($impresoraSeleccionada, '192.168.1.150');
     //impresora.end();
         // .then(valor => {
         //     loguear("Al imprimir: " + valor);
