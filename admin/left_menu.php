@@ -34,13 +34,7 @@
       <form style="text-align: center;">
         <span class="spanPay"><strong>¡Hola <?php echo $shop->shName; ?>!</strong> Tienes <strong><?php echo $month ?> meses</strong> pendientes por pagar</span>
         <span class="spanPay">
-          <script src="https://checkout.wompi.co/widget.js"
-          data-render="button"
-          data-public-key="pub_prod_RFgJ2fOjDPgigvVXTpLThQCGZ3ZV2xxS"
-          data-currency="COP"
-          data-amount-in-cents="<?php echo ($shop->shCostPlan * $month) * 100; ?>"
-          data-reference="<?php echo $shop->shReference; ?>"
-          data-redirect-url="https://cloud.mipos.pro/admin/end-transaction.php">
+          <script src="https://checkout.wompi.co/widget.js" data-render="button" data-public-key="pub_prod_RFgJ2fOjDPgigvVXTpLThQCGZ3ZV2xxS" data-currency="COP" data-amount-in-cents="<?php echo ($shop->shCostPlan * $month) * 100; ?>" data-reference="<?php echo $shop->shReference; ?>" data-redirect-url="https://cloud.mipos.pro/admin/end-transaction.php">
           </script>
         </span>
       </form>
@@ -121,30 +115,30 @@
           </li>
         <?php endif; ?>
 
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sort-alpha-asc fa-fw"></i> Productos <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li class="dropdown-header">Seleccione</li>
-            <li><a href="add-item.php"><i class="fa fa-plus-square fa-fw"></i> Nuevo Producto</a></li>
-            <li><a href="items.php"><i class="fa fa-cubes fa-fw"></i> Inventario</a></li>
-            <li><a href="stockin.php"><i class="fa fa-stack-overflow fa-fw"></i> Entradas</a></li>
-            <li><a href="brands.php"><i class="fa fa-creative-commons fa-fw"></i> Marcas</a></li>
-            <li><a href="warranties.php"><i class="fa fa-search fa-fw"></i> Garantias</a></li>
-          </ul>
-        </li>
-
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle fa-fw"></i> Clientes <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li class="dropdown-header">Seleccione</li>
-            <li><a href="add-client.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
-            <li><a href="clients.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>
-          </ul>
-        </li>
-
-        <?php if (checkAdmin() || checkManager()) : ?>
+        <?php if (checkAdmin() || checkManager() || checkReplacement() ) : ?>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-vcard-o fa-fw"></i> Poveedores <span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sort-alpha-asc fa-fw"></i> Productos <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">Seleccione</li>
+              <li><a href="add-item.php"><i class="fa fa-plus-square fa-fw"></i> Nuevo Producto</a></li>
+              <li><a href="items.php"><i class="fa fa-cubes fa-fw"></i> Inventario</a></li>
+              <li><a href="stockin.php"><i class="fa fa-stack-overflow fa-fw"></i> Entradas</a></li>
+              <li><a href="brands.php"><i class="fa fa-creative-commons fa-fw"></i> Marcas</a></li>
+              <li><a href="warranties.php"><i class="fa fa-search fa-fw"></i> Garantias</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle fa-fw"></i> Clientes <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">Seleccione</li>
+              <li><a href="add-client.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
+              <li><a href="clients.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>
+            </ul>
+          </li>
+
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-vcard-o fa-fw"></i> Proveedores <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
               <li class="dropdown-header">Seleccione</li>
               <li><a href="add-supplier.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Proveedor</a></li>
