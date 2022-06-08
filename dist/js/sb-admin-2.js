@@ -143,7 +143,10 @@ $(function () {
             },
             "ajax": {
                 url: "./fetch-orders.php",
-                method: 'POST'
+                method: 'POST',
+                data: {
+                    "order_type": order_type
+                }
             },
             columns: [{
                 data: 'id',
@@ -164,10 +167,11 @@ $(function () {
                 orderable: false,
                 className: 'text-center',
                 render: function (data, type, row, meta) {
-                    return '<a href="invoice.php?invId=' + (row.id) + '&type=1" class="btn btn-default">Ver</a><a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="' + (row.id) + '">Anular</a>';
+                    return '<a href="invoice.php?invId=' + (row.id) + '&type='+ order_type +'" class="btn btn-default">Ver</a><a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="' + (row.id) + '">Anular</a>';
                 }
             }
             ],
+
             "footerCallback": function (row, data, start, end, display) {
                 var api = this.api(), data;
 
