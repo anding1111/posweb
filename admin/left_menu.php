@@ -115,7 +115,7 @@
           </li>
         <?php endif; ?>
 
-        <?php if (checkAdmin() || checkManager() || checkReplacement() ) : ?>
+        <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-sort-alpha-asc fa-fw"></i> Productos <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">

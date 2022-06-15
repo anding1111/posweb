@@ -26,12 +26,14 @@ function horaCastellano ($fecha) {
 
 function getFecha ($inv){
   global $conexion;
-  $query = $conexion->query("SELECT bDate FROM orders WHERE `pId` != '0' AND `orEnable` = 1 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
+  $query = $conexion->query("SELECT bDate FROM orders WHERE `orEnable` = 1 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
+  // $query = $conexion->query("SELECT bDate FROM orders WHERE `pId` != '0' AND `orEnable` = 1 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
   return mysqli_fetch_object($query);
 }
 
 function getFechaQuot ($inv){
   global $conexion;
-  $query = $conexion->query("SELECT bDate FROM orders WHERE `pId` != '0' AND `orEnable` = 3 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
+  $query = $conexion->query("SELECT bDate FROM orders WHERE `orEnable` = 3 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
+  // $query = $conexion->query("SELECT bDate FROM orders WHERE `pId` != '0' AND `orEnable` = 3 AND invId = ".$inv." AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." LIMIT 1 ");
   return mysqli_fetch_object($query);
 }

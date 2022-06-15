@@ -9,9 +9,9 @@
             <div class="panel-body">
 
                 <div class="dataTable_wrapper">
-                    <script>
+                    <!-- <script>
                         var order_type = 1;
-                    </script>
+                    </script> -->
                     <table class="table table-striped table-bordered table-hover" id="dataTables-recibos" width="100%">
                         <thead>
                             <tr>

@@ -20,7 +20,7 @@
                                        <th style="text-align:right">Abono</th> 
                                        <th style="text-align:right">Saldo</th> 
                                        <th>Fecha</th> 
-                                       <!-- <th>Detalle</th>  -->
+                                       <th>Opciones</th> 
                                        <!-- <th style="text-align:center">Abonos</th>                                                     -->
                                       
                                    </tr>
@@ -66,8 +66,9 @@
                                                     <?php 
                                                     echo $data->bDate;
                                                     ?>
-                                                   </td>                                                   
-                                                                                                      
+                                                   </td>
+                                                   <td style="text-align:center;"> 
+                                                   <a href="invoice.php?invId=<?php echo $data->invId;?>&type=1" class="btn btn-default">Ver</a>
                                            </tr>                                                           
                                        <?php
                                        } ?> 
@@ -76,7 +77,7 @@
                                             <tr>
                                                 <th colspan="3" style="text-align:right">Total:</th>
                                                 <th colspan="1" style="text-align:right"></th>
-                                                <th colspan="2" style="text-align:right"></th>
+                                                <th colspan="3" style="text-align:right"></th>
                                                 <!-- <th colspan="1" style="text-align:center"></th> -->
                                                 <!-- <th colspan="1" style="text-align:center"></th>
                                                 <th colspan="1" style="text-align:center"></th> -->
