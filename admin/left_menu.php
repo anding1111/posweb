@@ -110,7 +110,7 @@
               <li class="dropdown-header">Seleccione</li>
               <li><a href="financials.php"><i class="fa fa-money fa-fw"></i> Caja</a></li>
               <li><a href="saldo.php"><i class="fa fa-bank fa-fw"></i> Creditos</a></li>
-              <li><a href="saldo-history.php"><i class="fa fa-calculator fa-fw"></i> Historial Creditos</a></li>
+              <li><a href="saldo-history.php"><i class="fa fa-calculator fa-fw"></i> Abonos</a></li>
             </ul>
           </li>
         <?php endif; ?>

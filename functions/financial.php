@@ -11,11 +11,13 @@ function getAllSaldosHistory()
 	global $conexion;
 	return $conexion->query("SELECT * FROM `orders` WHERE pId = 0 AND `orEnable` = '1' AND `shId` = '".$_SESSION['shId']."' ");
 }
-//Get Total Saldos Proveedor
+//Get Saldo por Cliente
 function getAllSaldosBetween($cid, $invId)
 {
 	global $conexion;
-	return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND `orEnable` = '1' AND shId = '".$_SESSION['shId']."' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
+	// return mysqli_fetch_object($conexion->query("SELECT `cId`, SUM(`pMount`) - SUM(`cPayment`) AS Total, SUM(`cPayment`) AS Abonos FROM `orders` WHERE `cId` = '$cid' AND `orEnable` = '1' AND shId = '".$_SESSION['shId']."' AND `invId` BETWEEN 0 AND '$invId' GROUP BY `cId`"));
+	// return mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) - SUM(subquery.cPayment) AS saldo FROM (SELECT invId, `cId`, SUM(`pMount`) AS Compras, `cPayment` FROM `orders` WHERE `cId` = '$cid' AND `orEnable` = '1' AND shId = '".$_SESSION['shId']."' AND `invId` BETWEEN 0 AND '$invId' GROUP BY invId) AS subquery GROUP BY subquery.cId;"));
+	return mysqli_fetch_object($conexion->query("SELECT subquery.cId, subquery.cName, SUM(subquery.Compras) - SUM(subquery.cPayment) AS saldo FROM (SELECT orders.invId, orders.`cId`, client.cName, SUM(orders.`pMount`) AS Compras, orders.`cPayment` FROM `orders` INNER JOIN client ON orders.`cId` = client.cId WHERE orders.`cId` = '$cid' AND orders.`orEnable` = '1' AND orders.shId = '".$_SESSION['shId']."' AND orders.`invId` BETWEEN 0 AND '$invId' GROUP BY orders.invId) AS subquery GROUP BY subquery.cId;"));
 }
 
 //Get Saldos Proveedor
