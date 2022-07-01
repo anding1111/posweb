@@ -19,8 +19,8 @@ include('../../autoloadfunctions.php');
 	   
 		$response = array();
 		while($row = mysqli_fetch_array($result) ){
-		//   $response[] = array("value"=>$row['pId'],"label"=>$row['pName'], "price"=>$row['pPrice'], "cost"=>$row['pCost'], "qty"=>$row['pQuantity']);
-		  $response[] = array("value"=>$row['pId'],"label"=>$row['pName']);
+		  $response[] = array("value"=>$row['pId'],"label"=>$row['pName'], "price"=>$row['pPrice'], "cost"=>$row['pCost'], "qty"=>$row['pQuantity']);
+		//   $response[] = array("value"=>$row['pId'],"label"=>$row['pName']);
 		}	
 		echo json_encode($response);
 		
