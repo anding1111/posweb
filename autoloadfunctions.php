@@ -24,3 +24,4 @@ session_start();
 	require('functions/shop.php');
 	require('functions/values.php');
 	require('functions/store.php');
+	require('functions/stockin.php');

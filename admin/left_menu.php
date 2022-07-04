@@ -122,7 +122,8 @@
               <li class="dropdown-header">Seleccione</li>
               <li><a href="add-item.php"><i class="fa fa-plus-square fa-fw"></i> Nuevo Producto</a></li>
               <li><a href="items.php"><i class="fa fa-cubes fa-fw"></i> Inventario</a></li>
-              <li><a href="stockin.php"><i class="fa fa-stack-overflow fa-fw"></i> Entradas</a></li>
+              <li><a href="stockin.php"><i class="fa fa-stack-overflow fa-fw"></i> Entrada Producto</a></li>
+              <li><a href="inventory.php"><i class="fa fa-tasks fa-fw"></i> Registro Entradas</a></li>
               <li><a href="brands.php"><i class="fa fa-creative-commons fa-fw"></i> Marcas</a></li>
               <li><a href="warranties.php"><i class="fa fa-search fa-fw"></i> Garantias</a></li>
             </ul>

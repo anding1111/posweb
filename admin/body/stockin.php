@@ -11,6 +11,7 @@ if (@$_POST['submit']) {
     $pPrice = formItemValidation($_POST['pPrice']);
     $pQty = formItemValidation($_POST['pQty']);
     $pCostOld = formItemValidation($_POST['pCostOld']);
+    $pCostNew = formItemValidation($_POST['pCostNew']);
 
     //collecting product IMEI or SN
     $pIdSupplier = formItemValidation($_POST['pIdSupplier']);
@@ -36,6 +37,24 @@ if (@$_POST['submit']) {
     $qry = $conexion->query($update) or die(mysqli_error($conexion));
 
     if ($qry) {
+        $insert_stockin = "INSERT INTO stockin VALUES(
+            '0',                            
+            '" . $pId . "',
+            '" . $pQty . "',
+            '" . $pQuantity . "',
+            '" . $pCostOld . "',
+            '" . $pCostNew . "',
+            '" . $pPrice . "',
+            '" . $pIdSupplier . "',
+            '" . $loggedInUser . "',
+            '" . $nowTime . "',
+            '" . $loggedInShop . "',
+            '" . $_SESSION['idStore'] . "'                                  
+        )";
+    }
+    $qry_inventory = $conexion->query($insert_stockin) or die(mysqli_error($conexion));
+
+    if ($qry_inventory) {
 
         for ($i = 0; $i < $numRows; $i++) {
             if (isset($serial[$i])) {
@@ -44,15 +63,15 @@ if (@$_POST['submit']) {
                 $sn = '';
             }
             $con->query("INSERT INTO serials VALUES(
-                    '0',                            
-                    '" . $pId . "',
-                    '" . $pIdSupplier . "',
-                    '" . $serial[$i] . "',
-                    '" . $loggedInUser . "',
-                    '" . $nowTime . "',
-                    NULL,
-                    '" . $loggedInShop . "'                                 
-                )") or die(mysqli_error($con));
+                        '0',                            
+                        '" . $pId . "',
+                        '" . $pIdSupplier . "',
+                        '" . $serial[$i] . "',
+                        '" . $loggedInUser . "',
+                        '" . $nowTime . "',
+                        NULL,
+                        '" . $loggedInShop . "'                                 
+                    )") or die(mysqli_error($con));
         }
 
         $insertSuccess = 1;
@@ -107,13 +126,13 @@ if (@$_POST['submit']) {
                     <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0" oninput="promCost()">
                     <input class="form-control" id="pQty" name="pQty" type="hidden" value="0">
                 </div>
-                
+
                 <div class="form-group">
                     <label id="pCostOldLabel" value="0">COSTO DE COMPRA</label>
                     <input class="form-control" id="pCostOld" name="pCostOld" type="hidden" value="0">
                     <div class="form-horizontal">
                         <div class="col-sm-6" style="padding-left: 0px;">
-                            <input class="form-control" id="pCostNew" required type="text" value="0" oninput="promCost()">
+                            <input class="form-control" id="pCostNew" name="pCostNew" required type="text" value="0" oninput="promCost()">
                         </div>
                         <label class="col-sm-2 control-label" style="padding-left: 0px;">PROMEDIO: </label>
                         <div class="col-sm-4" style="padding-left: 0px; margin-bottom: 15px;">
@@ -121,12 +140,6 @@ if (@$_POST['submit']) {
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="form-group" style="display:none;">
-                    <label>COSTO DE COMPRA PROMEDIO</label>
-                    <input class="form-control" name="pCostProm" required type="text" value="0" readonly>
-                </div> -->
-
                 <div class="form-group">
                     <label>PRECIO DE VENTA</label>
                     <input class="form-control" id='pPrice' name="pPrice" required type="text" value="0">
