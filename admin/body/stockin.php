@@ -206,6 +206,19 @@ if (@$_POST['submit']) {
                     }
                     $("#pCost").val(prom);
                 }
+
+                $(window).keydown(function(event) {
+                            if (event.keyCode == 13) {
+                                event.preventDefault();
+                                return false;
+                            }
+                            if (event.keyCode == 27) {
+                                alert("Presiono Escape");
+                                event.preventDefault();
+                                return false;
+                            }
+                        });
+
             </script>
 
 

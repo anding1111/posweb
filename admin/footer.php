@@ -74,7 +74,7 @@
                    <script type="text/javascript" src="https://cdn.datatables.net/plug-ins/1.11.3/filtering/type-based/accent-neutralise.js"></script>
 
                    <!-- Timer Picker JS -->
-                   <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+                   <script src="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 
                    <!-- Custom Theme JavaScript -->
                    <!-- <script src="../dist/js/sb-admin-2.js"></script> -->

@@ -49,7 +49,7 @@ include('../vendor/autoload.php');
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Time Picker CSS -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
     <!-- jQuery 3.4.1 -->
     <script src="../bower_components/jquery/dist/jquery.min.js"></script>

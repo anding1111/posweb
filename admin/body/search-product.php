@@ -1,5 +1,4 @@
 <?php
-
 include('../../autoloadfunctions.php');
 
 	//Autocomplete Product
