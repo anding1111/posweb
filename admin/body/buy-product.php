@@ -13,10 +13,10 @@ if (@$_POST['submit']) {
     //echo ("<script>alert('".$pSubmit."');</script>"); 
     $inSerial = trim($inSerial);
     if (empty($inSerial)) {
-        $numRows = 0;
+        $numRow = 0;
     } else {
         $serial = explode(" ", $inSerial);
-        $numRows = count($serial);
+        $numRow = count($serial);
     }
     $sn = '';
 
@@ -43,7 +43,8 @@ if (@$_POST['submit']) {
     //logged in user ID
     $loggedInUser = $_SESSION['uId'];
 
-    $numRows = formItemValidation($_POST['numRows']);
+    // $numRows = formItemValidation($_POST['numRows']);
+    $numRows = count($_POST['pId_value']);
     $i = 1;
     $qry = 0;
 
@@ -237,7 +238,7 @@ if (@$_POST['submit']) {
                                         <tr>
                                             <td>
                                                 <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;background-color:#287890;border-color:#287890;border-radius:6px;" class="btn btn-info btn-large" name="submit" />
-                                                <input type="hidden" name="numRows" id="num_rows" value="">
+                                                <!-- <input type="hidden" name="numRows" id="num_rows" value=""> -->
                                             </td>
                                         </tr>
                                         <tr>
@@ -486,7 +487,7 @@ if (@$_POST['submit']) {
                         var saldoBefore = numInt($("#saldoCliente").val());
                         totalSubAmount = Number(totalSubAmount) + Number(saldoBefore);
                         $("#gross_total").val(numMiles(totalSubAmount));
-                        $("#num_rows").val(tableSize - deleted);
+                        // $("#num_rows").val(tableSize - deleted);
                     }
 
                     const selectElement = document.querySelector('.fPago');

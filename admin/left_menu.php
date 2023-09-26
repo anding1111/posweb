@@ -26,8 +26,30 @@
     $datePlan = date_create($shop->shDatePlan);
     $interval = date_diff($datePlan, $today);
     $month = intval($interval->format("%m")) + 1;
-    //if(time() >= $_SESSION['last_run'] + (60 * 1)) { // 60 * 5 es 5 minutos
+    // $month_expired = intval($interval->format("%m"));
     // Si el tiempo es mayor a 1 minuto
+    //if(time() >= $_SESSION['last_run'] + (60 * 1)) { // 60 * 5 es 5 minutos
+    //}
+    if ($month > 1) {
+      $inactivo = 120 / $month;
+
+      if (isset($_SESSION['tiempo'])) {
+        $vida_session = time() - $_SESSION['tiempo'];
+        if ($vida_session > $inactivo) {
+          session_destroy();
+          // header("Location: logout.php");
+          // redirectTo('../index.php', 2);
+          echo '<script type="text/javascript">
+          alert("Hemos cerrado tu sesión por falta de pago. Por favor ponte al día. ¡Saludos!");
+          window.location.href="../index.php";
+          </script>';
+          // echo '<div class="alert alert-danger">Hemos Cerrado tu sesión por falta de pago. Por favor ponte al día. ¡Saludos!</a>.
+          //                   </div>';
+        }
+      }
+    }
+
+    // $_SESSION['tiempo'] = time();
   ?>
     <div class="alertPay warning">
       <span class="closebtnPay" onclick="closePay()">&times;</span>
@@ -40,7 +62,6 @@
       </form>
     </div>
   <?php
-    //}
   }
   ?>
 
@@ -128,16 +149,18 @@
               <li><a href="warranties.php"><i class="fa fa-search fa-fw"></i> Garantias</a></li>
             </ul>
           </li>
+        <?php endif; ?>
 
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle fa-fw"></i> Clientes <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li class="dropdown-header">Seleccione</li>
-              <li><a href="add-client.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
-              <li><a href="clients.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>
-            </ul>
-          </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user-circle fa-fw"></i> Clientes <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Seleccione</li>
+            <li><a href="add-client.php"><i class="fa fa-user-plus fa-fw"></i> Nuevo Cliente</a></li>
+            <li><a href="clients.php"><i class="fa fa-user-circle-o fa-fw"></i> Lista Clientes</a></li>
+          </ul>
+        </li>
 
+        <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-vcard-o fa-fw"></i> Proveedores <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">

@@ -1,9 +1,6 @@
 <?php  
 
-    // $getshId = $_GET['shId'];
-
-    //collect all informaion from database
-    // $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE shId = '{$getshId}' ") ); 
+    //Collect all information from database
     $qry = mysqli_fetch_object( $conexion->query("SELECT * FROM shop WHERE `shId` = '".$_SESSION['shId']."' ") ); 
     
     if ( @$_POST['submit'] ) {
@@ -46,9 +43,9 @@
 
         //Actualiza los datos de la tienda
         $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shInventory = '".$shInventory."', shClientDefault = '".$shClientDefault."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
-        $qry = $conexion->query($update) or die(mysqli_error($conexion));
+        $qry_update = $conexion->query($update) or die(mysqli_error($conexion));
 
-        if ( $qry ) {
+        if ( $qry_update ) {
             $insertSuccess = 1;
         } else{
             $insertError = 1;
@@ -132,7 +129,8 @@
                                     <label>Busqueda (Metodo de busqueda en el modulo ventas)</label>
                                     <?php $options = array( 
                                             "Nombre Producto" => 0, 
-                                            "Código Barras" => 1
+                                            "Código Barras | Añadir Automaticamente" => 1,
+                                            "Código Barras | Seleccionar Manualmente" => 2
                                         );  ?>
                                     <select class="form-control" name="shSearch">
                                     <?php  foreach($options as $display => $value) {  ?>

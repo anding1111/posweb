@@ -1,10 +1,8 @@
 <?php  
     
     if ( @$_POST['submit'] ) {
-        
        
          //collecting userinfo
-        
         $pName = formItemValidation($_POST['pName']);
         $pIdBrand = formItemValidation($_POST['pIdBrand']);
         $pBarCode =  formItemValidation($_POST['pBarCode'] );        
@@ -97,12 +95,12 @@
                                     <input class="form-control" name="pBarCode" required type="text" value="<?php echo @$_POST['pBarCode'] ?>">
                                 </div>
 
-                                 <div class="form-group" style="display:none;">
+                                 <div class="form-group">
                                     <label>CANTIDAD</label>
                                     <input class="form-control" name="pQuantity" required type="text" value="0">
                                 </div> 
 
-                                <div class="form-group" style="display:none;">
+                                <div class="form-group">
                                     <label>COSTO DE COMPRA</label>
                                     <input class="form-control" name="pCost" required type="text" value="0">
                                 </div>
@@ -112,7 +110,7 @@
                                     <input class="form-control" name="pCostProm" required type="text" value="0" readonly>
                                 </div>
 
-                                <div class="form-group" style="display:none;">
+                                <div class="form-group">
                                     <label>PRECIO DE VENTA</label>
                                     <input class="form-control" name="pPrice" required type="text" value="0">
                                 </div> 

@@ -8,18 +8,11 @@ include('../../autoloadfunctions.php');
 	   $query = "SELECT * FROM items WHERE `pName` like '%{$search}%' AND `pEnable` = '1' AND `idStore` = ".$_SESSION['idStore']." AND `shId` = ".$_SESSION['shId']." ";
 	   $queryBarCode = "SELECT * FROM items WHERE `pBarCode` like '{$search}' AND `pEnable` = '1' AND `idStore` = ".$_SESSION['idStore']." AND `shId` = ".$_SESSION['shId']." ";
 		
-	    // $queryByCode = ($_SESSION['shSearch'] == 1) ? $queryBarCode : $query;
-		$result = mysqli_query($conexion,($_SESSION['shSearch'] == 1) ? $queryBarCode : $query);
-		// if ($_SESSION['shSearch'] == 0) {
-		// 	$result = mysqli_query($conexion, $query);
-		// } else {
-		// 	$result = mysqli_query($conexion, $queryBarCode);
-		// }
+		$result = mysqli_query($conexion,($_SESSION['shSearch'] > 0) ? $queryBarCode : $query);
 	   
 		$response = array();
 		while($row = mysqli_fetch_array($result) ){
-		  $response[] = array("value"=>$row['pId'],"label"=>$row['pName'], "price"=>$row['pPrice'], "cost"=>$row['pCost'], "qty"=>$row['pQuantity']);
-		//   $response[] = array("value"=>$row['pId'],"label"=>$row['pName']);
+		  $response[] = array("value"=>$row['pId'],"label"=>$row['pName'], "price"=>$row['pPrice'], "cost"=>$row['pCost'], "qty"=>$row['pQuantity'], "shid"=>$row['shId']);
 		}	
 		echo json_encode($response);
 		
@@ -94,5 +87,3 @@ include('../../autoloadfunctions.php');
 		}
 
 	   exit;
-	
-?>

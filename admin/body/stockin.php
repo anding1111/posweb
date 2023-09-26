@@ -182,6 +182,10 @@ if (@$_POST['submit']) {
                             $('#pId').val(ui.item.value); // set value the selected product
                             $('#pPrice').val(ui.item.price); // set price the selected product
                             $('#pQty').val(ui.item.qty); // set qty the selected product
+                            //Validate shId = 79 (Distribuidora Los Giraldo)
+                            if (ui.item.shid == 79) {
+                                ui.item.cost = 0;
+                            }
                             //set cost the selected product
                             if (ui.item.cost > 0) {
                                 $('#pCostOldLabel').text("COSTO DE COMPRA ( antes: $" + ui.item.cost + ")");
@@ -208,17 +212,16 @@ if (@$_POST['submit']) {
                 }
 
                 $(window).keydown(function(event) {
-                            if (event.keyCode == 13) {
-                                event.preventDefault();
-                                return false;
-                            }
-                            if (event.keyCode == 27) {
-                                alert("Presiono Escape");
-                                event.preventDefault();
-                                return false;
-                            }
-                        });
-
+                    if (event.keyCode == 13) {
+                        event.preventDefault();
+                        return false;
+                    }
+                    if (event.keyCode == 27) {
+                        alert("Presiono Escape");
+                        event.preventDefault();
+                        return false;
+                    }
+                });
             </script>
 
 

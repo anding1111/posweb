@@ -46,7 +46,9 @@
 
                             </div>
                             <div class="modal-footer" style="text-align: center;">
-                                <button type="button" id="null-confirm" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">ANULAR FACTURA</button>
+                                <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
+                                    <button type="button" id="null-confirm" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">ANULAR FACTURA</button>
+                                <?php endif; ?>
                                 <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" style="color:#fff;background-color:#33B5E5;">SALIR</button>
                             </div>
                         </div>
