@@ -119,8 +119,10 @@
           <ul class="dropdown-menu" role="menu">
             <li class="dropdown-header">Seleccione</li>
             <li><a href="buy-product.php"><i class="fa fa-cart-plus fa-fw"></i> Nueva Venta</a></li>
+            <?php if (checkAdmin() || checkManager()) : ?>
             <li><a href="orders.php"><i class="fa fa-file-text-o fa-fw"></i> Facturas</a></li>
             <li><a href="quotations.php"><i class="fa fa-edit fa-fw"></i> Cotizaciones</a></li>
+            <?php endif; ?>
           </ul>
         </li>
 

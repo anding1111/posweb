@@ -30,7 +30,7 @@ function loginDataReceive($username, $password){
 
 			return 1;
 
-		} else{
+		} else {
 			
 			return 2;
 		}
