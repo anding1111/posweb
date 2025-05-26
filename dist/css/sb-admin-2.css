@@ -1398,7 +1398,7 @@ table.dataTable tbody th, table.dataTable tbody td {
     position: relative;
     padding-left: 22px;
     margin-right: 15px;
-    margin-top: 34px;
+    margin-top: 6px; /*Change de 34 to 6 px*/
     margin-left: -12px;
     /* margin-bottom: 12px; */
     cursor: pointer;

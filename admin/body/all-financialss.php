@@ -14,19 +14,40 @@
                                 <div class="row text-center">
                                     <div class="col-md-12">
                                         <div class="col-md-4" style="font-size:14px;">
-                                            <label class="container-custom">PRODUCTOS
-                                            <input class="radio" type="radio" checked="checked" name="radio" value="1">
-                                            <span class="checkmark-custom"></span>
-                                            </label>
-                                            <label class="container-custom">CLIENTES
-                                            <input class="radio" type="radio" name="radio" value="2">
-                                            <span class="checkmark-custom"></span>
-                                            </label>
-                                            <label class="container-custom">MARCAS
-                                            <input class="radio" type="radio" name="radio" value="3">
-                                            <span class="checkmark-custom"></span>
-                                            </label>
+                                            <div class="row col-md-12" style="font-size:14px;">
+                                                <label class="container-custom">PRODUCTOS
+                                                <input class="radio" type="radio" checked="checked" name="radio" value="1">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                                <label class="container-custom">CLIENTES
+                                                <input class="radio" type="radio" name="radio" value="2">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                                <label class="container-custom">MARCAS
+                                                <input class="radio" type="radio" name="radio" value="3">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                            </div>
+                                            <?php if (checkAdmin() || checkManager()) : ?>
+                                            <div class="row col-md-12" style="font-size:14px;">
+                                                <div class="form-group">
+                                                    <label class="container-custom" for="sellerId">CAJERO(A):</label>
+                                                    <select id="sellerId" name="sellerId" class="form-control">
+                                                        <option value="">-- Todos --</option>
+                                                        <?php
+                                                        $resultSellers = mysqli_query($conexion, "SELECT DISTINCT id, uFullName FROM users WHERE softDelete = 0");
+                                                        while ($row = mysqli_fetch_assoc($resultSellers)) {
+                                                            echo "<option value='{$row['id']}'>{$row['uFullName']}</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <?php else: ?>
+                                                <input type="hidden" id="sellerId" name="sellerId" value="<?php echo $loggedUserId; ?>">
+                                            <?php endif; ?>
                                         </div>
+
                                         <div class="col-md-4">
                                             <div class="row col-md-12">
                                                 <div class="col-md-6 titles" style="font-size:18px;">
@@ -54,10 +75,10 @@
                                                 </div> 
                                             </div>
                                         </div>
-
+                                       
                                         <div class="col-md-2" style="font-size:14px;">
                                             <label class="container-check">UTILIDAD
-                                            <input id="checkbox" type="checkbox" value="0" onclick="checkValidate();">
+                                            <input id="checkbox" type="checkbox" name="checkbox[]" value="0" onclick="checkValidate();">
                                             <span class="checkmark-check"></span>
                                             </label>                                            
                                         </div>                                      

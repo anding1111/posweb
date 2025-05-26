@@ -20,19 +20,35 @@ $columns = array('pId', 'pQty', 'pMount');
 $columnss = array('invId', 'Pagado');
 
 $query = "SELECT orders.pId, orders.cId, SUM(orders.pQty) AS pQty, SUM(orders.pMount) AS pMount, SUM(orders.inCost * orders.pQty) AS pCost, items.pIdBrand FROM `orders` INNER JOIN items ON orders.pId = items.pId WHERE orders.orEnable = '1' AND orders.shId = '".$_SESSION['shId']."' AND orders.idStore = ".$_SESSION['idStore']." AND ";
-$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate` FROM `orders` WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']."  AND `idStore` = ".$_SESSION['idStore']." GROUP BY `invId`) AS subquery WHERE ";
+$querys = "SELECT `invId`, SUM(`cPayment`) AS Pagado FROM (SELECT `invId`, `cPayment`, `bDate`, `idSeller` FROM `orders` WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']."  AND `idStore` = ".$_SESSION['idStore']." GROUP BY `invId`) AS subquery WHERE ";
 
 // if($_POST["is_date_search"] == "yes")
 if($_POST["start_date"] == ''){
-  $_POST["start_date"] = '2020-01-01';
+  $_POST["start_date"] = '2018-04-21';
 }
 if($_POST["end_date"] == ''){
   $_POST["end_date"] = '2100-01-01';
 }
-{
- $query .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
- $querys .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
+
+$query .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
+$querys .= 'bDate BETWEEN "'.$_POST["start_date"]." ".$_POST["start_time"].'" AND "'.$_POST["end_date"]." ".$_POST["end_time"].'" AND ';
+
+$sellerId = $_SESSION['usId']; // ID del usuario logueado
+
+if ($_SESSION['uType'] === 'admin' || $_SESSION['uType'] === 'manager') {
+    // Si es admin o manager y seleccionó un cajero, se filtra por ese cajero
+    if (!empty($_POST["sellerId"])) {
+        $sellerId = (int) $_POST["sellerId"];
+        $query .= "(orders.idSeller = $sellerId) AND ";
+        $querys .= "(subquery.idSeller = $sellerId) AND ";
+        // Si no se selecciona nada, no se añade filtro => muestra todos
+    }
+} else {
+    // Si no es admin o manager, siempre se filtra por el usuario logueado
+    $query .= "(orders.idSeller = $sellerId) AND ";
+    $querys .= "(subquery.idSeller = $sellerId) AND ";
 }
+
 
 if(isset($_POST["search"]["value"]))
 {

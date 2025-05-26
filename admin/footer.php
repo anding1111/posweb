@@ -325,10 +325,13 @@
                            //Section Financials
                            fetch_data('no');
 
+                           // Función para crear la tabla con parámetros dinámicos
                            function fetch_data(is_date_search, start_date = '', end_date = '', start_time = '00:00:00', end_time = '23:59:59', radio = '1', checkbox = '0') {
 
-                               var st_date = $("#start_date").val();
-                               var en_date = $("#end_date").val();
+                            // Destruye tabla previa solo si ya existe
+                            if ($.fn.DataTable.isDataTable('#order_data')) {
+                                $('#order_data').DataTable().destroy();
+                            }
                                var dataTable = $('#order_data').DataTable({
                                    "scrollY": "200px",
                                    "scrollX": true,
@@ -347,7 +350,8 @@
                                            start_time: start_time,
                                            end_time: end_time,
                                            radio: radio,
-                                           checkbox: checkbox
+                                           checkbox: checkbox,
+                                           sellerId: $('#sellerId').val() // AÑADIDO
                                        }
                                    },
                                    columns: [{
@@ -441,11 +445,6 @@
                                                return intVal(a) + intVal(b);
                                            }, 0);
 
-                                       // Total Saldo              
-                                       // pageAbono = api                    
-                                       //     .cell(0, 3, { page: 'current'})
-                                       //     .data();               
-
                                        // Update footer
                                        $(api.column(1).footer()).html(
                                            pageQty + ' Unidades');
@@ -465,8 +464,36 @@
                                    }
 
                                });
-
                            };
+                            // Captura automática de cambios para recargar tabla
+                            $('#startDate, #endDate, #startTime, #endTime, #sellerId').on('change', function () {
+                                console.log('Change detected, reloading table...');
+                                reloadTable();
+                            });
+
+                            $('input[name="radio"]').on('change', function () {
+                                console.log('Radio button changed, reloading table...');
+                                reloadTable();
+                            });
+
+                            $('input[name="checkbox[]"]').on('change', function () {
+                                console.log('Checkbox changed, reloading table...');
+                                reloadTable();
+                            });
+                            
+                            // Función para recargar la tabla con los datos actuales
+                            function reloadTable() {
+                                var start_date = $('#start_date').val();
+                                var end_date = $('#end_date').val();
+                                var start_time = $('#start_time').val() || '00:00:00';
+                                var end_time = $('#end_time').val() || '23:59:59';
+                                var radio = $('input[name="radio"]:checked').val() || '1';
+                                var checkbox = $('input[name="checkbox[]"]:checked').map(function () { return this.value; }).get().join(',') || '0';
+
+                                fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
+                            }
+
+
 
                            $('#search').click(function() {
                                var start_date = $('#start_date').val();
@@ -475,7 +502,7 @@
                                var end_time = $('#end_time').val();
                                var radio = $('.radio:checked').val();
                                var checkbox = $('#checkbox').val();
-                               $('#order_data').DataTable().destroy();
+                            //    $('#order_data').DataTable().destroy();
                                fetch_data('yes', start_date, end_date, start_time, end_time, radio, checkbox);
                            });
 

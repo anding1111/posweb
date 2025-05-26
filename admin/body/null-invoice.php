@@ -1,7 +1,7 @@
 <?php
 
 include('../../autoloadfunctions.php');
-// Null only invoice, but quotations non null
+
 $con = new mysqli($server_db, $user_db, $password_db, $database_db);
 if (isset($_POST["invId"])) {
     $invId = $_POST["invId"];

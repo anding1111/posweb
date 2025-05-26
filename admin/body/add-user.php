@@ -1,5 +1,4 @@
 <?php  
-
     
     if ( @$_POST['submit'] ) {
         
@@ -164,6 +163,8 @@
                                                 } ?>
                                         </select>   
                                     </div>
+                                <?php } else { ?>
+                                    <input type="hidden" name="idStore" value="<?php echo $_SESSION['idStore']; ?>">
                                 <?php } ?>
 
                                 <input type="submit" value="Añadir Ahora" class="btn btn-info btn-large" name="submit" />
