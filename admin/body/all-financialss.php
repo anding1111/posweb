@@ -35,7 +35,7 @@
                                                     <select id="sellerId" name="sellerId" class="form-control">
                                                         <option value="">-- Todos --</option>
                                                         <?php
-                                                        $resultSellers = mysqli_query($conexion, "SELECT DISTINCT id, uFullName FROM users WHERE softDelete = 0");
+                                                        $resultSellers = mysqli_query($conexion, "SELECT DISTINCT id, uFullName FROM users WHERE softDelete = 0 AND shId = '".$_SESSION['shId']."' AND idStore = ".$_SESSION['idStore']."");
                                                         while ($row = mysqli_fetch_assoc($resultSellers)) {
                                                             echo "<option value='{$row['id']}'>{$row['uFullName']}</option>";
                                                         }
