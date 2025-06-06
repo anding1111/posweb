@@ -21,6 +21,7 @@
         $shInvoiceType = formItemValidation($_POST['shInvoiceType']);
         $shInventory = formItemValidation($_POST['shInventory']);
         $shClientDefault = formItemValidation($_POST['shClientDefault']);
+        $shSetSeller = formItemValidation($_POST['shSetSeller']);
         $shColor = formItemValidation($_POST['shColor']);
         
         if ($_FILES['shLogo']['size'] == 0){
@@ -42,7 +43,7 @@
         }
 
         //Actualiza los datos de la tienda
-        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shInventory = '".$shInventory."', shClientDefault = '".$shClientDefault."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
+        $update = "UPDATE shop SET shName = '".$shName."', shAuxName = '".$shAuxName."', shDoc = '".$shDoc."', shTelf = '".$shTelf."', shDir = '".$shDir."', shMail = '".$shMail."', shWeb = '".$shWeb."', shDesc = '".$shDesc."', shSearch = '".$shSearch."', shPrinterName = '".$shPrinterName."', shPrinterType = '".$shPrinterType."', shLogo = '".$destination."', shTerms = '".$shTerms."', shInvoiceType = '".$shInvoiceType."', shInventory = '".$shInventory."', shClientDefault = '".$shClientDefault."', shSetSeller = '".$shSetSeller."', shColor = '".$shColor."' WHERE `shId` = '".$_SESSION['shId']."' ";
         $qry_update = $conexion->query($update) or die(mysqli_error($conexion));
 
         if ( $qry_update ) {
@@ -164,6 +165,20 @@
                                     <select class="form-control" name="shClientDefault">
                                     <?php  foreach($options as $display => $value) {  ?>
                                         <option value='<?= $value ?>' <?php if($qry->shClientDefault == trim($value)) { ?>selected='selected'<?php } ?>>
+                                            <?= $display ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>   
+                                </div>
+                                <div class="form-group">
+                                    <label>Selecionar Vendedor (Al hacer la venta)</label>
+                                    <?php $options = array( 
+                                            "NO" => 0, 
+                                            "SI" => 1
+                                        );  ?>
+                                    <select class="form-control" name="shSetSeller">
+                                    <?php  foreach($options as $display => $value) {  ?>
+                                        <option value='<?= $value ?>' <?php if($qry->shSetSeller == trim($value)) { ?>selected='selected'<?php } ?>>
                                             <?= $display ?>
                                         </option>
                                     <?php } ?>

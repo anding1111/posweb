@@ -20,9 +20,10 @@ function loginDataReceive($username, $password){
 			$_SESSION['shId']		      = $myData->shId;
 			$_SESSION['idStore']		  = $myData->idStore;
 			$ShopData = getShopNameById($myData->shId);	
-			$_SESSION['shInventory']      = $ShopData->shInventory;
-			$_SESSION['shSearch']         = $ShopData->shSearch;
-			$_SESSION['shClientDefault']  = $ShopData->shClientDefault;
+			$_SESSION['shInventory']      = $ShopData->shInventory; //Control de Inventario
+			$_SESSION['shSearch']         = $ShopData->shSearch; //Tipo de busqueda del producto
+			$_SESSION['shClientDefault']  = $ShopData->shClientDefault; // Cliente por defecto
+			$_SESSION['shSetSeller']      = $ShopData->shSetSeller; // Permite seleccionar vendedor
 			$_SESSION['clientDefault']    = getClientsDefault()[0];
 			$_SESSION['clientQuotation']  = getClientsDefault()[1];
 			$_SESSION['tiempo'] = time();

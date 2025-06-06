@@ -105,3 +105,10 @@ function getTotalUsers()
 	$query = $conexion->query("SELECT * FROM users WHERE `shId` = '" . $_SESSION['shId'] . "' ");
 	return $query->num_rows;
 }
+//Funcion trawer el nombre del usuario por ID
+function getNameWithUserId($value)
+{
+	global $conexion;
+	$qry = mysqli_fetch_object($conexion->query("SELECT uFullName FROM users WHERE `id` = '" . $value . "' "));
+	return $qry->uFullName;
+}

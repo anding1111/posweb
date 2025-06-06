@@ -10,7 +10,6 @@ if (@$_POST['submit']) {
     $ifCredito = formItemValidation($_POST['ifCredito']);
     $inSerial = formItemValidation($_POST['inSerial']);
     $pSubmit = formItemValidation($_POST['submit']);
-    //echo ("<script>alert('".$pSubmit."');</script>"); 
     $inSerial = trim($inSerial);
     if (empty($inSerial)) {
         $numRow = 0;
@@ -41,7 +40,8 @@ if (@$_POST['submit']) {
         $invNum = 1;
     }
     //logged in user ID
-    $loggedInUser = $_SESSION['uId'];
+    $loggedInUser = formItemValidation($_POST['sellerId']);
+;
 
     // $numRows = formItemValidation($_POST['numRows']);
     $numRows = count($_POST['pId_value']);
@@ -207,6 +207,34 @@ if (@$_POST['submit']) {
                                                 </div>
                                             </td>
                                         </tr>
+                                        
+                                        <?php if ($_SESSION['shSetSeller']) : ?>
+                                         <tr>
+                                            <td>
+                                                <fieldset class="scheduler-border">
+                                                    <legend class="scheduler-border">VENDEDOR</legend>
+                                                    <div class="form-group" style="width:100%;">
+                                                       <select id="sellerId" name="sellerId" class="form-control">
+                                                            <!-- <option value="">-- Todos --</option> -->
+                                                            <?php
+                                                            $resultSellers = mysqli_query($conexion, "SELECT DISTINCT id, uFullName FROM users WHERE softDelete = 0 AND shId = '".$_SESSION['shId']."' AND idStore = ".$_SESSION['idStore']."");
+                                                            while ($row = mysqli_fetch_assoc($resultSellers)) {
+                                                                if ($_SESSION['usId'] == $row['id']) {
+                                                                    echo "<option value='{$row['id']}' selected>{$row['uFullName']}</option>";
+                                                                } else {
+                                                                    echo "<option value='{$row['id']}'>{$row['uFullName']}</option>";
+                                                                }
+                                                            }
+                                                            ?>
+                                                        </select>
+                                                    </div>
+                                                </fieldset>
+                                            </td>
+                                        </tr>
+                                            <?php else: ?>
+                                                <input type="hidden" id="sellerId" name="sellerId" value="<?php echo $_SESSION['usId']; ?>">
+                                            <?php endif; ?>
+
                                         <tr>
                                             <td>
                                                 <fieldset class="scheduler-border">
@@ -238,7 +266,6 @@ if (@$_POST['submit']) {
                                         <tr>
                                             <td>
                                                 <input type="submit" value="COBRAR" style="font-size:26px; font-weight: bold; width:100%;vertical-align:middle;background-color:#287890;border-color:#287890;border-radius:6px;" class="btn btn-info btn-large" name="submit" />
-                                                <!-- <input type="hidden" name="numRows" id="num_rows" value=""> -->
                                             </td>
                                         </tr>
                                         <tr>

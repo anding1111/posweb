@@ -44,7 +44,7 @@
                                                 </div>
                                             </div>
                                             <?php else: ?>
-                                                <input type="hidden" id="sellerId" name="sellerId" value="<?php echo $loggedUserId; ?>">
+                                                <input type="hidden" id="sellerId" name="sellerId" value="<?php echo $_SESSION['usId']; ?>">
                                             <?php endif; ?>
                                         </div>
 

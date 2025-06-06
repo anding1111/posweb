@@ -20,7 +20,7 @@
 
     //Determinar el número de filas del resultado
     $numItems =  $qry->num_rows;
-    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment FROM orders WHERE invId = " . $invId . " AND  `orEnable` = '" . $type . "' AND shId = '" . $loggedInShop . "' GROUP BY cId"));
+    $qrydata = mysqli_fetch_object($conexion->query("SELECT invId, cId, SUM(pMount) AS venta, cPayment, idSeller FROM orders WHERE invId = " . $invId . " AND  `orEnable` = '" . $type . "' AND shId = '" . $loggedInShop . "' GROUP BY cId"));
     $qrysaldo = mysqli_fetch_object($conexion->query("SELECT subquery.cId, SUM(subquery.Compras) AS total, SUM(subquery.cPayment) AS pagado FROM (SELECT invId, cId, SUM(pMount)AS Compras, cPayment, shId, orEnable FROM `orders` WHERE `shId` = '" . $loggedInShop . "' AND `orEnable` = '" . $type . "' GROUP BY invId) AS subquery WHERE cId = '$qrydata->cId' AND shId = '" . $loggedInShop . "' AND `orEnable` = '" . $type . "' AND invId BETWEEN 0 AND '$invId' "));
 
     $typeInvoice = $shop->shInvoiceType;
@@ -171,7 +171,7 @@
                                  <td colspan="4">
                                      <br>
                                      <br>
-                                     <b style="font-size:10px;">Atendido por: <?php echo getLoggedInUserName(); ?> </b>
+                                     <b style="font-size:10px;">Atendido por: <?php echo getNameWithUserId($qrydata->idSeller); ?> </b>
                                      <br>
                                      <b style="font-size:10px;"><?php echo $shop->shWeb ?> </b>
                                      <br>
