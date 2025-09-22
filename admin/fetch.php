@@ -116,11 +116,19 @@ while($row = mysqli_fetch_array($result))
   $data[] = $sub_array;
   }
 
+// function get_all_data($connect)
+// {
+//  $query = "SELECT * FROM orders WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
+//  $result = mysqli_query($connect, $query);
+//  return mysqli_num_rows($result);
+// }
+
 function get_all_data($connect)
 {
- $query = "SELECT * FROM orders WHERE `orEnable` = '1' AND `shId` = ".$_SESSION['shId']." AND `idStore` = ".$_SESSION['idStore']." ";
- $result = mysqli_query($connect, $query);
- return mysqli_num_rows($result);
+    $query = "SELECT COUNT(*) FROM orders WHERE `orEnable` = '1' AND `shId` = " . mysqli_real_escape_string($connect, $_SESSION['shId']) . " AND `idStore` = " . mysqli_real_escape_string($connect, $_SESSION['idStore']);
+    $result = mysqli_query($connect, $query);
+    $row = mysqli_fetch_row($result);
+    return (int) $row[0];
 }
 
 $output = array(
