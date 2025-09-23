@@ -167,8 +167,15 @@ $(function () {
                 orderable: false,
                 className: 'text-center',
                 render: function (data, type, row, meta) {
-                    return '<a href="invoice.php?invId=' + (row.id) + '&type='+ order_type +'" class="btn btn-default">Ver</a><a href="#null_modal" class=" invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="' + (row.id) + '">Anular</a>';
+                    var viewBtn =
+                        '<a href="invoice.php?invId=' + (row.id) + '&type=' + order_type + '" class="btn btn-default">Ver</a>';
+
+                    var voidBtn = (window.MIPOS && window.MIPOS.canVoidInvoices)
+                        ? '<a href="#null_modal" class="invoiceInfo btn btn-default btn-small" id="invId" data-toggle="modal" data-id="' + (row.id) + '">Anular</a>'
+                        : '';
+                    return viewBtn + voidBtn;
                 }
+
             }
             ],
 

@@ -1,16 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.0-dev
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 25-04-2021 a las 19:58:27
--- Versión del servidor: 5.7.23
--- Versión de PHP: 7.2.10
+-- Host: localhost:3306
+-- Generation Time: Sep 22, 2025 at 03:54 PM
+-- Server version: 10.6.20-MariaDB-cll-lve
+-- PHP Version: 8.1.33
 
--- SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
--- SET AUTOCOMMIT = 0;
--- START TRANSACTION;
--- SET time_zone = "+00:00";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,153 +18,125 @@
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `mipos`
+-- Database: `mipospro_mipos`
 --
-CREATE DATABASE IF NOT EXISTS `mipos` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `mipos`;
+CREATE DATABASE IF NOT EXISTS `mipospro_mipos` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `mipospro_mipos`;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `brands`
+-- Table structure for table `brands`
 --
 
-DROP TABLE IF EXISTS `brands`;
-CREATE TABLE IF NOT EXISTS `brands` (
-  `bId` int(11) NOT NULL AUTO_INCREMENT,
-  `bName` varchar(50) NOT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`bId`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `brands`
---
-
-INSERT INTO `brands` (`bId`, `bName`, `shId`) VALUES
-(1, 'Sin Marca', 11);
+CREATE TABLE `brands` (
+  `bId` int(11) NOT NULL,
+  `bName` varchar(50) NOT NULL DEFAULT 'Sin Marca',
+  `shId` int(8) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `client`
+-- Table structure for table `client`
 --
 
-DROP TABLE IF EXISTS `client`;
-CREATE TABLE IF NOT EXISTS `client` (
-  `cId` int(11) NOT NULL AUTO_INCREMENT,
-  `cName` varchar(250) NOT NULL,
-  `cDoc` varchar(255) NOT NULL,
-  `cTelf` double NOT NULL,
-  `cDir` varchar(250) NOT NULL,
-  `cEmail` varchar(250) NOT NULL,
-  `cViewInv` int(2) NOT NULL,
-  `cAddedBy` varchar(4) NOT NULL,
-  `cEntryDate` datetime NOT NULL,
-  `clEnable` int(2) NOT NULL DEFAULT '1',
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`cId`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+CREATE TABLE `client` (
+  `cId` int(11) NOT NULL,
+  `cName` varchar(120) NOT NULL,
+  `cDoc` varchar(20) NOT NULL DEFAULT '000000000',
+  `cTelf` varchar(20) NOT NULL DEFAULT '3200000000',
+  `cDir` varchar(250) NOT NULL DEFAULT 'Local',
+  `cEmail` varchar(50) NOT NULL DEFAULT 'email@mipos.pro',
+  `cViewInv` int(2) NOT NULL DEFAULT 1,
+  `cAddedBy` varchar(4) NOT NULL DEFAULT '1002',
+  `cEntryDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `clEnable` int(2) NOT NULL DEFAULT 1,
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `items`
+-- Table structure for table `items`
 --
 
-DROP TABLE IF EXISTS `items`;
-CREATE TABLE IF NOT EXISTS `items` (
-  `pId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `items` (
+  `pId` int(11) NOT NULL,
   `pBarCode` varchar(50) NOT NULL,
-  `pName` varchar(250) NOT NULL,
+  `pName` varchar(350) NOT NULL,
   `pIdBrand` varchar(50) NOT NULL,
   `pQuantity` int(11) NOT NULL,
   `pCost` int(11) NOT NULL,
   `pPrice` int(11) NOT NULL,
-  `pEnable` int(2) NOT NULL DEFAULT '1',
+  `pEnable` int(2) NOT NULL DEFAULT 1,
   `shId` int(8) NOT NULL,
-  PRIMARY KEY (`pId`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+  `idStore` int(9) NOT NULL DEFAULT 1,
+  `idAux` int(11) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `localvalues`
+-- Table structure for table `localvalues`
 --
 
-DROP TABLE IF EXISTS `localvalues`;
-CREATE TABLE IF NOT EXISTS `localvalues` (
-  `vaId` int(11) NOT NULL AUTO_INCREMENT,
-  `vaData` varchar(50) NOT NULL,
-  PRIMARY KEY (`vaId`),
-  UNIQUE KEY `vaData` (`vaData`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `localvalues`
---
-
-INSERT INTO `localvalues` (`vaId`, `vaData`) VALUES
-(1, 'f4724d2cc216e8be474ef5ca694f5b9b87cc8bd0');
+CREATE TABLE `localvalues` (
+  `vaId` int(11) NOT NULL,
+  `vaData` varchar(50) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `logintime`
+-- Table structure for table `logintime`
 --
 
-DROP TABLE IF EXISTS `logintime`;
-CREATE TABLE IF NOT EXISTS `logintime` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `logintime` (
+  `id` int(11) NOT NULL,
   `uId` int(4) NOT NULL,
   `loginTime` datetime NOT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=latin1;
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `logouttime`
+-- Table structure for table `logouttime`
 --
 
-DROP TABLE IF EXISTS `logouttime`;
-CREATE TABLE IF NOT EXISTS `logouttime` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `logouttime` (
+  `id` int(11) NOT NULL,
   `uId` int(4) NOT NULL,
   `logoutTime` datetime NOT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `notification`
+-- Table structure for table `notification`
 --
 
-DROP TABLE IF EXISTS `notification`;
-CREATE TABLE IF NOT EXISTS `notification` (
-  `nId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `notification` (
+  `nId` int(11) NOT NULL,
   `nToWhom` varchar(10) NOT NULL,
   `nFromWhom` int(4) NOT NULL,
   `newUserId` int(4) NOT NULL,
   `nMessage` varchar(255) NOT NULL,
   `nDate` datetime NOT NULL,
   `delete` int(1) NOT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`nId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `orders`
+-- Table structure for table `orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
-CREATE TABLE IF NOT EXISTS `orders` (
-  `cmId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `orders` (
+  `cmId` int(11) NOT NULL,
   `invId` int(11) NOT NULL,
   `pId` int(11) NOT NULL,
   `cId` int(11) NOT NULL,
@@ -176,20 +147,20 @@ CREATE TABLE IF NOT EXISTS `orders` (
   `cPayment` int(11) NOT NULL,
   `bDate` datetime NOT NULL,
   `inSerial` varchar(15000) NOT NULL,
-  `orEnable` int(2) NOT NULL DEFAULT '1',
+  `orEnable` int(2) NOT NULL DEFAULT 1,
   `shId` int(8) NOT NULL,
-  PRIMARY KEY (`cmId`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+  `idSeller` int(9) NOT NULL DEFAULT 0,
+  `idStore` int(9) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `purchases`
+-- Table structure for table `purchases`
 --
 
-DROP TABLE IF EXISTS `purchases`;
-CREATE TABLE IF NOT EXISTS `purchases` (
-  `puId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `purchases` (
+  `puId` int(11) NOT NULL,
   `suId` int(7) NOT NULL,
   `puTotal` int(11) NOT NULL,
   `puPayment` int(11) NOT NULL,
@@ -197,113 +168,352 @@ CREATE TABLE IF NOT EXISTS `purchases` (
   `puDate` datetime NOT NULL,
   `puInvPurchase` varchar(20) NOT NULL,
   `puDetail` varchar(100) NOT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`puId`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `shId` int(8) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `serials`
+-- Table structure for table `serials`
 --
 
-DROP TABLE IF EXISTS `serials`;
-CREATE TABLE IF NOT EXISTS `serials` (
-  `seId` int(7) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `serials` (
+  `seId` int(7) NOT NULL,
   `pId` int(7) NOT NULL,
   `sId` int(7) NOT NULL,
   `seSerial` varchar(30) NOT NULL,
   `seAddedBy` varchar(6) NOT NULL,
   `seDate` datetime NOT NULL,
   `seDateSale` datetime DEFAULT NULL,
-  `shId` int(8) NOT NULL,
-  PRIMARY KEY (`seId`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `shId` int(8) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `shop`
+-- Table structure for table `shop`
 --
 
-DROP TABLE IF EXISTS `shop`;
-CREATE TABLE IF NOT EXISTS `shop` (
-  `shId` int(9) NOT NULL AUTO_INCREMENT,
-  `shName` varchar(50) NOT NULL,
+CREATE TABLE `shop` (
+  `shId` int(9) NOT NULL,
+  `shName` varchar(50) NOT NULL DEFAULT 'Nombre Comercio',
   `shAuxName` varchar(50) NOT NULL DEFAULT '',
-  `shDoc` varchar(15) NOT NULL,
-  `shTelf` varchar(15) NOT NULL,
-  `shDir` varchar(80) NOT NULL,
+  `shDoc` varchar(15) NOT NULL DEFAULT '88888888-0',
+  `shTelf` varchar(50) NOT NULL DEFAULT '3200000000',
+  `shDir` varchar(80) NOT NULL DEFAULT 'Dirección',
   `shMail` varchar(50) NOT NULL,
-  `shWeb` varchar(50) NOT NULL,
-  `shDesc` varchar(80) NOT NULL,
-  `shColor` varchar(10) NOT NULL,
-  `shEnable` int(2) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`shId`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `shop`
---
-
-INSERT INTO `shop` (`shId`, `shName`, `shAuxName`, `shDoc`, `shTelf`, `shDir`, `shMail`, `shWeb`, `shDesc`, `shColor`, `shEnable`) VALUES
-(11, 'Mi POS', 'Web', '1085903578-11', '3202807060', 'KRA. 33 # 23-51 B/ CENTRO NARIÃ‘O - BOGOTA DC - COLOMBIA', 'ventas@mipos,pro', 'www.mipos.pro', 'Facilitamos tus ventas', '#BC1269', 1);
+  `shWeb` varchar(50) NOT NULL DEFAULT 'www.mipaginaweb.com',
+  `shDesc` varchar(80) NOT NULL DEFAULT 'Descripción para la factura',
+  `shColor` varchar(10) NOT NULL DEFAULT '#158DCF	',
+  `shEnable` int(2) NOT NULL DEFAULT 1,
+  `shSearch` int(2) NOT NULL DEFAULT 0,
+  `shPrinterName` varchar(50) NOT NULL DEFAULT 'POS-80C',
+  `shPrinterType` int(2) NOT NULL DEFAULT 0,
+  `shLogo` varchar(100) DEFAULT NULL,
+  `shTerms` varchar(1024) NOT NULL DEFAULT 'Mis terminos y condiciones',
+  `shInvoiceType` int(2) NOT NULL DEFAULT 0,
+  `shInventory` int(2) NOT NULL DEFAULT 0,
+  `shClientDefault` int(2) NOT NULL DEFAULT 1,
+  `shSetSeller` int(2) DEFAULT 0,
+  `shPlan` int(2) NOT NULL DEFAULT 1,
+  `shDatePlan` datetime GENERATED ALWAYS AS (`shCreatedOn` + interval 1 month) VIRTUAL,
+  `shCostPlan` int(10) NOT NULL DEFAULT 29000,
+  `shReference` varchar(20) NOT NULL DEFAULT '''''',
+  `shCreatedOn` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `suppliers`
+-- Table structure for table `stockin`
 --
 
-DROP TABLE IF EXISTS `suppliers`;
-CREATE TABLE IF NOT EXISTS `suppliers` (
-  `sId` int(11) NOT NULL AUTO_INCREMENT,
-  `sName` varchar(250) NOT NULL,
-  `sDoc` double NOT NULL,
-  `sTelf` double NOT NULL,
-  `sDir` varchar(250) NOT NULL,
-  `sAddedBy` varchar(7) NOT NULL,
-  `sEntryDate` datetime NOT NULL,
+CREATE TABLE `stockin` (
+  `stId` int(11) NOT NULL,
+  `pId` int(9) NOT NULL,
+  `stOldQuantity` int(11) NOT NULL DEFAULT 0,
+  `stQuantity` int(11) NOT NULL,
+  `stOldCost` int(11) NOT NULL DEFAULT 0,
+  `stNewCost` int(11) NOT NULL,
+  `stPrice` int(11) NOT NULL,
+  `stIdSupplier` int(9) NOT NULL,
+  `stAddedBy` int(5) NOT NULL,
+  `stDate` datetime NOT NULL DEFAULT current_timestamp(),
   `shId` int(8) NOT NULL,
-  PRIMARY KEY (`sId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `suppliers`
---
-
-INSERT INTO `suppliers` (`sId`, `sName`, `sDoc`, `sTelf`, `sDir`, `sAddedBy`, `sEntryDate`, `shId`) VALUES
-(1, 'Sin Proveedor', 888888888, 55555555, 'xxxxxxxxx', '1000', '2021-04-25 17:36:28', 11);
+  `idStore` int(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `users`
+-- Table structure for table `store`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `uId` int(3) NOT NULL,
-  `uFullName` varchar(150) NOT NULL,
+CREATE TABLE `store` (
+  `stId` int(9) NOT NULL,
+  `stName` varchar(30) NOT NULL DEFAULT 'Principal',
+  `stType` int(2) NOT NULL DEFAULT 1,
+  `stStatus` int(2) NOT NULL DEFAULT 1,
+  `stDesc` text NOT NULL DEFAULT '',
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `suppliers`
+--
+
+CREATE TABLE `suppliers` (
+  `sId` int(11) NOT NULL,
+  `sName` varchar(100) NOT NULL DEFAULT 'Sin Proveedor',
+  `sDoc` varchar(15) NOT NULL DEFAULT '888888888-0',
+  `sTelf` varchar(20) NOT NULL DEFAULT '0000000000',
+  `sDir` varchar(200) NOT NULL DEFAULT 'Dirección Proveedor',
+  `sAddedBy` int(4) NOT NULL DEFAULT 1002,
+  `sEntryDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `shId` int(8) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `trId` int(10) NOT NULL,
+  `trIdBank` varchar(30) NOT NULL,
+  `trReference` varchar(20) NOT NULL,
+  `trCustomerEmail` varchar(50) NOT NULL,
+  `trAmountInCents` int(10) NOT NULL,
+  `trCreatedAt` datetime NOT NULL,
+  `tdPaymentMethodType` varchar(30) NOT NULL,
+  `trStatus` varchar(20) NOT NULL,
+  `shId` int(8) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `uId` int(4) NOT NULL DEFAULT 1002,
+  `uFullName` varchar(150) NOT NULL DEFAULT 'Nombre Usuario',
   `uName` varchar(50) NOT NULL,
-  `uPassword` varchar(50) NOT NULL,
-  `uType` varchar(10) NOT NULL,
-  `uFlag` tinyint(1) NOT NULL,
-  `softDelete` int(1) NOT NULL,
-  `uAddedBy` int(4) NOT NULL,
-  `uEntryDate` date NOT NULL,
+  `uPassword` varchar(50) NOT NULL DEFAULT 'password',
+  `uType` varchar(15) NOT NULL DEFAULT 'admin',
+  `uFlag` tinyint(1) NOT NULL DEFAULT 1,
+  `softDelete` int(1) NOT NULL DEFAULT 0,
+  `uAddedBy` int(4) NOT NULL DEFAULT 1002,
+  `uEntryDate` datetime NOT NULL DEFAULT current_timestamp(),
   `shId` int(8) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `idStore` int(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
--- Volcado de datos para la tabla `users`
+-- Indexes for dumped tables
 --
 
-INSERT INTO `users` (`id`, `uId`, `uFullName`, `uName`, `uPassword`, `uType`, `uFlag`, `softDelete`, `uAddedBy`, `uEntryDate`, `shId`) VALUES
-(1, 1000, 'MI POS', 'admin', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin', 1, 0, 1000, '2021-04-25', 11),
-(3, 1002, 'Pruebas', 'pruebas', '5f4dcc3b5aa765d61d8327deb882cf99', 'admin', 1, 0, 1000, '2021-04-25', 11),
+--
+-- Indexes for table `brands`
+--
+ALTER TABLE `brands`
+  ADD PRIMARY KEY (`bId`);
+
+--
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`cId`);
+
+--
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`pId`);
+
+--
+-- Indexes for table `localvalues`
+--
+ALTER TABLE `localvalues`
+  ADD PRIMARY KEY (`vaId`),
+  ADD UNIQUE KEY `vaData` (`vaData`);
+
+--
+-- Indexes for table `logintime`
+--
+ALTER TABLE `logintime`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `logouttime`
+--
+ALTER TABLE `logouttime`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notification`
+--
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`nId`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`cmId`);
+
+--
+-- Indexes for table `purchases`
+--
+ALTER TABLE `purchases`
+  ADD PRIMARY KEY (`puId`);
+
+--
+-- Indexes for table `serials`
+--
+ALTER TABLE `serials`
+  ADD PRIMARY KEY (`seId`);
+
+--
+-- Indexes for table `shop`
+--
+ALTER TABLE `shop`
+  ADD PRIMARY KEY (`shId`);
+
+--
+-- Indexes for table `stockin`
+--
+ALTER TABLE `stockin`
+  ADD PRIMARY KEY (`stId`);
+
+--
+-- Indexes for table `store`
+--
+ALTER TABLE `store`
+  ADD PRIMARY KEY (`stId`);
+
+--
+-- Indexes for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  ADD PRIMARY KEY (`sId`);
+
+--
+-- Indexes for table `transactions`
+--
+ALTER TABLE `transactions`
+  ADD PRIMARY KEY (`trId`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `brands`
+--
+ALTER TABLE `brands`
+  MODIFY `bId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+  MODIFY `cId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `items`
+--
+ALTER TABLE `items`
+  MODIFY `pId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `localvalues`
+--
+ALTER TABLE `localvalues`
+  MODIFY `vaId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `logintime`
+--
+ALTER TABLE `logintime`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `logouttime`
+--
+ALTER TABLE `logouttime`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `notification`
+--
+ALTER TABLE `notification`
+  MODIFY `nId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `cmId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `purchases`
+--
+ALTER TABLE `purchases`
+  MODIFY `puId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `serials`
+--
+ALTER TABLE `serials`
+  MODIFY `seId` int(7) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `shop`
+--
+ALTER TABLE `shop`
+  MODIFY `shId` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `stockin`
+--
+ALTER TABLE `stockin`
+  MODIFY `stId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `store`
+--
+ALTER TABLE `store`
+  MODIFY `stId` int(9) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `suppliers`
+--
+ALTER TABLE `suppliers`
+  MODIFY `sId` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transactions`
+--
+ALTER TABLE `transactions`
+  MODIFY `trId` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -122,7 +122,7 @@ if (@$_POST['submit']) {
                 </div>
 
                 <div class="form-group">
-                    <label>CANTIDAD</label>
+                    <label id="pQtyOldLabel">CANTIDAD</label>
                     <input class="form-control" id="pQuantity" name="pQuantity" required type="text" value="0" oninput="promCost()">
                     <input class="form-control" id="pQty" name="pQty" type="hidden" value="0">
                 </div>
@@ -182,13 +182,14 @@ if (@$_POST['submit']) {
                             $('#pId').val(ui.item.value); // set value the selected product
                             $('#pPrice').val(ui.item.price); // set price the selected product
                             $('#pQty').val(ui.item.qty); // set qty the selected product
+                            $('#pQtyOldLabel').text("CANTIDAD (Actual: " + ui.item.qty + ")"); // set qty the selected product
                             //Validate shId = 79 (Distribuidora Los Giraldo)
                             if (ui.item.shid == 79) {
                                 ui.item.cost = 0;
                             }
                             //set cost the selected product
                             if (ui.item.cost > 0) {
-                                $('#pCostOldLabel').text("COSTO DE COMPRA ( antes: $" + ui.item.cost + ")");
+                                $('#pCostOldLabel').text("COSTO DE COMPRA (Anterior: $" + ui.item.cost + ")");
                                 $('#pCostOld').val(ui.item.cost);
                             } else {
                                 $('#pCostOldLabel').text("COSTO DE COMPRA");

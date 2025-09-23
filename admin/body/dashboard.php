@@ -37,6 +37,7 @@
                 </div>
             </div>
         </div>
+        <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
         <a href="orders.php">
             <div class="panel-footer">
                 <span class="pull-left">Ver Detalles</span>
@@ -50,9 +51,9 @@
                 <div class="clearfix"></div>
             </div>
         </a>
+        <?php endif; ?>
     </div>
 </div>
-<?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
     <div class="col-lg-3 col-md-6">
         <div class="panel panel-yellow w3-card-4">
             <div class="panel-heading">
@@ -70,6 +71,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
             <a href="clients.php">
                 <div class="panel-footer">
                     <span class="pull-left">Ver Detalles</span>
@@ -83,6 +85,7 @@
                     <div class="clearfix"></div>
                 </div>
             </a>
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
@@ -101,6 +104,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
             <a href="items.php">
                 <div class="panel-footer">
                     <span class="pull-left">Ver Detalles</span>
@@ -114,6 +118,7 @@
                     <div class="clearfix"></div>
                 </div>
             </a>
+            <?php endif; ?>
         </div>
     </div>
     <div class="col-lg-3 col-md-6">
@@ -132,6 +137,7 @@
                     </div>
                 </div>
             </div>
+            <?php if (checkAdmin() || checkManager() || checkReplacement()) : ?>
             <a href="users.php">
                 <div class="panel-footer">
                     <span class="pull-left">Ver Detalles</span>
@@ -145,6 +151,6 @@
                     <div class="clearfix"></div>
                 </div>
             </a>
+            <?php endif; ?>
         </div>
     </div>
-    <?php endif; ?>
