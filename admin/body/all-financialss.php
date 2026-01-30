@@ -14,20 +14,6 @@
                                 <div class="row text-center">
                                     <div class="col-md-12">
                                         <div class="col-md-4" style="font-size:14px;">
-                                            <div class="row col-md-12" style="font-size:14px;">
-                                                <label class="container-custom">PRODUCTOS
-                                                <input class="radio" type="radio" checked="checked" name="radio" value="1">
-                                                <span class="checkmark-custom"></span>
-                                                </label>
-                                                <label class="container-custom">CLIENTES
-                                                <input class="radio" type="radio" name="radio" value="2">
-                                                <span class="checkmark-custom"></span>
-                                                </label>
-                                                <label class="container-custom">MARCAS
-                                                <input class="radio" type="radio" name="radio" value="3">
-                                                <span class="checkmark-custom"></span>
-                                                </label>
-                                            </div>
                                             <?php if (checkAdmin() || checkManager()) : ?>
                                             <div class="row col-md-12" style="font-size:14px;">
                                                 <div class="form-group">
@@ -46,6 +32,25 @@
                                             <?php else: ?>
                                                 <input type="hidden" id="sellerId" name="sellerId" value="<?php echo $_SESSION['usId']; ?>">
                                             <?php endif; ?>
+                                            <div class="row col-md-12" style="font-size:14px;">
+                                                <label class="container-custom">PRODUCTOS
+                                                <input class="radio" type="radio" checked="checked" name="radio" value="1">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                                <label class="container-custom">CLIENTES
+                                                <input class="radio" type="radio" name="radio" value="2">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                                <label class="container-custom">MARCAS
+                                                <input class="radio" type="radio" name="radio" value="3">
+                                                <span class="checkmark-custom"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="row col-md-12 liveSearchWrap">
+                                                <input type="text" id="liveSearch" name="liveSearch" class="form-control" placeholder="Buscar…">
+                                            </div>
+
                                         </div>
 
                                         <div class="col-md-4">
@@ -100,9 +105,11 @@
                                </tfoot>
                                 </table>
                                 <table class="table table-bordered" id="table_credito">
+                                    <br>
                                     <tbody id="resume_credito" class="form-inline" style="font-size:22px; color:#2D7890;">
                                     <tr>
-                                        <th colspan="4" class="text-center" id="totales"></th>                            
+                                        <th class="text-center" id="totales"></th>                            
+                                        <th class="text-center" id="transferencias"></th>                            
                                     </tr>                    
                                     </tbody>
                                 </table>

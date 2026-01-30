@@ -17,13 +17,7 @@ if(isset($_POST["checkbox"]) && $_POST["checkbox"] == 1){
 $connect = mysqli_connect($server_db, $user_db, $password_db, $database_db);
 
 $columns  = array('pId', 'pQty', 'pMount');
-$columnss = array('invId', 'Pagado');
-
-// --- nuevo: texto del buscador propio ---
-$product_search = '';
-if (isset($_POST['product_search'])) {
-  $product_search = trim($_POST['product_search']);
-}
+// $columnss = array('invId', 'Pagado');
 
 /* =========================
    QUERY PRINCIPAL (tabla)
@@ -42,16 +36,19 @@ $query = "SELECT
             AND orders.idStore = ".$_SESSION['idStore']." AND ";
 
 /* =========================
-   TOTALES (EFECTIVO / TRANSFERENCIA)
+   QUERY DE TOTALES (EFECTIVO / TRANSFERENCIA)
+   - 0 = Transferencia
+   - 1 = Efectivo
+   - 2 = Crédito (no se suma aquí)
    ========================= */
 $querys = "SELECT
-            COALESCE(SUM(CASE WHEN sub.tPayment = 1 THEN sub.cPayment ELSE 0 END), 0) AS Pagado,
+            COALESCE(SUM(CASE WHEN sub.tPayment > 0 THEN sub.cPayment ELSE 0 END), 0) AS Pagado,
             COALESCE(SUM(CASE WHEN sub.tPayment = 0 THEN sub.cPayment ELSE 0 END), 0) AS PagadoTransferencia
           FROM (
             SELECT 
               invId,
-              MAX(tPayment) AS tPayment,
-              MAX(cPayment) AS cPayment,
+              MAX(tPayment) AS tPayment,     -- método por factura
+              MAX(cPayment) AS cPayment,     -- pago por factura (evita duplicados si hay varias líneas)
               MAX(bDate)    AS bDate,
               MAX(idSeller) AS idSeller
             FROM `orders`
@@ -65,8 +62,12 @@ $querys = "SELECT
 /* =========================
    RANGOS DE FECHA
    ========================= */
-if(empty($_POST["start_date"])){ $_POST["start_date"] = '2018-04-21'; }
-if(empty($_POST["end_date"])){   $_POST["end_date"]   = '2100-01-01'; }
+if(empty($_POST["start_date"])){
+  $_POST["start_date"] = '2018-04-21';
+}
+if(empty($_POST["end_date"])){
+  $_POST["end_date"] = '2100-01-01';
+}
 $start_time = isset($_POST["start_time"]) ? $_POST["start_time"] : '00:00:00';
 $end_time   = isset($_POST["end_time"])   ? $_POST["end_time"]   : '23:59:59';
 
@@ -76,40 +77,41 @@ $querys .= ' AND sub.bDate BETWEEN "'.$_POST["start_date"].' '.$start_time.'" AN
 /* =========================
    FILTRO POR CAJERO / ROL
    ========================= */
-$sellerId = (int)$_SESSION['usId'];
+$sellerId = (int)$_SESSION['usId']; // ID del usuario logueado
 
 if ($_SESSION['uType'] === 'admin' || $_SESSION['uType'] === 'manager') {
+    // Si es admin o manager y seleccionó un cajero, se filtra por ese cajero
     if (!empty($_POST["sellerId"])) {
         $sellerId = (int) $_POST["sellerId"];
         $query  .= "(orders.idSeller = $sellerId) AND ";
         $querys .= " AND sub.idSeller = $sellerId";
+        // Si no se selecciona nada, no se añade filtro => muestra todos
     }
 } else {
+    // Si no es admin o manager, siempre se filtra por el usuario logueado
     $query  .= "(orders.idSeller = $sellerId) AND ";
     $querys .= " AND sub.idSeller = $sellerId";
 }
 
 /* =========================
-   BÚSQUEDA (COMBINADA)
-   - product_search: nombre de producto (independiente del search global)
-   - search[value] de DataTables: tu lógica previa
+   BÚSQUEDA
    ========================= */
-
-// 1) Filtro por nombre de producto (cuando radio=Productos)
-if ($_POST["radio"] == 1 && strlen($product_search) >= 2) {
-  $ps = mysqli_real_escape_string($connect, $product_search);
-  $query .= ' (items.pName LIKE "%'.$ps.'%") AND ';
-}
-
-// 2) Búsqueda global de DataTables (conserva tu comportamiento anterior)
-if (isset($_POST["search"]["value"]) && $_POST["search"]["value"] !== '') {
+if (isset($_POST["search"]["value"])) {
   $sv = mysqli_real_escape_string($connect, $_POST["search"]["value"]);
-  // nota: aquí no tocamos items.pName; eso ya lo hace product_search
-  $query .= ' (orders.pId LIKE "%'.$sv.'%" OR pQty LIKE "%'.$sv.'%" OR pMount LIKE "%'.$sv.'%") AND ';
-}
 
-// Siempre agrupar por el tipo seleccionado (asegura GROUP BY aunque no haya search)
-$query .= ' 1=1 GROUP BY '.$type.' ';
+  if ($_POST["radio"] == 1) {
+    // Productos: buscar por nombre de producto
+    $query .= ' (items.pName LIKE "%'.$sv.'%") ';
+  } else {
+    // comportamiento anterior (por id/cant/valor)
+    $query .= ' (orders.pId LIKE "%'.$sv.'%"  
+                 OR pQty LIKE "%'.$sv.'%"  
+                 OR pMount LIKE "%'.$sv.'%") ';
+  }
+
+  // Mantén tu agrupación exactamente igual que antes
+  $query .= ' GROUP BY '.$type.' ';
+}
 
 /* =========================
    ORDEN
@@ -119,11 +121,12 @@ if(isset($_POST["order"]))
   $colIndex = (int)$_POST['order']['0']['column'];
   $dir      = ($_POST['order']['0']['dir'] === 'desc') ? 'DESC' : 'ASC';
   $orderCol = isset($columns[$colIndex]) ? $columns[$colIndex] : 'pId';
-  $query .= ' ORDER BY '.$orderCol.' '.$dir.' ';
+
+  $query .= 'ORDER BY '.$orderCol.' '.$dir.' ';
 }
 else
 {
-  $query .= ' ORDER BY pId ASC ';
+  $query .= 'ORDER BY pId ASC ';
 }
 
 /* =========================
@@ -138,15 +141,15 @@ if(isset($_POST["length"]) && $_POST["length"] != -1)
 /* =========================
    EJECUCIÓN
    ========================= */
-$number_filter_row = mysqli_num_rows(mysqli_query($connect, $query)); // sin LIMIT
+$number_filter_row = mysqli_num_rows(mysqli_query($connect, $query)); // sin LIMIT para recordsFiltered
 $result  = mysqli_query($connect, $query . $query1);
 
-// Totales sin LIMIT
+// ¡IMPORTANTE!: los totales NO deben paginarse
 $results = mysqli_query($connect, $querys);
 $saldo   = mysqli_fetch_assoc($results);
 
-$abonoAntes               = isset($saldo["Pagado"]) ? (int)$saldo["Pagado"] : 0;
-$abonoAntesTrasferencia   = isset($saldo["PagadoTransferencia"]) ? (int)$saldo["PagadoTransferencia"] : 0;
+$abonoAntes               = isset($saldo["Pagado"]) ? (int)$saldo["Pagado"] : 0;                 // EFECTIVO
+$abonoAntesTrasferencia   = isset($saldo["PagadoTransferencia"]) ? (int)$saldo["PagadoTransferencia"] : 0; // TRANSFER
 
 /* =========================
    ARMADO DE DATA
@@ -168,13 +171,17 @@ while($row = mysqli_fetch_array($result))
     $sub_array[] = $brand->bName;
   }
 
-  $endMount = ($utilidad == 0) ? $row["pMount"] : ($row["pMount"] - $row["pCost"]);
+  if($utilidad == 0) {
+    $endMount = $row["pMount"];
+  }else{
+    $endMount = $row["pMount"] - $row["pCost"];
+  }
 
   $sub_array[] = $row["pQty"];
   $sub_array[] = $endMount;
   $sub_array[] = $row["pCost"];
-  $sub_array[] = $abonoAntes;             // Total EFECTIVO (rango + filtros)
-  $sub_array[] = $abonoAntesTrasferencia; // Total TRANSFERENCIAS (rango + filtros)
+  $sub_array[] = $abonoAntes;               // Total EFECTIVO (rango + filtros)
+  $sub_array[] = $abonoAntesTrasferencia;   // Total TRANSFERENCIAS (rango + filtros)
 
   $data[] = $sub_array;
 }

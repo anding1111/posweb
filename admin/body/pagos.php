@@ -22,6 +22,7 @@
                                         '0',
                                         '0',
                                         '".$sPrice."',
+                                        '0',
                                         '".$nowTime."',
                                         ''
                     )") or die(mysqli_error($conexion));   

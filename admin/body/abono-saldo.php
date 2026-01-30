@@ -34,6 +34,7 @@ if (@$_POST['dId']) {
         '0',
         '0',
         '" . $dSaldo . "',                                    
+        '1',
         '" . $nowTime . "',
         '',
         '1',
@@ -46,24 +47,6 @@ if (@$_POST['dId']) {
         // $qry->free_result();
     }
     // $con->close();
-
-    // $qry = $con->query("INSERT INTO orders VALUES(
-    //                         '0',
-    //                         '" . $invNum . "', 
-    //                         '0',
-    //                         '" . $dId . "',                                       
-    //                         '0',
-    //                         '0',
-    //                         '0',
-    //                         '0',
-    //                         '" . $dSaldo . "',                                    
-    //                         '" . $nowTime . "',
-    //                         '',
-    //                         '1',
-    //                         '" . $loggedInShop . "',
-    //                         '" . $_SESSION['usId'] . "',
-    //                         '" . $_SESSION['idStore'] . "'
-    //                     )") or die(mysqli_error($con));
 }
 
 if (@$_POST['dIdSupplier']) {

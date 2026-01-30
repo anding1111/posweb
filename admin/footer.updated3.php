@@ -333,6 +333,18 @@
                                 $('#order_data').DataTable().destroy();
                             }
                                var dataTable = $('#order_data').DataTable({
+        ajax: {data: function(d){
+                    var __ps = ($('#liveSearch').length ? ($('#liveSearch').val() || '').trim() : '');
+                    d.product_search = (__ps.length >= 2) ? __ps : '';
+                },
+            url: "fetch.php",
+            type: "POST",
+            data: function(d){
+                var __ps = ($('#liveSearch').length ? ($('#liveSearch').val() || '').trim() : '');
+                d.product_search = (__ps.length >= 2) ? __ps : '';
+            }
+        },
+        
                                    "scrollY": "200px",
                                    "scrollX": true,
                                    "scrollCollapse": true,
@@ -343,16 +355,20 @@
                                    "ajax": {
                                        url: "fetch.php",
                                        type: "POST",
-                                       data: {
-                                           is_date_search: is_date_search,
-                                           start_date: start_date,
-                                           end_date: end_date,
-                                           start_time: start_time,
-                                           end_time: end_time,
-                                           radio: radio,
-                                           checkbox: checkbox,
-                                           sellerId: $('#sellerId').val() // AÑADIDO
-                                       }
+                                       data: function(d){
+                                        d.is_date_search = is_date_search;
+                                        d.start_date     = start_date;
+                                        d.end_date       = end_date;
+                                        d.start_time     = start_time;
+                                        d.end_time       = end_time;
+                                        d.radio          = radio;
+                                        d.checkbox       = checkbox;
+                                        d.sellerId       = $('#sellerId').val();
+
+                                        // NUEVO: buscador de productos
+                                        var __ps = ($('#liveSearch').length ? ($('#liveSearch').val() || '').trim() : '');
+                                        d.product_search = (__ps.length >= 2) ? __ps : '';
+                                        }
                                    },
                                    columns: [{
                                            title: "Nombre",
@@ -690,7 +706,70 @@
                            });
 
                        });
-                   </script>
+                   
+// Live search producto (2+ letras)
+(function(){
+  var $ls = $('#liveSearch');
+  if ($ls.length && !$ls.data('bound-orderdata')) {
+    $ls.data('bound-orderdata', true);
+    var t = null;
+    $ls.on('input.orderdata', function(){
+      var v = ($(this).val() || '').trim();
+      clearTimeout(t);
+      if (v.length === 0) { t=setTimeout(function(){ dataTable.ajax.reload(); },150); return; }
+      if (v.length < 2) return;
+      t = setTimeout(function(){ dataTable.ajax.reload(); }, 250);
+    });
+    $ls.on('keypress.orderdata', function(e){
+      if (e.which === 13) { e.preventDefault(); dataTable.ajax.reload(); }
+    });
+    $('input[name="radio"]').off('change.orderdata').on('change.orderdata', function(){
+      $ls.val('');
+      dataTable.ajax.reload();
+    });
+  }
+})();
+
+
+
+    // Live product search (2+ chars) for #order_data, delegated & idempotent
+    (function($){
+        var ns = '.orderdata';
+        $(document).off('input'+ns+' keyup'+ns+' paste'+ns, '#liveSearch')
+                   .on('input'+ns+' keyup'+ns+' paste'+ns, '#liveSearch', function(){
+            var v = ($(this).val() || '').trim();
+            if (v.length === 0 || v.length >= 2) {
+                if ($.fn.dataTable.isDataTable('#order_data')) {
+                    $('#order_data').DataTable().ajax.reload();
+                }
+            }
+        });
+        // Enter triggers reload
+        $(document).off('keypress'+ns, '#liveSearch')
+                   .on('keypress'+ns, '#liveSearch', function(e){
+            if (e.which === 13) { e.preventDefault();
+                if ($.fn.dataTable.isDataTable('#order_data')) {
+                    $('#order_data').DataTable().ajax.reload();
+                }
+            }
+        });
+        // Reset al cambiar el radio (Productos / Clientes / Marcas)
+        $(document)
+        .off('change'+ns, 'input[name="radio"]')
+        .on('change'+ns, 'input[name="radio"]', function () {
+            var val  = String($(this).val());          // '1' | '2' | '3'
+            var $inp = $('#liveSearch');
+            var $wrap = $inp.length ? $inp.closest('#liveSearchWrap') : $();
+
+            if ($inp.length) $inp.val('');             // limpia el texto para evitar filtros viejos
+            if ($wrap.length) $wrap.toggle(val === '1');  // solo visible si Productos
+
+            if ($.fn.dataTable.isDataTable('#order_data')) {
+            $('#order_data').DataTable().ajax.reload();
+            }
+        });
+    })(jQuery);
+    </script>
 
                    <!-- </body>
 

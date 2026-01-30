@@ -451,23 +451,30 @@
                                        $(api.column(2).footer()).html(
                                            '$' + numMiles(pageTotal));
 
-                                       // Update Total 
-                                       var efectivo = 0;
-                                       var transferencia = 0;
+                                       
+                                       // Update Totales (Caja y Transferencias)
+                                       var efectivo = 0, transferencia = 0;
                                        try {
-                                        if(data[0]){
-                                           var efectivo = data[0][4];
-                                           var transferencia = data[0][5];
-                                        }
+                                           if (Array.isArray(data) && data.length > 0) {
+                                               efectivo     = data[0][4] ? parseInt(('' + data[0][4]).toString().replace(/[^0-9]/g,'')) : 0;
+                                               transferencia= data[0][5] ? parseInt(('' + data[0][5]).toString().replace(/[^0-9]/g,'')) : 0;
+                                           }
                                        } catch (e) {
-                                           console.error(e.message, " porque no existe el objeto");
+                                           console.error('No fue posible leer totales de la respuesta:', e.message);
                                        }
-                                       $("#totales").html('Efectivo: $' + numMiles(efectivo));
-                                       $("#transferencias").html('Transferencias: $' + numMiles(transferencia));
+                                       if ($('#totales').length) {
+                                           $('#totales').html('Efectivo: $' + numMiles(efectivo));
+                                       }
+                                       if ($('#transferencias').length) {
+                                           $('#transferencias').html('Transferencias: $' + numMiles(transferencia));
+                                       }
+
 
                                    }
 
                                });
+
+                               window.orderDT = dataTable;
                            };
                             // Captura automática de cambios para recargar tabla
                             $('#startDate, #endDate, #startTime, #endTime, #sellerId').on('change', function () {
@@ -484,6 +491,27 @@
                                 console.log('Checkbox changed, reloading table...');
                                 reloadTable();
                             });
+                            // Buscador en vivo para #order_data (2+ letras). Se ata una sola vez.
+                            (function attachLiveSearchOnce(){
+                                var bound = $('#liveSearch').data('bound-live') || false;
+                                if (bound) return;
+                                $('#liveSearch').data('bound-live', true);
+                                var debounceTimer = null;
+                                $('#liveSearch').on('input', function(){
+                                    if (!window.orderDT) return;
+                                    var v = this.value.trim();
+                                    if (v.length === 0) { window.orderDT.search('').draw(); return; }
+                                    if (v.length < 2) return;
+                                    clearTimeout(debounceTimer);
+                                    debounceTimer = setTimeout(function(){ window.orderDT.search(v).draw(); }, 250);
+                                });
+                                // limpiar búsqueda al cambiar radio
+                                $('input[name="radio"]').on('change', function(){
+                                    $('#liveSearch').val('');
+                                    if (window.orderDT) window.orderDT.search('').draw();
+                                });
+                            })();
+
                             
                             // Función para recargar la tabla con los datos actuales
                             function reloadTable() {
@@ -671,11 +699,12 @@
                                        var efectivo = 0;
                                        try {
                                            console.log(data[0][4]);
-                                        var efectivo = data[0][4];
+                                           var efectivo = data[0][4];
                                        } catch (e) {
                                            console.error(e.message, " porque no existe el objeto");
                                        }
                                        $("#totales").html('Total Caja: $' + numMiles(efectivo));
+
                                    }
 
                                });

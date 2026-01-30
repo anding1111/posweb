@@ -9,6 +9,7 @@ if (@$_POST['submit']) {
     $cTotal = numIntPHP(formItemValidation($_POST['cTotal']));
     $ifCredito = formItemValidation($_POST['ifCredito']);
     $inSerial = formItemValidation($_POST['inSerial']);
+    $tPayment = formItemValidation($_POST['fPago']);
     $pSubmit = formItemValidation($_POST['submit']);
     $inSerial = trim($inSerial);
     if (empty($inSerial)) {
@@ -86,6 +87,7 @@ if (@$_POST['submit']) {
                         '" . $pCost . "',
 						'" . $pMount . "',
                         '" . $cPayment . "',
+                        '" . $tPayment . "',
 						'" . $nowTime . "',
                         '" . $inSerial . "',                 
                         '" . $orValue . "',                 
@@ -250,8 +252,9 @@ if (@$_POST['submit']) {
                                                         <legend class="scheduler-border">FORMA DE PAGO</legend>
                                                         <div class="form-group" style="width:100%;">
                                                             <select class="form-control fPago" name="fPago" style="width:100%">
-                                                                <option value="1" selected id="ocultar">Contado</option>
-                                                                <option value="2" id="mostrar">Credito</option>
+                                                                <option value="1" selected>Efectivo</option>
+                                                                <option value="0">Transferencia</option>
+                                                                <option value="2">Credito</option>
                                                             </select>
                                                         </div>
                                                         <input type="hidden" id="ifCredito" name="ifCredito" value="0">

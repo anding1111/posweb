@@ -3,6 +3,13 @@
 // http://kio4.com/appinventor/340D_appinventor_mysqli_inject.htm
 
 // 1.- IDENTIFICACION nombre de la base, del usuario, clave y servidor
+// TEST
+// $db_host = "localhost";
+// $db_name = "mipospro_pruebas";
+// $db_login = "mipospro_pruebas";
+// $db_pswd = "MIPOS.MIPOS.PRO";
+
+//PRODUCTION
 $db_host = "localhost";
 $db_name = "mipospro_mipos";
 $db_login = "mipospro_mipos";
@@ -27,7 +34,7 @@ if ($boton == "btnInsertar") {
      $stmt->bind_result($shId, $shName, $shMail, $shEnable);
      $stmt->fetch();
      if ($stmt->num_rows() > 0) {
-          echo $shMail . " ya se está usando en: <b>" . $shName . "<br>";
+          echo $shMail . " ya se encuentra registrado en: <b>" . $shName . "<br>";
      } else {
           $stmt = $link->prepare("INSERT INTO shop (shId, shMail) VALUES (?, ?)");
           $stmt->bind_param('is', $shId, $shMail);
@@ -37,7 +44,7 @@ if ($boton == "btnInsertar") {
           $stmt->execute();
           if ($stmt->affected_rows > 0) {
                $id_shop = $stmt->insert_id;
-               echo "Comercio correctamente<br>";
+               echo "Comercio Correctamente<br>";
                $insertStmt = $link->prepare("INSERT INTO store (stId, stName, shId) VALUES (?, ?, ?)");
                $stId = 0;
                $shId = $id_shop;
@@ -48,7 +55,7 @@ if ($boton == "btnInsertar") {
                }
                if ($insertStmt->affected_rows > 0) {
                     $id_store = $insertStmt->insert_id;
-                    echo "Almacén correctamente<br>";
+                    echo "Almacenes Correctamente<br>";
                     $stmt = $link->prepare("INSERT INTO users (id, uName, uPassword, shId, idStore) VALUES (?, ?, ?, ?, ?)");
                     $stmt->bind_param('issii', $id, $uName, $uPassword, $shId, $idStore);
                     $id = 0;
@@ -59,7 +66,7 @@ if ($boton == "btnInsertar") {
                     /* ejecuta INSERT User */
                     $stmt->execute();
                     if ($stmt->affected_rows > 0) {
-                         echo "Usuario correctamente<br>";
+                         echo "Usuario Correctamente<br>";
                          $stmt = $link->prepare("INSERT INTO client (cId, cName, clEnable, shId) VALUES (?, ?, ?, ?), (?, ?, ?, ?)");
                          $stmt->bind_param('isiiisii', $cId, $cName, $clEnable, $shId, $cId, $cName2, $clEnable2, $shId);
                          $cId = 0;
@@ -71,7 +78,7 @@ if ($boton == "btnInsertar") {
                          /* ejecuta INSERT clients */
                          $stmt->execute();
                          if ($stmt->affected_rows > 0) {
-                              echo "Clientes correctamente<br>";
+                              echo "Clientes Correctamente<br>";
                               $stmt = $link->prepare("INSERT INTO brands (bId, shId) VALUES (?, ?)");
                               $stmt->bind_param('ii', $bId, $shId);
                               $bId = 0;
@@ -79,7 +86,7 @@ if ($boton == "btnInsertar") {
                               /* ejecuta INSERT brands */
                               $stmt->execute();
                               if ($stmt->affected_rows > 0) {
-                                   echo "Marcas correctamente<br>";
+                                   echo "Marcas Correctamente<br>";
                                    $stmt = $link->prepare("INSERT INTO suppliers (sId, shId) VALUES (?, ?)");
                                    $stmt->bind_param('ii', $sId, $shId);
                                    $sId = 0;
@@ -87,24 +94,24 @@ if ($boton == "btnInsertar") {
                                    /* ejecuta INSERT Suppliers */
                                    $stmt->execute();
                                    if ($stmt->affected_rows > 0) {
-                                        echo "Proveedores correctamente<br>";
+                                        echo "Proveedores Correctamente<br>";
                                    } else {
-                                        echo "No se crearon los Proveedores<br>";
+                                        echo "Proveedores Error<br>";
                                    }
                               } else {
-                                   echo "No se crearon las marcas<br>";
+                                   echo "Marcas Error<br>";
                               }
                          } else {
-                              echo "No se crearon los clientes<br>";
+                              echo "Clientes Error<br>";
                          }
                     } else {
-                         echo "No se creó el usuario<br>";
+                         echo "Usuario Error<br>";
                     }
                } else {
-                    echo "No se creó el almacén<br>";
+                    echo "Almacenes Error<br>";
                }
           } else {
-               echo "No se creó el comercio<br>";
+               echo "Comercio Error<br>";
           }
      }
      $stmt->close();
